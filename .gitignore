@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Local notebooks
+.ipynb_checkpoints/
+
+# Generated data and outputs
+data/raw/
+data/interim/
+data/processed/
+outputs/
+reports/generated/
+
+# Existing large project artifacts
+dataset/
+clustering/
+Model_outputs/
+group_accuracy_bias_checking/
+Qwen/
+*.csv
+alaki2.json
+گزارش_کار_پروژه.md
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,17 @@
+input_path: dataset/Hard/hardest_papers.json
+output_dir: outputs/rhetoric_variants
+sample_size: 40
+seed: 42
+text_field: full_text
+id_fields:
+  - index
+  - title
+  - group
+model:
+  name: deepseek-v3.2
+  temperature: 0.2
+  max_retries: 3
+variants:
+  - rhetoric_heavy
+  - plain_core
+
