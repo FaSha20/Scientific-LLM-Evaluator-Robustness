@@ -12,6 +12,7 @@ venv/
 .env
 .env.*
 !.env.example
+scripts/utils.py
 
 # Local notebooks
 .ipynb_checkpoints/

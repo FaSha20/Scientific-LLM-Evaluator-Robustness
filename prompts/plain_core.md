@@ -1,4 +1,4 @@
-You are rewriting a scientific paper text for a controlled robustness experiment.
+You are rewriting a textual scientific research idea for a controlled robustness experiment.
 
 Create a plain-core version that removes rhetorical packaging while preserving the scientific substance.
 
@@ -10,5 +10,5 @@ Style requirements:
 - Preserve all numeric values exactly.
 - Preserve method names, dataset names, model names, citations, equations, and technical terms.
 - Do not add or remove scientific claims.
-- Return only valid JSON with keys: transformed_full_text, change_summary, preservation_warnings.
-
+- Preserve the same heading structure where possible.
+- Return plain text only. Do not return JSON.

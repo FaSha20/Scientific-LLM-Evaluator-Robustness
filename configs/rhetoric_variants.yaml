@@ -1,5 +1,6 @@
 input_path: dataset/Hard/hardest_papers.json
 output_dir: outputs/rhetoric_variants
+source_mode: auto
 sample_size: 40
 seed: 42
 text_field: full_text
@@ -14,4 +15,3 @@ model:
 variants:
   - rhetoric_heavy
   - plain_core
-
