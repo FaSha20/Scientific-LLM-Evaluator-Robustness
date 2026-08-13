@@ -16,7 +16,6 @@ REVIEW_SOURCE_MODES = {"auto", "abstract_intro", "textual_idea", "full_paper"}
 def build_review_input(
     *,
     title: str,
-    variant_name: str,
     abstract: str,
     introduction: str,
 ) -> str:
@@ -25,7 +24,7 @@ def build_review_input(
         "Ground the review only in these sections and explicitly state uncertainty "
         "when full-paper evidence would be needed.\n\n"
         f"Title: {title}\n"
-        f"Variant: {variant_name}\n\n"
+        "\n"
         "Abstract:\n"
         f"{abstract.strip()}\n\n"
         "Introduction:\n"
@@ -36,7 +35,6 @@ def build_review_input(
 def build_structured_review_input(
     *,
     title: str,
-    variant_name: str,
     idea_text: str,
 ) -> str:
     return (
@@ -45,7 +43,7 @@ def build_structured_review_input(
         "idea text and explicitly state uncertainty when full-paper evidence would "
         "be needed.\n\n"
         f"Title: {title}\n"
-        f"Variant: {variant_name}\n\n"
+        "\n"
         f"{idea_text.strip()}"
     )
 
@@ -53,14 +51,13 @@ def build_structured_review_input(
 def build_full_paper_review_input(
     *,
     title: str,
-    variant_name: str,
     full_text: str,
 ) -> str:
     return (
         "A full research paper is provided for this review. Ground the review in "
         "the complete paper text.\n\n"
         f"Title: {title}\n"
-        f"Variant: {variant_name}\n\n"
+        "\n"
         f"{full_text.strip()}"
     )
 
@@ -244,21 +241,18 @@ def generate_variant_reviews(
             if resolved_review_source == "full_paper":
                 review_input = build_full_paper_review_input(
                     title=variant["title"],
-                    variant_name=variant_name,
                     full_text=variant["full_text"],
                 )
                 input_kind = "full_paper"
             elif resolved_review_source == "textual_idea":
                 review_input = build_structured_review_input(
                     title=variant["title"],
-                    variant_name=variant_name,
                     idea_text=variant["idea_text"],
                 )
                 input_kind = str(source_format or "textual_idea")
             else:
                 review_input = build_review_input(
                     title=variant["title"],
-                    variant_name=variant_name,
                     abstract=variant["abstract"],
                     introduction=variant["introduction"],
                 )
