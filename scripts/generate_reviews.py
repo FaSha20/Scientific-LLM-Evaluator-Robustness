@@ -26,12 +26,6 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--max-retries", type=int, default=3)
-    parser.add_argument(
-        "--review-source",
-        choices=["auto", "abstract_intro", "textual_idea", "full_paper"],
-        default="auto",
-        help="Choose what text is sent to the review LLM.",
-    )
     parser.add_argument("--no-resume", action="store_true")
     return parser.parse_args()
 
@@ -49,7 +43,6 @@ def main() -> None:
         temperature=args.temperature,
         max_retries=args.max_retries,
         resume=not args.no_resume,
-        review_source=args.review_source,
     )
 
 
