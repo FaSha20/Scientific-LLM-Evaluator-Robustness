@@ -34,6 +34,8 @@ def test_generate_variants_from_structured_text(tmp_path):
     assert records[0]["variant_generation"]["source_format"] == "structured_text"
     assert "rag_queries" not in records[0]["original_content"]
     assert records[0]["variants"]["plain_core"]["transformed_text"] == "Rewritten idea"
+    assert records[0]["variants"]["rhetoric_heavier"]["transformed_text"] == "Rewritten idea"
+    assert records[0]["variants"]["rhetoric_heavier"]["change_strength"] == "5_of_5"
 
 
 def test_generate_variants_from_full_text(tmp_path):
@@ -60,3 +62,7 @@ def test_generate_variants_from_full_text(tmp_path):
     assert records[0]["variant_generation"]["source_format"] == "full_text"
     assert records[0]["original_text"] == "Full paper text."
     assert records[0]["variants"]["rhetoric_heavy"]["transformed_text"] == "Rewritten full text"
+    assert records[0]["variants"]["rhetoric_heavy"]["transformed_full_text"] == "Rewritten full text"
+    assert records[0]["variants"]["plain_core"]["transformed_full_text"] == "Rewritten full text"
+    assert records[0]["variants"]["rhetoric_heavier"]["transformed_full_text"] == "Rewritten full text"
+    assert records[0]["variants"]["rhetoric_heavier"]["change_strength"] == "5_of_5"

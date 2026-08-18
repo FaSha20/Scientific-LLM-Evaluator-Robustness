@@ -14,6 +14,7 @@ from .prompts import load_prompt
 from .sampling import sample_records
 from .sections import TargetSections, extract_target_sections, replace_target_sections
 from .structured_idea import (
+    SURFACE_CHANGES,
     describe_surface_changes,
     get_structured_content,
     select_surface_changes,
@@ -126,6 +127,7 @@ def _build_structured_variant_record(
     model_name: str,
     selected_changes: list[str],
     rhetoric_text: str,
+    rhetoric_heavier_text: str,
     plain_text: str,
 ) -> dict[str, Any]:
     return {
@@ -147,12 +149,18 @@ def _build_structured_variant_record(
                 "transformed_text": rhetoric_text,
                 "applied_surface_changes": selected_changes,
             },
+            "rhetoric_heavier": {
+                "transformed_text": rhetoric_heavier_text,
+                "applied_surface_changes": list(SURFACE_CHANGES),
+                "change_strength": "5_of_5",
+            },
             "plain_core": {
                 "transformed_text": plain_text,
             },
         },
         "validation": {
             "rhetoric_heavy": validate_transformation(source_text, rhetoric_text),
+            "rhetoric_heavier": validate_transformation(source_text, rhetoric_heavier_text),
             "plain_core": validate_transformation(source_text, plain_text),
         },
     }
@@ -169,8 +177,26 @@ def _build_text_variant_record(
     model_name: str,
     selected_changes: list[str],
     rhetoric_text: str,
+    rhetoric_heavier_text: str,
     plain_text: str,
 ) -> dict[str, Any]:
+    rhetoric_payload = {
+        "transformed_text": rhetoric_text,
+        "applied_surface_changes": selected_changes,
+    }
+    plain_payload = {
+        "transformed_text": plain_text,
+    }
+    rhetoric_heavier_payload = {
+        "transformed_text": rhetoric_heavier_text,
+        "applied_surface_changes": list(SURFACE_CHANGES),
+        "change_strength": "5_of_5",
+    }
+    if source_format == "full_text":
+        rhetoric_payload["transformed_full_text"] = rhetoric_text
+        plain_payload["transformed_full_text"] = plain_text
+        rhetoric_heavier_payload["transformed_full_text"] = rhetoric_heavier_text
+
     return {
         **record,
         "variant_generation": {
@@ -181,19 +207,17 @@ def _build_text_variant_record(
             "model_name": model_name,
             "source_format": source_format,
             "rhetoric_surface_changes": selected_changes,
+            "rhetoric_heavier_surface_changes": list(SURFACE_CHANGES),
         },
         "original_text": source_text,
         "variants": {
-            "rhetoric_heavy": {
-                "transformed_text": rhetoric_text,
-                "applied_surface_changes": selected_changes,
-            },
-            "plain_core": {
-                "transformed_text": plain_text,
-            },
+            "rhetoric_heavy": rhetoric_payload,
+            "rhetoric_heavier": rhetoric_heavier_payload,
+            "plain_core": plain_payload,
         },
         "validation": {
             "rhetoric_heavy": validate_transformation(source_text, rhetoric_text),
+            "rhetoric_heavier": validate_transformation(source_text, rhetoric_heavier_text),
             "plain_core": validate_transformation(source_text, plain_text),
         },
     }
@@ -249,6 +273,7 @@ def generate_rhetoric_variants(
     plain_prompt = load_prompt("plain_core")
     checkpoint_path = output_path / "generation_checkpoint.jsonl"
     completed_by_key = _load_completed_records(checkpoint_path) if resume else {}
+    all_rhetoric_changes = list(SURFACE_CHANGES)
 
     generated_records: list[dict[str, Any]] = []
     for position, record in enumerate(selected_records, start=1):
@@ -275,11 +300,28 @@ def generate_rhetoric_variants(
                 + "\n\nSelected surface-level changes for this record:\n"
                 + describe_surface_changes(selected_changes)
             )
+            rhetoric_heavier_prompt = (
+                rhetoric_prompt
+                + "\n\nSelected surface-level changes for this record:\n"
+                + describe_surface_changes(all_rhetoric_changes)
+                + "\n\nApply all five selected surface-level changes."
+            )
 
             rhetoric_result = transform_structured_idea_with_call_llm(
                 call_llm,
                 idea_text=source_text,
                 system_prompt=rhetoric_prompt_with_changes,
+                url=url,
+                api_key=api_key,
+                model_name=model_name,
+                temperature=temperature,
+                max_retries=max_retries,
+            )
+
+            rhetoric_heavier_result = transform_structured_idea_with_call_llm(
+                call_llm,
+                idea_text=source_text,
+                system_prompt=rhetoric_heavier_prompt,
                 url=url,
                 api_key=api_key,
                 model_name=model_name,
@@ -308,6 +350,7 @@ def generate_rhetoric_variants(
                 model_name=model_name,
                 selected_changes=selected_changes,
                 rhetoric_text=rhetoric_result,
+                rhetoric_heavier_text=rhetoric_heavier_result,
                 plain_text=plain_result,
             )
             append_jsonl(checkpoint_path, generated)
@@ -323,10 +366,26 @@ def generate_rhetoric_variants(
                 + "\n\nSelected surface-level changes for this record:\n"
                 + describe_surface_changes(selected_changes)
             )
+            rhetoric_heavier_prompt = (
+                rhetoric_prompt
+                + "\n\nSelected surface-level changes for this record:\n"
+                + describe_surface_changes(all_rhetoric_changes)
+                + "\n\nApply all five selected surface-level changes across the full paper text."
+            )
             rhetoric_result = transform_text_with_call_llm(
                 call_llm,
                 source_text=source_text,
                 system_prompt=rhetoric_prompt_with_changes,
+                url=url,
+                api_key=api_key,
+                model_name=model_name,
+                temperature=temperature,
+                max_retries=max_retries,
+            )
+            rhetoric_heavier_result = transform_text_with_call_llm(
+                call_llm,
+                source_text=source_text,
+                system_prompt=rhetoric_heavier_prompt,
                 url=url,
                 api_key=api_key,
                 model_name=model_name,
@@ -353,6 +412,7 @@ def generate_rhetoric_variants(
                 model_name=model_name,
                 selected_changes=selected_changes,
                 rhetoric_text=rhetoric_result,
+                rhetoric_heavier_text=rhetoric_heavier_result,
                 plain_text=plain_result,
             )
             append_jsonl(checkpoint_path, generated)

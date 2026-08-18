@@ -8,7 +8,7 @@ from .llm import CallLLM
 from .pipeline import record_key, record_title
 
 
-VARIANT_ORDER = ("main", "plain_core", "rhetoric_heavy")
+VARIANT_ORDER = ("main", "plain_core", "rhetoric_heavy", "rhetoric_heavier")
 
 
 def build_full_paper_review_input(
@@ -41,7 +41,7 @@ def extract_full_paper_review_variants(record: dict[str, Any]) -> dict[str, dict
             "full_text": full_text,
         }
     }
-    for variant_name in ("plain_core", "rhetoric_heavy"):
+    for variant_name in ("plain_core", "rhetoric_heavy", "rhetoric_heavier"):
         payload = variants_payload.get(variant_name)
         if not isinstance(payload, dict):
             raise ValueError(f"Record is missing variant '{variant_name}'")
