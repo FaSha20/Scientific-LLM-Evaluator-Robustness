@@ -1,0 +1,41 @@
+[
+  {
+    "variant_name": "plain_core",
+    "n_papers": 14,
+    "mean_rating_shift": -0.2857142857142857,
+    "mean_abs_rating_shift": 0.42857142857142855,
+    "max_abs_rating_shift": 2.0,
+    "mean_abs_score_dim_shift": 0.19047619047619047,
+    "decision_flip_rate": 0.14285714285714285,
+    "rating_stability": 0.9523809523809523,
+    "score_stability": 0.9523809523809523,
+    "decision_stability": 0.8571428571428572,
+    "robustness_index": 0.9206349206349206
+  },
+  {
+    "variant_name": "rhetoric_heavy",
+    "n_papers": 14,
+    "mean_rating_shift": -0.14285714285714285,
+    "mean_abs_rating_shift": 0.42857142857142855,
+    "max_abs_rating_shift": 1.0,
+    "mean_abs_score_dim_shift": 0.2857142857142857,
+    "decision_flip_rate": 0.07142857142857142,
+    "rating_stability": 0.9523809523809523,
+    "score_stability": 0.9285714285714286,
+    "decision_stability": 0.9285714285714286,
+    "robustness_index": 0.9365079365079365
+  },
+  {
+    "variant_name": "rhetoric_heavier",
+    "n_papers": 14,
+    "mean_rating_shift": 0.0,
+    "mean_abs_rating_shift": 0.3333333333333333,
+    "max_abs_rating_shift": 1.0,
+    "mean_abs_score_dim_shift": 0.3611111111111111,
+    "decision_flip_rate": 0.07142857142857142,
+    "rating_stability": 0.962962962962963,
+    "score_stability": 0.9097222222222222,
+    "decision_stability": 0.9285714285714286,
+    "robustness_index": 0.933752204585538
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "n_variants": 3,
+  "n_review_conditions": 4,
+  "mean_abs_rating_shift": 0.3968253968253968,
+  "mean_decision_flip_rate": 0.09523809523809523,
+  "mean_robustness_index": 0.930298353909465,
+  "least_robust_variant": "plain_core"
+}

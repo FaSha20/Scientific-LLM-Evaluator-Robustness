@@ -1,0 +1,14 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='760' height='420' viewBox='0 0 760 420'><style>.title{font:700 22px Arial}.label{font:13px Arial}.note{font:12px Arial;fill:#555}.axis{stroke:#333;stroke-width:1}</style><rect width='100%' height='100%' fill='white'/>
+<text x='30' y='35' class='title'>Decision Flip Rate vs Main</text>
+<text x='30' y='390' class='note'>Flip rate</text>
+<line x1='90' y1='320' x2='700' y2='320' class='axis'/>
+<rect x='90.0' y='111.7' width='184.7' height='208.3' fill='#5277c3'/>
+<text x='182.3' y='103.7' class='label' text-anchor='middle'>14%</text>
+<text x='182.3' y='344.0' class='label' text-anchor='middle'>plain_core</text>
+<rect x='302.7' y='215.8' width='184.7' height='104.2' fill='#c95f45'/>
+<text x='395.0' y='207.8' class='label' text-anchor='middle'>7%</text>
+<text x='395.0' y='344.0' class='label' text-anchor='middle'>rhetoric_heavy</text>
+<rect x='515.3' y='215.8' width='184.7' height='104.2' fill='#6c9f58'/>
+<text x='607.7' y='207.8' class='label' text-anchor='middle'>7%</text>
+<text x='607.7' y='344.0' class='label' text-anchor='middle'>rhetoric_heavier</text>
+</svg>

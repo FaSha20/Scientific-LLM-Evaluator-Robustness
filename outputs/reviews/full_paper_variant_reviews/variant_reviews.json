@@ -1,0 +1,1367 @@
+[
+  {
+    "paper_key": "index:134",
+    "paper_position": 1,
+    "title": "Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs",
+    "variant_name": "main",
+    "paper_metadata": {
+      "Rating_gt": 4.75,
+      "Decision_gt": "Reject",
+      "Rating_pred": 6.0,
+      "Decision_pred": "Accept",
+      "hardness": 0.3950632489
+    },
+    "review": {
+      "summary": "The paper introduces ISED (Infer-Sample-Estimate-Descend), a neurosymbolic learning framework that enables training neural models with algorithmic supervision from arbitrary black-box programs (e.g., Python functions), without requiring differentiability or white-box access. The key idea is to sample structured inputs from neural predictions, execute the program forward, and estimate gradients via probability aggregation to reward/penalize inputs that lead to correct/incorrect outputs. The method is evaluated on a new benchmark suite of 30 tasks spanning synthetic (MNIST-R, SVHN-R, NS-Leetcode), classic (handwritten formula, sorting), and real-world (coffee leaf disease severity) problems. ISED is shown to outperform end-to-end neural baselines by 30% on average and matches or exceeds specialized neurosymbolic frameworks like Scallop on tasks where they are applicable, while handling many programs that cannot be expressed in differentiable logic languages.",
+      "strengths": [
+        "Addresses a significant limitation in neurosymbolic learning: the requirement for differentiable, white-box programs. Enables use of arbitrary black-box code (e.g., Python libraries, legacy algorithms).",
+        "Proposes a concrete, sampling-based algorithm (ISED) with clear steps (Infer, Sample, Estimate, Descend) and provides a programming interface (structural mappings) to integrate neural predictions with black-box functions.",
+        "Introduces a comprehensive and diverse benchmark suite (30 tasks) covering varied data types, reasoning patterns, and real-world applications, which is a valuable contribution for future research.",
+        "Demonstrates strong empirical results: outperforms neural baselines significantly, matches or beats specialized frameworks (Scallop, NGS) on several tasks, and shows improved interpretability in a real-world case (coffee leaf disease).",
+        "The method is pragmatic and accessible for ML practitioners, as it allows using familiar Python code rather than forcing adoption of a new logic programming language."
+      ],
+      "weaknesses": [
+        "The theoretical grounding of the gradient estimation via sampling is not deeply analyzed. It is unclear under what conditions (e.g., program complexity, sample size) the estimated gradients are unbiased or effective.",
+        "The computational cost of forward sampling (e.g., k=100 samples per training example) is high, especially for programs with large input spaces or slow execution. Scalability to very complex or long-running programs is not addressed.",
+        "The comparison to Scallop is somewhat asymmetric: Scallop is designed for differentiable logic programs, while ISED handles black-box programs. The paper notes 17/28 benchmarks cannot be specified in Scallop, but does not rigorously compare on a common subset where both are applicable (only mentions ISED beats Scallop on 6/11).",
+        "The loss function and normalization details (e.g., L2 normalization of estimated probability vector) are presented without strong justification. The choice of aggregation operators (min/max vs. product/sum) is heuristic.",
+        "The real-world coffee leaf disease task uses a pre-trained SAM model for segmentation, which itself is a large vision model. The contribution of ISED vs. the segmentation component is somewhat conflated; it's unclear how much gain comes from ISED versus using SAM.",
+        "Limited discussion of failure modes or tasks where ISED performs poorly. The benchmark suite seems curated to show success, but understanding limitations is important for future work."
+      ],
+      "suggestions": [
+        "Provide a more formal analysis of the gradient estimation, e.g., connecting it to REINFORCE or score function estimators, and discuss bias/variance trade-offs. This would strengthen the theoretical contribution.",
+        "Include an ablation study on the impact of sample count k and sampling strategy S on accuracy and training time. This would help users tune the method.",
+        "Add a runtime/efficiency comparison between ISED and differentiable neurosymbolic frameworks (like Scallop) on tasks where both can be applied, to quantify the cost of black-box sampling.",
+        "Discuss the sensitivity to program output space discretization (for FLOAT outputs). The method discretizes based on sampled outputs, which may be unstable if samples are sparse.",
+        "Explore more sophisticated sampling strategies (e.g., importance sampling, MCMC) that could reduce variance and improve sample efficiency.",
+        "Include a broader set of baselines for the NS-Leetcode tasks, such as reinforcement learning or program synthesis approaches, to better contextualize ISED's performance.",
+        "Clarify the handling of variable-length inputs (e.g., lists up to length n). The paper mentions it but does not detail how padding/masking is managed during sampling and aggregation."
+      ],
+      "questions": [
+        "How does the choice of aggregation operator (min/max vs. product/sum) affect performance across different task types? Is there a principled way to select the appropriate operator?",
+        "For programs with large discrete input spaces (e.g., long lists), sampling 100 inputs may cover a tiny fraction of the space. How does ISED ensure that informative samples are obtained, and does performance degrade with input dimensionality?",
+        "The method requires the program P to be deterministic. How would ISED handle non-deterministic or stochastic black-box programs?",
+        "In the coffee leaf disease task, what is the performance of an end-to-end neural baseline that also uses SAM patches as input (i.e., a fairer comparison where both methods have access to segmented patches)?",
+        "The structural mapping interface includes permutations. How are gradients estimated for permutation outputs, given that the sampling of permutations from a distribution is non-trivial?",
+        "Could ISED be combined with differentiable approximations (e.g., soft sorting) for programs where such approximations exist, to improve sample efficiency?",
+        "What is the memory overhead of storing k samples per training example during the Estimate step, especially for large batch sizes?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The method is algorithmically sound and empirically validated across many tasks. The core idea of sampling and aggregating probabilities to estimate gradients is plausible and aligns with techniques like REINFORCE. However, the paper lacks a rigorous theoretical analysis of gradient estimator properties (bias, variance, convergence). The experimental setup is thorough, but some comparisons (e.g., with Scallop) are not fully balanced. The reliance on sampling introduces computational inefficiency but is a reasonable trade-off for black-box compatibility."
+      },
+      "contribution": {
+        "score": 5,
+        "justification": "The contribution is significant and timely. It removes a major barrier in neurosymbolic learning—the need for differentiable white-box programs—enabling the use of arbitrary black-box code. The proposed benchmark suite of 30 tasks is itself a valuable resource for the community. The method opens up new applications where symbolic reasoning components are implemented in general-purpose languages (Python, C++, etc.) and cannot be easily translated to differentiable logic."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is well-structured and clearly written. The algorithm (ISED) is explained step-by-step with a concrete example. The programming interface (structural mappings) is defined formally. Figures and tables help illustrate the pipeline and results. However, some technical details are glossed over: e.g., how variable-length lists are handled, the exact loss function used, and the discretization process for continuous outputs. The related work section adequately covers neurosymbolic frameworks and differentiable programming."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "This is a strong paper with a novel and impactful contribution. It addresses a clear limitation in neurosymbolic learning and provides a practical solution (ISED) backed by extensive experiments. The benchmark suite is a notable addition. Weaknesses include the lack of theoretical analysis of the gradient estimator, high computational cost of sampling, and some uneven comparisons. However, the strengths outweigh these issues. The paper is publishable with minor revisions to address the weaknesses (e.g., adding more analysis and ablation studies)."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:134::main",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:134",
+    "paper_position": 1,
+    "title": "Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs",
+    "variant_name": "plain_core",
+    "paper_metadata": {
+      "Rating_gt": 4.75,
+      "Decision_gt": "Reject",
+      "Rating_pred": 6.0,
+      "Decision_pred": "Accept",
+      "hardness": 0.3950632489
+    },
+    "review": {
+      "summary": "This paper addresses the limitation of existing neurosymbolic learning frameworks that require programs to be written in differentiable logic programming languages. The authors propose ISED (Infer-Sample-Estimate-Descend), an algorithm that enables neurosymbolic learning with arbitrary black-box programs via sampling-based gradient approximation. Key claims include: (1) ISED achieves 30% higher accuracy than end-to-end neural baselines across 30 benchmark tasks; (2) ISED matches or exceeds specialized neurosymbolic frameworks on tasks they can handle; (3) ISED provides improved interpretability through its modular design; (4) 61% of benchmark programs cannot be expressed in existing differentiable frameworks like Scallop.",
+      "strengths": [
+        "Addresses a significant practical limitation in neurosymbolic learning: the requirement for differentiable program specifications",
+        "Proposes a conceptually simple yet powerful sampling-based approach that works with arbitrary black-box programs",
+        "Comprehensive evaluation across 30 diverse benchmark tasks, including synthetic, algorithmic, and real-world applications",
+        "Demonstrates practical utility on a real-world agricultural problem with meaningful accuracy improvements",
+        "Provides a clean programming interface with type definitions that bridge neural predictions and symbolic programs"
+      ],
+      "weaknesses": [
+        "The theoretical justification for the gradient approximation method is underdeveloped - no formal analysis of bias/variance or convergence guarantees",
+        "Sampling efficiency concerns are not addressed - 100 samples per training example may be computationally expensive for complex programs",
+        "Limited comparison to other gradient-free optimization methods (e.g., REINFORCE, evolutionary strategies) that could also handle black-box programs",
+        "The benchmark suite includes many synthetic tasks; more real-world applications would strengthen the practical contribution",
+        "The method's scalability to programs with large discrete output spaces or complex control flow is not evaluated"
+      ],
+      "suggestions": [
+        "Provide theoretical analysis of the gradient estimator's properties (bias, variance, convergence)",
+        "Include ablation studies on the impact of sample count k and sampling strategy S on performance and training time",
+        "Compare against reinforcement learning baselines (e.g., REINFORCE with baseline) on the same benchmark tasks",
+        "Evaluate computational efficiency more thoroughly, including training time comparisons with differentiable frameworks",
+        "Extend evaluation to programs with more complex control flow (conditionals, loops, recursion) to better understand limitations",
+        "Discuss how the method handles programs with non-deterministic or stochastic behavior"
+      ],
+      "questions": [
+        "How does the choice of aggregation function (min vs product) affect gradient estimation quality? Is there a theoretical basis for this choice?",
+        "For the L2 normalization of weights ŵ, what is the justification for this particular normalization scheme versus alternatives?",
+        "The paper mentions 'sampling strategy S' but doesn't specify what strategies were used. What sampling strategies were evaluated and how were they chosen?",
+        "How sensitive is ISED to program execution time? What happens with programs that take seconds or minutes to execute?",
+        "For the coffee leaf disease task, how was the SAM model integrated? Was it frozen or fine-tuned? How does this affect the claim of 'black-box' compatibility?",
+        "The method requires defining structural mappings τ. How difficult is this in practice for complex data types, and could this be automated?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The method is technically reasonable and the experimental evaluation is comprehensive. However, there are significant gaps in theoretical justification: no formal analysis of the gradient estimator's properties, no convergence guarantees, and limited discussion of approximation error. The empirical results are strong but would benefit from more rigorous statistical analysis (e.g., significance testing). The comparison to Scallop is appropriate but could be more detailed regarding why certain programs cannot be expressed in differentiable frameworks."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The core contribution - enabling neurosymbolic learning with arbitrary black-box programs - is meaningful and addresses a practical limitation in the field. The benchmark suite of 30 tasks is itself a valuable contribution. However, the novelty is somewhat incremental: sampling-based gradient approximation is a known technique, and the specific application to neurosymbolic learning, while useful, builds directly on existing ideas from reinforcement learning and gradient-free optimization. The real-world application to coffee leaf disease adds practical relevance."
+      },
+      "presentation": {
+        "score": 5,
+        "justification": "The paper is generally well-structured and clearly written. The problem statement is motivated well with concrete examples. The methodology section explains the algorithm clearly with pseudocode and type definitions. The benchmark descriptions are detailed. However, some technical details are unclear: the sampling strategy is not specified, the gradient estimation derivation is brief, and the loss function details could be more explicit. The figures and tables help understanding but could be better integrated with the text."
+      },
+      "overall_rating": {
+        "score": 6,
+        "justification": "This is a solid borderline paper. The work addresses an important practical problem in neurosymbolic learning and presents a reasonable solution with strong empirical results across many benchmarks. The main weaknesses are theoretical underdevelopment and limited comparison to alternative approaches. The practical contribution is clear, but the methodological novelty is moderate. With additional theoretical analysis and more comprehensive comparisons, this could be a strong accept. In its current form, it represents a useful but incremental contribution to the field."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:134::plain_core",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:134",
+    "paper_position": 1,
+    "title": "Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs",
+    "variant_name": "rhetoric_heavy",
+    "paper_metadata": {
+      "Rating_gt": 4.75,
+      "Decision_gt": "Reject",
+      "Rating_pred": 6.0,
+      "Decision_pred": "Accept",
+      "hardness": 0.3950632489
+    },
+    "review": {
+      "summary": "The paper introduces ISED (Infer-Sample-Estimate-Descend), a novel neurosymbolic learning framework designed to work with arbitrary black-box programs (e.g., written in Python) rather than requiring differentiable logic programs. The key idea is to use sampling and probability estimation to approximate gradients for training neural models under algorithmic supervision, where only the final output of the program is observed. The authors evaluate ISED on a diverse suite of 30 benchmark tasks, reporting 30% higher accuracy than end-to-end neural baselines and competitive or superior performance compared to the differentiable neurosymbolic framework Scallop on tasks where both are applicable. The work claims to significantly expand the practical applicability of neurosymbolic learning.",
+      "strengths": [
+        "Addresses a clear and important limitation of existing neurosymbolic frameworks: the requirement for programs to be differentiable and written in specialized languages.",
+        "Proposes a novel and intuitive sampling-based approach (ISED) that is compatible with general-purpose programming languages like Python, potentially lowering the barrier to entry.",
+        "Provides a comprehensive benchmark suite of 30 tasks covering diverse data types, reasoning patterns, and real-world applications, which is a valuable contribution to the community.",
+        "Demonstrates strong empirical results, showing improved accuracy over neural baselines and competitive performance against specialized neurosymbolic methods on several tasks.",
+        "The structural mapping interface and algorithm description are detailed, providing a clear conceptual framework for how neural predictions interface with black-box programs."
+      ],
+      "weaknesses": [
+        "The theoretical grounding for the gradient approximation via sampling is not deeply explored. It is unclear under what conditions the ISED update provides a valid gradient estimate or converges.",
+        "The comparison to Scallop is somewhat asymmetric: Scallop is restricted to tasks expressible in Datalog, while ISED handles a broader class. The claim that ISED outperforms Scallop on tasks 'that can be specified' is presented but the selection and fairness of this subset are not thoroughly justified.",
+        "The computational cost of the sampling approach (with k=100 samples per training example) is significant but not analyzed in depth. Scalability to larger programs or more complex input spaces is a concern.",
+        "The paper does not discuss the sensitivity of ISED to the choice of sampling strategy (S), aggregation functions (⊗, ⊕), or the number of samples k. These are critical hyperparameters.",
+        "While interpretability is claimed as a benefit (RQ2), the evaluation is limited to a qualitative inspection of 44 patches on one task. A more rigorous quantitative or human-study-based assessment of interpretability is lacking.",
+        "The related work section could better position ISED against other gradient-free optimization or reinforcement learning techniques that also handle non-differentiable objectives (e.g., REINFORCE, evolutionary strategies)."
+      ],
+      "suggestions": [
+        "Provide a more formal analysis or intuition for why the ISED update rule provides a sensible gradient direction. Connect it to existing concepts like score function estimators or REINFORCE if applicable.",
+        "Include a runtime or efficiency comparison between ISED and differentiable neurosymbolic baselines (like Scallop) on the tasks where both are applicable, highlighting the trade-off between generality and computational cost.",
+        "Conduct an ablation study or sensitivity analysis on key algorithm parameters: the sampling strategy S, the sample count k, and the choice of aggregation operators (min/max vs. product/sum).",
+        "Strengthen the interpretability claim (RQ2) with a more systematic evaluation, perhaps by measuring the accuracy of intermediate symbolic predictions (e.g., digit recognition in HWF) or via a user study.",
+        "Clarify the limitations of the approach: for instance, what types of black-box programs (e.g., those with very discrete or sparse outputs) might be particularly challenging for ISED's sampling-based estimation?",
+        "Discuss potential extensions or variants, such as adaptive sampling strategies or hybrid approaches that combine ISED with differentiable components where available."
+      ],
+      "questions": [
+        "Could you elaborate on the theoretical justification for the ISED update? Under what assumptions does the estimated gradient ∂l/∂θ_i correlate with the true gradient of the expected loss?",
+        "How was the sample count k=100 chosen for all tasks? Did you perform any hyperparameter tuning for k, and how does performance scale with k (especially for tasks with large output spaces)?",
+        "For the aggregation operators (⊗ and ⊕), you mention two pairs: (min, max) and (product, sum). What is the rationale behind these choices, and how do they affect training dynamics and final performance?",
+        "In the comparison with Scallop, you state ISED achieves higher average accuracy on tasks that Scallop can handle. Were the neural architectures and training budgets (epochs, etc.) kept identical for a fair comparison?",
+        "The benchmark includes programs from Leetcode. Are these programs deterministic? How does ISED handle non-deterministic or stochastic black-box programs?",
+        "The structural mapping includes FLOAT outputs, which require discretization for vectorization. How is the discretization bin size chosen, and how sensitive are the results to this choice?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The core algorithm is clearly described and the experimental evaluation is extensive across 30 tasks. The method appears technically sound in its implementation. However, the paper lacks a rigorous theoretical foundation for the gradient approximation scheme. The empirical comparisons, while broad, have some asymmetries (e.g., comparing to Scallop only on a subset of tasks). The claims are generally supported by the results, but the justification for why the sampling-based update works well is more empirical than theoretical."
+      },
+      "contribution": {
+        "score": 5,
+        "justification": "The contribution is highly significant. The paper identifies a major practical limitation in current neurosymbolic learning (dependency on differentiable logic) and proposes a novel, general framework to overcome it. The ability to use black-box programs written in standard languages like Python greatly expands the potential applicability of neurosymbolic methods. The creation of a diverse 30-task benchmark suite is also a substantial contribution to the field, enabling more robust evaluation of future work."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is generally well-structured and clearly written. The problem statement, motivating examples, and algorithm description are understandable. The figures and tables help illustrate the concepts. However, some details remain unclear: the exact sampling strategy 'S' is not specified, the pseudocode (Algorithm 1) references an undefined 'accumulate' function, and the relationship between the described ω function and the pseudocode could be tighter. The core idea is reproducible conceptually, but some implementation specifics would require careful reading of the (presumed) code."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "This is a strong paper with a novel and impactful contribution. It addresses a clear gap in neurosymbolic learning and proposes a practical, sampling-based solution that works with black-box programs. The empirical evaluation is extensive and demonstrates compelling advantages over neural baselines and competitive performance against specialized frameworks. The main weaknesses are the lack of theoretical analysis for the gradient approximation and some missing details in the experimental comparison and parameter sensitivity. These issues prevent it from being exceptional (9-10), but it is a solid and publishable contribution that advances the field. The score of 7 reflects a clear accept with minor revisions needed to address the noted weaknesses."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:134::rhetoric_heavy",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:134",
+    "paper_position": 1,
+    "title": "Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs",
+    "variant_name": "rhetoric_heavier",
+    "paper_metadata": {
+      "Rating_gt": 4.75,
+      "Decision_gt": "Reject",
+      "Rating_pred": 6.0,
+      "Decision_pred": "Accept",
+      "hardness": 0.3950632489
+    },
+    "review": {
+      "summary": "This paper introduces ISED (Infer-Sample-Estimate-Descend), a novel neurosymbolic learning algorithm that enables training neural models with arbitrary black-box programs, eliminating the requirement for programs to be written in differentiable logic languages. The key insight is to use forward execution and intelligent sampling to approximate gradients through non-differentiable programs. The authors evaluate ISED on a comprehensive benchmark of 30 tasks, including synthetic tasks (MNIST-R, SVHN-R, NS-Leetcode), established neurosymbolic tasks (hand-written formula evaluation, sorting), and a real-world application (coffee leaf disease severity classification). They claim ISED achieves 30% higher accuracy than end-to-end neural baselines and outperforms the state-of-the-art neurosymbolic framework Scallop on tasks where both are applicable, while also enabling the use of programs that cannot be expressed in Scallop's differentiable logic language.",
+      "strengths": [
+        "Addresses a significant and practical limitation in neurosymbolic learning: the requirement for programs to be differentiable or written in specific logic languages.",
+        "Proposes a conceptually simple and general solution based on sampling and probability estimation that can interface with arbitrary black-box programs (e.g., Python functions).",
+        "Introduces a comprehensive and diverse benchmark suite (30 tasks) spanning synthetic, established, and real-world problems, which is a valuable contribution to the community.",
+        "Demonstrates strong empirical results, showing ISED outperforms neural baselines and is competitive with or superior to specialized neurosymbolic frameworks on many tasks.",
+        "The method provides improved interpretability by design, as demonstrated in the coffee leaf disease case study, where intermediate semantic concepts (rust patches) are explicitly learned."
+      ],
+      "weaknesses": [
+        "The theoretical grounding and convergence guarantees of the sampling-based gradient estimation are not deeply explored. The paper relies on empirical success but lacks a formal analysis of when and why the ISED procedure works.",
+        "The computational cost of the sampling step (k=100 samples per training example) is significant but not thoroughly analyzed. Scalability to programs with very large input spaces or expensive executions is a concern.",
+        "The comparison to Scallop is somewhat asymmetric. The paper notes that 61% of benchmark programs cannot be specified in Scallop, which highlights ISED's generality but makes a direct accuracy comparison on a limited, potentially biased subset.",
+        "The description of the \"Estimate\" step and the choice of aggregation operators (min/max vs. product/sum) is somewhat technical and could be better motivated. The impact of this choice on learning dynamics is not analyzed.",
+        "While the benchmark is extensive, the paper does not include an ablation study to isolate the contribution of different components of ISED (e.g., sampling strategy, aggregation function) or to analyze failure modes."
+      ],
+      "suggestions": [
+        "Provide a more formal analysis or intuition for why the ISED gradient estimation procedure is expected to work, perhaps connecting it to score function estimators or REINFORCE.",
+        "Include an analysis of computational cost (time/memory) versus sample count k, and discuss potential strategies for adaptive sampling or reducing k for efficiency.",
+        "Conduct a more detailed ablation study to understand the sensitivity of ISED to hyperparameters like sampling strategy, sample count, and choice of aggregation operators.",
+        "Discuss the limitations of the method more explicitly: e.g., programs with extremely sparse or discontinuous output spaces, programs where small input changes cause large output changes.",
+        "Consider adding a baseline that uses a simple REINFORCE-style estimator through the black-box program to better contextualize ISED's novelty and performance."
+      ],
+      "questions": [
+        "Could you clarify the theoretical justification for the gradient estimation in the \"Estimate\" step? How does the aggregation and normalization procedure relate to established gradient estimation techniques?",
+        "For the FLOAT output type, the vectorizer discretizes based on the sampled outputs. How sensitive is the method to the sampling resolution for continuous outputs? Could this lead to bias if the sampled outputs do not adequately cover the output space?",
+        "The paper states ISED requires the aggregation operator ⊗ and accumulation operator ⊕ to be either (min, max) or (product, sum). What is the rationale behind these specific pairs? Have you experimented with other operators?",
+        "In the coffee leaf disease task, the Segment Anything Model (SAM) is kept fixed. Was the entire pipeline (SAM + CNN classifier) ever trained end-to-end with ISED? If not, what are the challenges?",
+        "The benchmark includes programs from Leetcode. Are there any characteristics of these programs (e.g., algorithmic complexity, input/output structure) that made them particularly easy or hard for ISED to learn from?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The method is empirically sound and evaluated on a large, diverse benchmark. The core algorithm is clearly described. However, the theoretical soundness of the gradient estimation procedure is not deeply justified. The paper lacks a formal analysis of convergence, bias, or variance of the estimator. The empirical comparisons are strong but could be more rigorous (e.g., statistical significance tests, ablation studies)."
+      },
+      "contribution": {
+        "score": 5,
+        "justification": "The contribution is highly significant. The paper identifies a major practical bottleneck in neurosymbolic learning (differentiability requirement) and proposes a general, practical solution that greatly expands the class of usable programs. The introduction of a comprehensive benchmark suite is itself a substantial contribution to the field. The work has the potential to increase the adoption of neurosymbolic methods by making them accessible to programmers using standard languages like Python."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is generally well-structured and readable. The problem motivation, method overview, and examples are clear. The technical sections (3.1, 3.2) are dense and could benefit from more intuitive explanations alongside the formal definitions. The figures and tables are helpful. Some details, like the exact gradient computation in the Estimate step, could be elaborated for better reproducibility."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "This is a strong paper with a clear, important contribution. It addresses a significant limitation in neurosymbolic learning and proposes a novel, general, and empirically effective solution. The benchmark suite is a valuable asset. The main weaknesses are the lack of theoretical analysis for the gradient estimation method and a somewhat superficial treatment of computational cost and limitations. These issues prevent it from being exceptional, but it is a solid and publishable contribution that advances the field."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:134::rhetoric_heavier",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:585",
+    "paper_position": 2,
+    "title": "Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection",
+    "variant_name": "main",
+    "paper_metadata": {
+      "Rating_gt": 4.25,
+      "Decision_gt": "Reject",
+      "Rating_pred": 6.0,
+      "Decision_pred": "Accept",
+      "hardness": 0.5162160292
+    },
+    "review": {
+      "summary": "The paper addresses the problem of selecting which examples to annotate for in-context learning (ICL) under a limited annotation budget. The proposed method, AdaICL, combines uncertainty sampling (identifying examples the model is uncertain about) with diversity-based sampling (selecting representative examples from diverse semantic regions of hard examples). This is framed as a Maximum Coverage Problem (MCP) and solved approximately with a greedy algorithm. Key claimed results include: AdaICL outperforms state-of-the-art baselines by an average of 4.4% accuracy points (7.7% relative improvement), achieves up to 3x budget efficiency over random annotation, and requires 2x fewer ICL examples than SOTA to match performance. It also improves model calibration.",
+      "strengths": [
+        "Addresses a practical and important problem: cost-effective annotation for ICL in low-resource settings.",
+        "Proposes a novel combination of uncertainty and diversity sampling, motivated by kernel regression interpretation of ICL.",
+        "Extensive empirical evaluation across 9 datasets, 5 NLP tasks, and 7 LLMs (1.3B to 65B parameters).",
+        "Demonstrates strong performance gains over SOTA baselines, with clear improvements in budget efficiency and inference cost reduction.",
+        "Includes analysis of calibration, showing AdaICL leads to better-calibrated predictions.",
+        "Well-structured paper with clear problem formulation, method description, and experimental design."
+      ],
+      "weaknesses": [
+        "The theoretical connection to kernel regression (Eq. 1) is used for motivation but not deeply integrated into the algorithm design or analysis. The method relies on heuristics (e.g., θ=0.5, set construction) without strong theoretical justification.",
+        "Several hyperparameters are introduced (θ, m, T, hop count) without extensive ablation studies or clear guidance on how to set them for new tasks/models. The heuristic for m is mentioned but not detailed in the main text.",
+        "The comparison to 'SOTA' is limited to Vote-k and Fast-vote-k. Other recent active learning for ICL methods (e.g., Diao et al. 2023, Pitis et al. 2023, Margatina et al. 2023) are cited but not empirically compared in the main experiments.",
+        "The method requires an initial small annotated pool L_0 (or zero-shot). The sensitivity of performance to the size/quality of L_0 is not explored.",
+        "Computational cost of the iterative process (re-evaluating model predictions, constructing graphs, solving MCP) is not discussed, which could be non-trivial for large pools.",
+        "For generation tasks (summarization, math reasoning), results are shown for only two large models (Falcon-40B, LLaMa-65B). It's unclear if the method generalizes as well to generation as to classification."
+      ],
+      "suggestions": [
+        "Provide a more thorough ablation study on the hyperparameters (θ, m, hop count, T) to show their impact and provide practical tuning guidelines.",
+        "Include comparisons to more recent active learning for ICL baselines (e.g., Margatina et al. 2023, Diao et al. 2023) to strengthen the SOTA claim.",
+        "Analyze the sensitivity of the method to the size and quality of the initial annotated pool L_0. What happens if L_0 is empty (zero-shot start) vs. small but biased?",
+        "Discuss the computational complexity and runtime of AdaICL compared to baselines, especially for large unlabeled pools and LLM inference costs.",
+        "Clarify the heuristic rule for determining m (mentioned in Sec. 4.2) in the main text or provide a reference to the appendix where it is detailed.",
+        "Consider providing an intuitive explanation or visualization of how the MCP formulation leads to selecting 'representative examples of dense hard regions'."
+      ],
+      "questions": [
+        "How is the similarity space S (e.g., SBERT embeddings) chosen? Did you experiment with using the LLM's own embeddings for retrieval, and if so, how did it compare?",
+        "In the MCP formulation, selecting set S_i corresponds to selecting example x_i. Does this mean the 'representative example' is always the central node of the egonet? Could this bias selection towards certain points?",
+        "For generation tasks, how is uncertainty quantified (averaging log-probs of generated tokens)? How does this compare to more sophisticated measures like entropy over a candidate set?",
+        "The budget B is for annotation, but the retriever uses k examples. How is the pool L (size B) used during inference? Are all B examples available to the retriever for each test query?",
+        "In the iterative process, when the model's feedback is re-evaluated, are the newly annotated examples added to L_0 for subsequent uncertainty estimation? Could this introduce bias?",
+        "What is the computational overhead of AdaICL (graph construction, MCP solving) relative to the cost of LLM inference for uncertainty estimation?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The method is technically sound and well-motivated. The experiments are extensive and support the main claims. However, some aspects lack rigorous justification: the hyperparameter choices are heuristic, the connection to kernel regression is more motivational than foundational, and the comparison to the full landscape of recent SOTA is incomplete. The core algorithm (greedy MCP) is a standard approximation with known guarantees."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The work makes a meaningful contribution by framing example selection for ICL as a budgeted active learning problem and proposing a novel combination of uncertainty and diversity sampling. The empirical gains are substantial and demonstrated across many models and tasks. The focus on low-resource settings and inference cost reduction is practically valuable. However, the core ideas (uncertainty + diversity) are not entirely new in active learning, though their adaptation to the ICL setting is novel and well-executed."
+      },
+      "presentation": {
+        "score": 5,
+        "justification": "The paper is very well-written, clear, and well-structured. The problem setting, method, and experiments are explained thoroughly. Figures and tables are informative. The reproducibility statement is a plus. The method is described with sufficient detail for conceptual reproduction."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "This is a strong paper with a clear contribution, solid empirical results, and good presentation. It addresses an important practical problem and shows significant improvements over existing methods. The main weaknesses are the heuristic nature of some design choices and the lack of comparison to some recent relevant work. These do not undermine the core contribution but suggest room for improvement. The paper is publishable as is, but would benefit from addressing the weaknesses in a revision."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:585::main",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:585",
+    "paper_position": 2,
+    "title": "Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection",
+    "variant_name": "plain_core",
+    "paper_metadata": {
+      "Rating_gt": 4.25,
+      "Decision_gt": "Reject",
+      "Rating_pred": 6.0,
+      "Decision_pred": "Accept",
+      "hardness": 0.5162160292
+    },
+    "review": {
+      "summary": "This paper addresses the problem of selecting which examples to annotate for in-context learning (ICL) under a limited annotation budget. The proposed method, AdaICL, combines uncertainty sampling (identifying examples the LLM is uncertain about) with diversity-based sampling (selecting representative examples from semantically diverse hard regions). The selection is formulated as a Maximum Coverage Problem (MCP) and solved approximately with a greedy algorithm. Key claimed results include: (1) AdaICL improves average accuracy by 4.4% points over the state-of-the-art, (2) it is up to 3x more budget-efficient than random annotation, and (3) it outperforms the state-of-the-art using 2x fewer ICL examples, while also improving model calibration.",
+      "strengths": [
+        "The paper tackles a practical and important problem: reducing annotation cost for ICL while maintaining or improving performance.",
+        "The proposed AdaICL method is well-motivated by combining two intuitive principles: uncertainty (for efficiency and learning new information) and diversity (for effectiveness).",
+        "Extensive experimental evaluation across nine datasets, five NLP tasks, and seven LLMs of varying sizes provides strong empirical support.",
+        "The formulation as a Maximum Coverage Problem (MCP) provides a clear theoretical grounding for the diversity selection component.",
+        "The paper includes analysis of calibration, showing AdaICL leads to better-calibrated predictions compared to selecting easy examples.",
+        "The method is optimization-free and model-adaptive, making it applicable to black-box LLMs without requiring gradient access."
+      ],
+      "weaknesses": [
+        "The paper lacks a clear theoretical analysis connecting the MCP formulation to the kernel regression view of ICL mentioned in Section 3. The intuition is provided, but a formal link is missing.",
+        "The definition and identification of 'hard examples' rely solely on the LLM's confidence scores. This assumes the model's confidence is a reliable proxy for uncertainty and informativeness, which may not always hold, especially for smaller or miscalibrated models.",
+        "The heuristic for setting the hyperparameter 'm' (for graph construction) and the number of iterations 'T' (for AdaICLp) is not deeply justified. Sensitivity analysis for these parameters is limited.",
+        "While compared to several baselines, the paper does not include a comparison to more traditional active learning strategies adapted for the ICL setting (e.g., query-by-committee with multiple LLM samples, or BALD-like acquisition functions approximated via sampling).",
+        "The computational cost of the method is not thoroughly analyzed. Constructing the m-nearest neighbor graph over the unlabeled pool and running the greedy algorithm iteratively could be non-trivial for very large pools.",
+        "The transductive evaluation setting (testing on the unlabeled pool U) is less standard than a fully inductive hold-out test. While both are presented, the practical implications of the transductive results are less clear."
+      ],
+      "suggestions": [
+        "Provide a more formal theoretical motivation linking the MCP objective (covering hard examples in semantic space) to the expected improvement in the kernel regression-based ICL prediction error.",
+        "Include an ablation study or analysis to disentangle the contribution of the uncertainty component vs. the diversity component in AdaICL's performance.",
+        "Conduct a more comprehensive sensitivity analysis on key hyperparameters: the hard example threshold θ, the graph parameter m, and the iteration count T for AdaICLp.",
+        "Compare against a broader set of active learning baselines, particularly those that estimate uncertainty via multiple samples (e.g., using temperature scaling or multiple generations) to see if more sophisticated uncertainty estimation helps.",
+        "Discuss the computational complexity of AdaICL more explicitly, including the cost of building the similarity graph and running the greedy algorithm, especially as the unlabeled pool size N grows.",
+        "Clarify the practical scenario for the transductive experiments. If the test set is part of the unlabeled pool U, how does the k-NN retriever work at test time? Are the test examples removed from U before selection?"
+      ],
+      "questions": [
+        "In Section 4.2, you construct the region S_i as the 1-hop egonet of a hard node v, considering only edges from other hard nodes v' pointing to v. What is the intuition behind this directed edge construction, and how does it differ from using a simple undirected k-NN graph?",
+        "For generation tasks (like XSUM, GSM8K), you use average log-probability of generated tokens as the confidence score u_i. Did you find this to be a reliable uncertainty measure compared to more complex metrics like entropy over multiple samples?",
+        "The heuristic for setting 'm' is based on 'desired maximum iterations until budget exhaustion and minimum number of hard examples to be covered per iteration.' Could you provide the exact formula or a more detailed explanation of this heuristic?",
+        "In the iterative version of AdaICL/AdaICLp, after annotating a batch, you re-evaluate model predictions on the entire U. Does this assume the LLM's predictions on the *unlabeled* examples change significantly after seeing the newly annotated examples in-context? Could this lead to a feedback loop where the same examples are repeatedly identified as hard?",
+        "You show AdaICL improves calibration. Is this improvement primarily because you select uncertain (lower confidence) examples, which naturally leads to a more uniform predicted distribution, or does the diversity component also play a role in calibration?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The core method is logically sound and well-motivated. The experimental design is rigorous, with extensive evaluations across models and datasets. The claims are generally supported by the results. However, some aspects weaken technical soundness: (1) The connection between the MCP formulation and the kernel regression view of ICL is intuitive but not formally established. (2) The reliance on single-model confidence scores for uncertainty estimation is a potential weakness, though commonly used. (3) Some algorithmic details (e.g., the heuristic for 'm') are not fully justified."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The contribution is meaningful and timely. The paper clearly identifies a gap in active learning for ICL, where most prior work assumes a large pre-annotated set. Proposing a combined diversity-uncertainty strategy tailored for the retrieval-based ICL setting is novel. The formulation as an MCP problem and the iterative, model-adaptive algorithm are concrete contributions. The empirical demonstration of significant performance gains and budget efficiency across many models and tasks is substantial."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is generally well-structured and clear. The problem statement, method, and experiments are explained in a logical flow. The figures and tables effectively support the findings. However, some sections could be clearer: Section 4.2 (set construction for MCP) is somewhat dense and could benefit from a more intuitive walk-through or a simple illustrative example. The distinction between AdaICL, AdaICLb, and AdaICLp is clear, but the rationale for the progression could be slightly more emphasized."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "This is a strong paper with a clear, practical contribution. The method is novel, well-motivated, and extensively validated. The weaknesses are not fatal but represent opportunities for improvement: a stronger theoretical link, more comprehensive baselines, and deeper analysis of certain design choices. The work is technically sound, presents significant empirical results, and is clearly relevant to the ICL and active learning communities. It meets the criteria for a solid accept."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:585::plain_core",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:585",
+    "paper_position": 2,
+    "title": "Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection",
+    "variant_name": "rhetoric_heavy",
+    "paper_metadata": {
+      "Rating_gt": 4.25,
+      "Decision_gt": "Reject",
+      "Rating_pred": 6.0,
+      "Decision_pred": "Accept",
+      "hardness": 0.5162160292
+    },
+    "review": {
+      "summary": "This paper addresses the problem of selecting which examples to annotate for in-context learning (ICL) under a limited annotation budget. The proposed method, AdaICL, is a model-adaptive, optimization-free algorithm that combines uncertainty sampling (identifying examples the LLM is uncertain about) with semantic diversity-based selection. It formulates the selection as a Maximum Coverage Problem (MCP) to choose representative examples from diverse 'hard' regions, which is solved approximately with a greedy algorithm. Key claimed results include: (i) an average performance improvement of 4.4% accuracy points over SOTA baselines, (ii) up to 3x more budget-efficient than random annotation, (iii) outperforming SOTA with 2x fewer ICL examples, and (iv) improved model calibration.",
+      "strengths": [
+        "The paper tackles a highly practical and timely problem: reducing annotation and inference costs for ICL with LLMs, which is crucial for real-world deployment.",
+        "The proposed AdaICL method is well-motivated by combining two intuitive and complementary principles: uncertainty sampling (for efficiency and learning new information) and diversity sampling (for effectiveness).",
+        "The experimental evaluation is extensive, covering nine datasets, five NLP tasks, and seven LLMs of varying sizes, which strongly supports the robustness and generalizability of the findings.",
+        "The paper provides a thorough analysis, including ablation studies (AdaICLb, AdaICLp), investigation of retriever and LLM effects, and a novel analysis of model calibration, which adds depth to the results.",
+        "The connection to the theoretical view of ICL as kernel regression (Equation 1) provides a solid foundation for the method's motivation regarding the role of the retriever and hard examples."
+      ],
+      "weaknesses": [
+        "The paper lacks a clear theoretical or empirical justification for the default hyperparameter choices (e.g., θ=0.5, m=5 for AdaICL, T=2 for AdaICLp). Their sensitivity and impact on performance are not systematically analyzed.",
+        "The description of the set construction for the MCP (especially the heuristic for determining 'm' and the details of 1-hop vs. 2-hop egonets) is somewhat vague and relegated to appendices, making the method difficult to reproduce conceptually.",
+        "While compared against several baselines, the paper does not include comparisons to more recent or sophisticated active learning strategies that might be adapted for the ICL setting, potentially leaving the SOTA claim unchallenged.",
+        "The calibration analysis, while interesting, is presented mostly for a variant (AdaICL-easy) and specific snapshots. A more comprehensive quantitative comparison of ECE across all methods and datasets would strengthen this claim.",
+        "The computational cost of the iterative process (re-evaluating model predictions on the pool after each batch) is not discussed, which could be a practical limitation for very large pools or expensive LLM API calls."
+      ],
+      "suggestions": [
+        "Include a hyperparameter sensitivity analysis (e.g., for θ, m, T) in the main paper or a dedicated appendix to demonstrate the robustness of the method and provide guidance for practitioners.",
+        "Clarify the set construction process and the heuristic for 'm' in the main text. A small illustrative example or a more formal algorithmic description would improve clarity.",
+        "Expand the related work to discuss and differentiate from other potential active learning paradigms for LLMs (e.g., based on gradients, embeddings, or acquisition functions) to better position the novelty.",
+        "Strengthen the calibration analysis by reporting average ECE scores for all main methods (Random, Vote-k, AdaICL) across multiple datasets, not just comparisons between AdaICL-hard and AdaICL-easy.",
+        "Discuss the computational overhead of AdaICL's iterative feedback loop (LLM inference on the pool) and potential strategies to mitigate it, such as using smaller proxy models or caching strategies."
+      ],
+      "questions": [
+        "In Algorithm 1, the greedy MCP solver is terminated when every hard example is covered, potentially before the budget B is exhausted. How are the remaining annotation queries allocated if this happens? Is the process simply restarted with a new U_h?",
+        "For generation tasks (XSUM, GSM8K), how exactly is the uncertainty score u_i computed? The paper mentions averaging log-probabilities of generated tokens, but what is the prompt used for this generation, and how does it handle variable-length outputs?",
+        "The heuristic for determining 'm' for graph construction is mentioned but not detailed due to space. Could you provide the rule or formula? How does it depend on T_hat and N_{θ_hat}?",
+        "In the transductive setting (test instances from U), how is the evaluation performed to avoid data leakage? Are the selected examples for annotation held out from the test evaluation for those specific instances?",
+        "The paper shows AdaICL needs 2x fewer ICL examples than SOTA. Was this achieved by running Vote-k with k/2 examples, or by a different experimental protocol? Please clarify the exact comparison setup for this claim."
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The core methodological idea is logically sound and well-motivated by the ICL-as-kernel-regression perspective. The combination of uncertainty and diversity is principled. The experimental design is rigorous, with extensive evaluations across models and tasks. However, some technical details are under-specified (hyperparameter choices, set construction heuristics), and the lack of a thorough sensitivity analysis slightly weakens the full support for the claimed robustness."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The work makes a clear and meaningful contribution by formalizing and addressing the budgeted annotation problem for ICL, an area with limited prior work. The proposed AdaICL method is novel in its adaptive, optimization-free formulation of diversity-based uncertainty sampling as an MCP. The demonstrated gains in performance, budget efficiency, and calibration are significant and have direct practical implications for cost-effective LLM deployment."
+      },
+      "presentation": {
+        "score": 3,
+        "justification": "The paper is generally well-structured and the core idea is understandable. However, the description of the algorithm's details, particularly the graph construction and MCP adaptation (Sections 3.2 & 3.3), becomes dense and relies on concepts explained in appendices. The hyperparameter settings and their justification are not clearly presented. Figures are referenced but not included in the provided text, hindering full assessment."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "This is a strong paper (Accept tier) that addresses an important practical problem with a novel and effective method. The experimental validation is extensive and convincing. The main weaknesses are related to presentation clarity regarding some algorithmic details and the lack of hyperparameter analysis, which are not fundamental flaws but areas for improvement. The contributions in performance, efficiency, and calibration analysis are substantial and merit publication."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:585::rhetoric_heavy",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:585",
+    "paper_position": 2,
+    "title": "Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection",
+    "variant_name": "rhetoric_heavier",
+    "paper_metadata": {
+      "Rating_gt": 4.25,
+      "Decision_gt": "Reject",
+      "Rating_pred": 6.0,
+      "Decision_pred": "Accept",
+      "hardness": 0.5162160292
+    },
+    "review": {
+      "summary": "This paper addresses the problem of selecting which examples to annotate for in-context learning (ICL) under a limited annotation budget. The proposed method, AdaICL, combines uncertainty sampling (identifying examples the LLM is uncertain about) with diversity-based sampling (selecting representative examples from semantically diverse hard regions). The algorithm formulates selection as a Maximum Coverage Problem (MCP) and solves it greedily. Key claimed results include: (1) 4.4% average accuracy improvement over SOTA baselines, (2) up to 3× budget efficiency over random annotation, (3) matching/exceeding SOTA performance with 2× fewer ICL examples, and (4) improved calibration of LLM predictions.",
+      "strengths": [
+        "Addresses a practical and important problem: cost-effective annotation for ICL in low-resource settings.",
+        "Proposes a novel combination of uncertainty and diversity sampling tailored for black-box LLMs.",
+        "Extensive evaluation across 9 datasets, 5 NLP tasks, and 7 LLMs of varying sizes (1.3B to 65B parameters).",
+        "Provides strong empirical results showing consistent improvements in accuracy, budget efficiency, and calibration.",
+        "The connection to Maximum Coverage Problem provides a clear theoretical framing for the diversity objective.",
+        "Includes ablation studies (AdaICL-base, AdaICL-plus) and analysis of calibration impact."
+      ],
+      "weaknesses": [
+        "The paper lacks a clear theoretical justification for why the MCP formulation is optimal for the ICL objective. The connection between covering hard examples in embedding space and improving downstream task accuracy is intuitive but not rigorously derived.",
+        "The definition of 'hard examples' relies on model confidence scores, which may be unreliable for generation tasks. The method for computing confidence for generation (averaging token log-probs) is not well-motivated or evaluated.",
+        "The hyperparameter θ (fraction of examples considered hard) is set to 0.5 by default without ablation or sensitivity analysis. This choice significantly impacts the algorithm but is not justified.",
+        "Comparison to some relevant baselines is missing: e.g., other active learning methods adapted for ICL beyond Vote-k, or methods that use gradient-based uncertainty estimates (even if approximated).",
+        "The computational cost of constructing m-NN graphs and solving MCP repeatedly (especially for AdaICL-plus with iterations) is not discussed, nor is its scalability to very large unlabeled pools.",
+        "The improvement over Vote-k (the main SOTA baseline) is sometimes modest (e.g., 1.9% for GPT-J), and the paper does not deeply analyze when/why AdaICL provides larger gains."
+      ],
+      "suggestions": [
+        "Provide a more formal analysis linking the MCP objective to expected reduction in ICL prediction error, perhaps using the kernel regression view mentioned in the problem statement.",
+        "Include a sensitivity analysis for key hyperparameters: θ (hard example threshold), m (for m-NN graph), and T (iterations for AdaICL-plus). Show how performance varies with these choices.",
+        "Compare to additional baselines, such as Bayesian active learning by disagreement (BALD) adapted for LLMs (e.g., using multiple stochastic forward passes or prompts), or other diversity methods like core-set selection.",
+        "Discuss the computational complexity of AdaICL steps (graph construction, greedy MCP) and how it scales with pool size N and budget B. Provide runtime comparisons with baselines.",
+        "Clarify the handling of generation tasks: justify the confidence scoring method and show its correlation with actual uncertainty/error on generation metrics.",
+        "Include a case study or qualitative analysis showing examples selected by AdaICL vs. baselines, to illustrate what 'hard and diverse' examples look like in practice."
+      ],
+      "questions": [
+        "How is the semantic similarity space S defined? The paper mentions SBERT embeddings, but were other embeddings (e.g., from the LLM itself) explored? How sensitive are results to the choice of embedding model?",
+        "For AdaICL-plus, you mention replicating U_h with different weight schedules to maintain submodularity. Can you elaborate on this trick and provide a proof or intuition for why it works?",
+        "The initial annotated pool L_0 is assumed to be small but non-empty. How does the performance of AdaICL depend on the size and quality of L_0? What if L_0 is empty (true cold start)?",
+        "In the MCP formulation, each hard example's region is its egonet in the m-NN graph. Why is this a good proxy for the set of examples that selecting x_i will 'inform'? Is there an alternative region definition that could be more aligned with the k-NN retriever used at inference?",
+        "You show AdaICL improves calibration. Is this primarily because it selects uncertain examples, or does the diversity component also play a role? Have you tested a variant that does diversity sampling over all examples (not just hard ones) to disentangle these effects?",
+        "The budget B is for annotation, but the inference uses k < B examples retrieved via k-NN. Does AdaICL optimize for the ultimate k-shot performance, or does it simply try to cover many hard examples? Could there be a mismatch?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The method is technically sound and well-motivated. The combination of uncertainty and diversity is principled, and the MCP formulation is a reasonable approach to diversity. The experimental evaluation is thorough across many datasets and models. However, there are some gaps: the theoretical connection between MCP coverage and ICL performance is not fully established, the confidence estimation for generation tasks is ad-hoc, and hyperparameter choices lack justification."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The paper makes a meaningful contribution by framing active learning for ICL under a strict annotation budget, a practical scenario not well-studied. The proposed AdaICL method is novel in its adaptive combination of uncertainty and diversity, and the extensive empirical results demonstrate clear improvements over existing methods. The calibration analysis provides additional insight into why selecting hard examples helps. However, the core idea (combining uncertainty and diversity) is not entirely new in active learning, though its adaptation to black-box LLM ICL is innovative."
+      },
+      "presentation": {
+        "score": 5,
+        "justification": "The paper is well-structured, clearly written, and easy to follow. The problem statement, method, and experiments are explained in detail. Figures and tables are informative. The algorithm description is clear enough for conceptual reproduction. The related work section adequately covers ICL and active learning. The reproducibility statement is a plus."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "This is a strong paper that addresses an important practical problem with a novel method and thorough evaluation. The empirical results are convincing, showing consistent improvements in accuracy, efficiency, and calibration. The main weaknesses are the lack of theoretical grounding for the MCP objective, insufficient justification for hyperparameters, and missing comparisons to some relevant baselines. These issues prevent it from being exceptional, but it is a solid contribution that merits acceptance."
+      },
+      "confidence": 5
+    },
+    "review_generation": {
+      "review_key": "index:585::rhetoric_heavier",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:455",
+    "paper_position": 3,
+    "title": "Behind the Myth of Exploration in Policy Gradients",
+    "variant_name": "main",
+    "paper_metadata": {
+      "Rating_gt": 5.33,
+      "Decision_gt": "Reject",
+      "Rating_pred": 3.5,
+      "Decision_pred": "Reject",
+      "hardness": 0.271709617
+    },
+    "review": {
+      "summary": "This paper critically examines the role of exploration in policy-gradient (PG) algorithms. It argues that the common justification of exploration as a mechanism to gather diverse experience is incomplete. Instead, the authors propose a novel analysis that decomposes the effect of exploration-based reward shaping (e.g., entropy bonuses) into two distinct functions: 1) Smoothing the learning objective to eliminate local optima while preserving the global optimum (coherence and pseudoconcavity criteria). 2) Modifying the gradient estimates to increase the probability that a stochastic update step improves the policy (efficiency and attraction criteria). The paper introduces these four criteria and illustrates them with simple, didactic environments (a hill-car and a sparse-reward maze). The core claim is that exploration in PG should be understood as a tool for shaping the optimization landscape and the gradient estimator's distribution, rather than solely as a means to visit unseen states.",
+      "strengths": [
+        "The paper provides a clear, novel, and valuable reframing of exploration in policy gradients, moving beyond the standard 'visit all states' intuition.",
+        "The introduction of four formal criteria (coherence, pseudoconcavity, efficiency, attraction) provides a structured framework for analyzing exploration strategies.",
+        "The use of simple, illustrative environments (hill-car, maze) effectively visualizes the abstract concepts of objective smoothing and gradient distribution.",
+        "The discussion connects well to optimization theory (pseudoconcavity, stochastic ascent) and highlights a critical, often overlooked issue: gradient estimates can be zero with high probability in sparse-reward settings.",
+        "The work opens clear avenues for future research, such as deriving practical conditions or schedules for exploration weights based on the proposed criteria."
+      ],
+      "weaknesses": [
+        "The empirical validation is limited to simple, low-dimensional, synthetic environments with hand-crafted policies. The scalability and relevance to modern, high-dimensional deep RL settings are not demonstrated.",
+        "The analysis of gradient distribution (Section 4) relies on a strong simplifying assumption: that the rate of policy improvement is proportional to P(X>0), ignoring the magnitude of improvement. This limits the practical predictive power of the efficiency/attraction criteria.",
+        "The connection to existing, complex exploration strategies (e.g., curiosity-driven, count-based) is only briefly mentioned. The analysis focuses heavily on entropy-based bonuses, leaving the 'unified' claim somewhat underdeveloped.",
+        "The paper does not provide theoretical guarantees or bounds relating the exploration weight (λ) to the proposed criteria (e.g., how large must λ be to guarantee pseudoconcavity?). The trade-off between coherence and pseudoconcavity is shown empirically but not formally characterized.",
+        "The definition of 'locally optimal policies over a space with probability Δ' (Eq. 13) is introduced late and feels somewhat disconnected from the main flow of the analysis."
+      ],
+      "suggestions": [
+        "Strengthen the empirical section by applying the analysis to a standard deep RL benchmark (e.g., a MuJoCo task) with a neural network policy, even if just as a qualitative case study. This would bolster the claim of practical relevance.",
+        "Clarify the relationship between the proposed framework and the broader literature on exploration. A table or a more detailed subsection mapping common exploration methods (curiosity, counts, entropy) to the four criteria would be very helpful.",
+        "Provide a more rigorous discussion on the limitations of the P(X>0) metric for measuring optimization efficiency. Acknowledge that in practice, algorithms like Adam use momentum and adaptive step sizes, which complicate this simple probabilistic view.",
+        "Consider adding a small theoretical result, even if under restrictive assumptions (e.g., linear MDPs, tabular policies), that formally links the exploration weight λ to the pseudoconcavity of the objective or a lower bound on P(X>0).",
+        "Improve the flow by integrating the concept of 'local optimality over a space with probability Δ' earlier, perhaps in Section 4.1, to better motivate the need for modifying gradient distributions."
+      ],
+      "questions": [
+        "In the maze experiment (Fig. 3), the probability of improvement P(G>0) for the learning objective L^s(θ) dips significantly around θ=0.75. What causes this dip, and how does it relate to the attraction criterion? Does it imply that this exploration strategy might create new, temporary optimization hurdles?",
+        "The analysis assumes on-policy gradient estimates. How do the proposed criteria extend to off-policy policy gradient methods (e.g., DDPG, SAC) where the exploration strategy is often decoupled from the policy update via a separate behavior policy?",
+        "For the coherence criterion, you define ε-coherence relative to the optimal policy π*. In continuous or large state spaces, π* is often unknown. How would you propose to evaluate or ensure ε-coherence in practice without knowing π*?",
+        "You state that the intrinsic gradient estimate î is typically biased because it neglects the influence of the policy on the intrinsic reward. Can you provide a concrete example of an exploration bonus where this bias is significant and discuss its potential impact on the optimization?",
+        "The framework is presented as general for 'exploration-based reward shaping.' Does it also apply to exploration strategies that are not implemented as reward bonuses, such as parameter space noise or Bayesian optimization in policy search?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The core conceptual arguments are logically sound and well-grounded in optimization theory. The illustrative examples correctly demonstrate the phenomena described. However, the technical soundness is limited by the simplicity of the experiments and the lack of formal theoretical connections between the exploration parameters and the proposed criteria. The assumption that optimization rate is proportional to P(X>0) is a significant simplification that is not thoroughly justified."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The contribution is meaningful and novel. It provides a fresh, optimization-centric perspective on a fundamental concept in RL, challenging the prevailing intuition. The four-criteria framework is a useful conceptual tool for analyzing and designing exploration methods. However, the contribution is primarily conceptual and analytical; it lacks the empirical depth or theoretical breakthroughs that would make it a landmark paper."
+      },
+      "presentation": {
+        "score": 5,
+        "justification": "The paper is very clearly written and well-structured. The abstract and introduction effectively set up the problem. The background is sufficient. The use of simple, visual examples makes the abstract concepts of objective smoothing and gradient distribution highly understandable. The figures are clear and directly support the text. The overall narrative is coherent and easy to follow."
+      },
+      "overall_rating": {
+        "score": 6,
+        "justification": "This is a borderline paper. It presents a novel, insightful, and clearly communicated reframing of exploration in policy gradients, which constitutes a solid conceptual contribution. Its main weaknesses are the limited empirical scope (toy problems) and the lack of formal theoretical results linking exploration parameters to the proposed criteria. While the framework is promising and opens avenues for future work, the paper in its current form feels more like a strong research idea or a position paper than a complete, empirically validated research study suitable for a top-tier conference. It is technically reasonable but requires stronger validation to be considered a strong accept."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:455::main",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:455",
+    "paper_position": 3,
+    "title": "Behind the Myth of Exploration in Policy Gradients",
+    "variant_name": "plain_core",
+    "paper_metadata": {
+      "Rating_gt": 5.33,
+      "Decision_gt": "Reject",
+      "Rating_pred": 3.5,
+      "Decision_pred": "Reject",
+      "hardness": 0.271709617
+    },
+    "review": {
+      "summary": "This paper analyzes the role of exploration in policy-gradient algorithms, distinguishing two effects: (1) smoothing the learning objective to eliminate local optima while preserving the global optimum (coherence and pseudoconcavity), and (2) modifying gradient estimates to increase the probability that stochastic updates improve the return (efficiency and attraction). The authors introduce four criteria to formalize these effects and illustrate them with simple environments. The work aims to provide a unified framework for interpreting exploration strategies beyond folklore.",
+      "strengths": [
+        "Clear conceptual distinction between two distinct effects of exploration: objective smoothing and gradient distribution modification.",
+        "Introduction of four formal criteria (ε-coherence, pseudoconcavity, δ-efficiency, δ-attraction) provides a structured framework for analysis.",
+        "Simple illustrative examples (valley environment, sparse-reward maze) effectively demonstrate the concepts.",
+        "Connects practical exploration heuristics to optimization theory, moving beyond folklore explanations.",
+        "Discussion generalizes to other RL methods (value-based, off-policy) and links to concepts like overfitting/local optimality."
+      ],
+      "weaknesses": [
+        "The analysis is largely conceptual and qualitative; no theoretical guarantees or bounds are provided for the proposed criteria.",
+        "Empirical illustrations are minimal and limited to simple, low-dimensional environments. No validation on standard RL benchmarks.",
+        "The connection between the two effects (objective smoothing vs. gradient distribution) is not deeply analyzed; they are presented as separate phenomena.",
+        "The 'local optimality over a space with probability Δ' definition is introduced late and not fully integrated into the main framework.",
+        "Practical implications for designing or tuning exploration strategies are not concretely derived from the criteria.",
+        "The paper does not compare against or discuss how existing theoretical analyses of entropy regularization (e.g., Ahmed et al., 2019) relate to the proposed efficiency/attraction criteria."
+      ],
+      "suggestions": [
+        "Provide a more rigorous theoretical analysis: under what conditions do common exploration bonuses (entropy) guarantee ε-coherence or pseudoconcavity?",
+        "Extend empirical validation beyond simple illustrative examples. Test the framework on standard continuous control benchmarks (e.g., MuJoCo) to show how the criteria correlate with practical performance.",
+        "Explore the trade-off between the two effects more deeply. For instance, does maximizing pseudoconcavity (large λ) hurt δ-efficiency?",
+        "Clarify the relationship between the proposed criteria and existing convergence analyses of policy gradient methods (e.g., with compatible function approximation).",
+        "Discuss how the framework could guide the design of adaptive exploration schedules (e.g., annealing λ based on estimated δ-efficiency).",
+        "Include a more thorough related work section contrasting the proposed unified view with prior specific interpretations (e.g., robust optimization, two-player games)."
+      ],
+      "questions": [
+        "How would you empirically estimate δ-efficiency or δ-attraction in a complex environment where ∇L(θ) is not known?",
+        "The paper states that intrinsic reward gradients î are 'often biased, neglecting some partial derivatives.' Can you clarify which partial derivatives are neglected and under what conditions this bias affects the attraction criterion?",
+        "For the attraction criterion, why is the ball B(θ†) defined relative to θ^int (maximizer of J^int) rather than θ*? What if θ^int is far from θ†?",
+        "The local optimality definition uses a set E with visitation probability ≥ Δ. How does this Δ relate to the δ in the efficiency/attraction criteria?",
+        "You mention the framework applies to off-policy and value-based methods. Could you provide a concrete example of how the efficiency criterion would manifest in Q-learning with exploration bonuses?"
+      ],
+      "soundness": {
+        "score": 3,
+        "justification": "The core ideas are logically consistent and grounded in optimization principles. The illustrative examples support the claims qualitatively. However, the paper lacks rigorous theoretical analysis or empirical validation beyond simple cases. Key assumptions (e.g., unbiased ĝ, biased î) are stated but not deeply examined. The connection between criteria and practical algorithm performance is not firmly established."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The paper provides a novel unified perspective on exploration in policy gradients, distinguishing two distinct optimization effects. The four criteria offer a structured framework for analysis beyond existing heuristic justifications. While the ideas are not empirically validated at scale, the conceptual contribution is meaningful for the field, potentially guiding future theoretical work and algorithm design."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is clearly written and well-structured. The abstract and introduction effectively set up the problem. The background is sufficient, and the illustrative examples are helpful. However, some sections (e.g., Section 4.2) could be more concise, and the connection between the two main effects could be emphasized earlier. The notation is generally clear, though the sudden introduction of local optimality with probability Δ feels slightly disconnected."
+      },
+      "overall_rating": {
+        "score": 5,
+        "justification": "The paper presents a conceptually interesting framework for understanding exploration in policy gradients, with clear strengths in structuring the discussion. However, it is currently more of a research idea than a fully developed paper. The lack of theoretical depth, limited empirical validation, and minimal practical guidance weaken its contribution. It falls in the borderline range: the core idea is promising and could be developed into a strong paper with more rigorous analysis and experimentation."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:455::plain_core",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:455",
+    "paper_position": 3,
+    "title": "Behind the Myth of Exploration in Policy Gradients",
+    "variant_name": "rhetoric_heavy",
+    "paper_metadata": {
+      "Rating_gt": 5.33,
+      "Decision_gt": "Reject",
+      "Rating_pred": 3.5,
+      "Decision_pred": "Reject",
+      "hardness": 0.271709617
+    },
+    "review": {
+      "summary": "This paper critically examines the role of exploration in policy-gradient reinforcement learning methods. The authors argue that the traditional justification of exploration as a mechanism for gathering information about the environment is incomplete. Instead, they propose a unified analysis identifying two distinct effects of exploration-based reward shaping: (1) smoothing the learning objective to eliminate local optima while preserving the global maximum (pseudoconcavity), and (2) modifying gradient estimates to increase the probability that stochastic updates lead to policy improvement. The paper introduces four criteria (coherence, pseudoconcavity, efficiency, attraction) to evaluate exploration strategies and illustrates these concepts with simple analytical examples (valley environment, maze environment). The work positions itself as providing a new theoretical lens for interpreting and designing exploration strategies in policy optimization.",
+      "strengths": [
+        "The paper addresses a fundamental and often misunderstood aspect of policy-gradient methods: the true role of exploration beyond the classic exploration-exploitation dilemma.",
+        "The proposed framework of four criteria (coherence, pseudoconcavity, efficiency, attraction) provides a structured and novel way to analyze exploration strategies.",
+        "The analytical examples (valley, maze) are well-chosen to clearly illustrate the conceptual points about objective smoothing and gradient distribution.",
+        "The discussion connects the analysis to broader RL concepts like overfitting/generalization and local optimality, showing good conceptual depth.",
+        "The paper clearly distinguishes its contribution from prior work on entropy regularization, positioning it as a more unified explanation."
+      ],
+      "weaknesses": [
+        "The paper is primarily conceptual and analytical; it lacks empirical validation on standard RL benchmarks or complex tasks to demonstrate the practical utility of the framework.",
+        "The theoretical claims, while intuitively appealing, are not formally proven. The criteria are introduced as definitions, but their general applicability or guarantees are not rigorously established.",
+        "The connection between the proposed criteria and actual algorithm design or hyperparameter selection (e.g., scheduling intrinsic reward weights) is discussed only at a high level, without concrete guidance.",
+        "The analysis relies on simple, low-dimensional examples. It is unclear how the insights scale to high-dimensional continuous control problems where policy gradients are typically applied.",
+        "The paper does not compare against or situate its framework relative to recent theoretical analyses of policy gradient convergence (e.g., with entropy regularization) that provide formal convergence rates.",
+        "The term \"myth\" in the title is provocative, but the paper does not thoroughly survey or debunk specific widespread myths in the literature; the critique remains somewhat abstract."
+      ],
+      "suggestions": [
+        "Provide at least one empirical case study on a standard RL benchmark (e.g., MuJoCo) showing how the four criteria can be used to diagnose or improve an existing exploration strategy.",
+        "Strengthen the theoretical foundation by providing formal propositions or theorems. For example, under what conditions on the MDP and policy class does adding an entropy bonus guarantee pseudoconcavity?",
+        "Expand the discussion on how the framework informs practical algorithm design. Could the criteria be used to derive adaptive schedules for the intrinsic reward weight (λ)?",
+        "Clarify the relationship between the proposed \"local optimality\" definition and existing notions like saddle points or flat regions in the policy landscape.",
+        "Discuss the computational and statistical challenges of estimating the intrinsic returns (like state-visitation entropy) in complex environments, as briefly mentioned but not addressed.",
+        "Consider a more systematic comparison with related theoretical frameworks (e.g., mirror descent, natural policy gradient) to better delineate the novelty of the proposed lens."
+      ],
+      "questions": [
+        "For the coherence criterion, how is the parameter ε chosen in practice? Is it problem-dependent, and if so, how should a practitioner set it?",
+        "The pseudoconcavity criterion requires the objective to have a unique maximum and no other stationary points. For common policy classes (e.g., Gaussian policies) and intrinsic rewards (e.g., entropy), can this property be proven, or is it typically an empirical observation?",
+        "In the efficiency and attraction criteria, you analyze P(ΔJ > 0). How does this relate to the variance of the gradient estimator, which is a more common metric for analyzing policy gradient methods?",
+        "You state that the framework applies directly to other direct policy optimization algorithms (e.g., off-policy). Can you elaborate on how the bias introduced by off-policy sampling interacts with the attraction criterion?",
+        "The maze example shows that a pseudoconcave return can still benefit from exploration due to gradient estimate effects. Is there a characterization of problems where the primary benefit of exploration is smoothing (Section 3) vs. improving gradient estimates (Section 4)?"
+      ],
+      "soundness": {
+        "score": 3,
+        "justification": "The core conceptual arguments are logically structured and the examples coherently illustrate the intended points. However, the technical soundness is limited. The paper introduces definitions and criteria but does not provide formal proofs, theoretical guarantees, or connections to established optimization theory. The claims about the effects of exploration are supported by illustrative examples but not by rigorous analysis or comprehensive empirical evidence. The analysis of gradient estimate distributions (Section 4) relies on an assumption (ΔJ constant) that is a significant simplification not fully justified."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The contribution is meaningful and novel. The paper provides a fresh perspective on a classic topic by disentangling two distinct roles of exploration in policy gradients. The proposed four-criteria framework offers a new vocabulary and analytical lens for researchers to think about exploration strategies. While related to prior work on entropy regularization, the unified treatment and focus on gradient estimate properties are novel. The contribution is primarily conceptual/theoretical rather than algorithmic, which limits its immediate practical impact but could inspire future research directions."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is generally well-written and structured. The abstract and introduction clearly state the problem and contributions. The background is sufficient. The use of simple, visualized examples (valley, maze) effectively communicates the core ideas. However, some technical passages are dense and could benefit from more intuitive explanations. The figures are referenced but not included in the provided text, which slightly hinders assessment. The flow from problem statement to criteria definition to illustration is logical."
+      },
+      "overall_rating": {
+        "score": 5,
+        "justification": "This is a borderline paper. It presents a novel and interesting conceptual framework for rethinking exploration in policy gradients. The strengths lie in its clear problem framing and the potential of its analytical lens. However, significant weaknesses hold it back: the lack of empirical validation, the absence of formal theoretical grounding, and the reliance on simple illustrative examples rather than demonstrating applicability to realistic RL problems. The work feels like a promising research idea or position paper rather than a complete research contribution suitable for publication in its current form. It would benefit greatly from stronger theoretical analysis or empirical demonstration."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:455::rhetoric_heavy",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:455",
+    "paper_position": 3,
+    "title": "Behind the Myth of Exploration in Policy Gradients",
+    "variant_name": "rhetoric_heavier",
+    "paper_metadata": {
+      "Rating_gt": 5.33,
+      "Decision_gt": "Reject",
+      "Rating_pred": 3.5,
+      "Decision_pred": "Reject",
+      "hardness": 0.271709617
+    },
+    "review": {
+      "summary": "This paper challenges the conventional interpretation of exploration in policy-gradient methods, arguing that exploration bonuses serve two distinct purposes beyond mere exploration: (1) smoothing the learning objective to eliminate local optima while preserving the global optimum, and (2) modifying gradient estimates to increase the probability of convergence to optimal policies. The authors introduce four criteria (ϵ-coherence, pseudoconcavity, δ-efficiency, δ-attraction) to analyze these effects and provide illustrative examples in simple environments to demonstrate how exploration strategies impact the objective landscape and gradient distribution.",
+      "strengths": [
+        "The paper provides a clear, unified framework (four criteria) for analyzing exploration in policy gradients, which is more comprehensive than prior work focusing on specific methods like entropy regularization.",
+        "The distinction between smoothing the objective and improving gradient estimates is insightful and helps demystify why exploration bonuses work in practice.",
+        "The illustrative examples (hill environment, maze) effectively visualize the theoretical concepts, making the arguments more accessible.",
+        "The work connects practical exploration strategies to fundamental optimization theory (pseudoconcavity, stochastic ascent), providing a solid theoretical grounding.",
+        "The discussion extends the framework beyond policy gradients to other RL paradigms (value-based, direct policy search), suggesting broad applicability."
+      ],
+      "weaknesses": [
+        "The empirical validation is limited to simple, low-dimensional environments with handcrafted policy parameterizations. It is unclear how the insights scale to complex, high-dimensional problems where exploration is most critical.",
+        "The four criteria are introduced but not formally analyzed or proven to hold for common exploration strategies (e.g., entropy regularization) beyond the provided illustrations. The paper lacks theoretical guarantees linking specific bonus forms to the criteria.",
+        "The assumption that intrinsic reward gradients are computed while neglecting some policy dependencies (mentioned in Background) is not thoroughly discussed—this could introduce biases not accounted for in the analysis.",
+        "While the framework is general, the paper does not provide concrete guidelines for designing or scheduling exploration bonuses in practice, beyond stating that a trade-off exists between coherence and pseudoconcavity.",
+        "The comparison to prior work (e.g., entropy smoothing, robust optimization interpretations) is somewhat brief, and the claimed novelty could be more sharply delineated."
+      ],
+      "suggestions": [
+        "Extend the empirical analysis to more complex environments (e.g., MuJoCo tasks) to demonstrate the practical relevance of the criteria and the trade-offs between coherence and pseudoconcavity.",
+        "Provide a more formal analysis linking specific exploration bonuses (e.g., entropy regularization, state-visitation entropy) to the proposed criteria under reasonable assumptions. For instance, derive conditions under which entropy regularization ensures pseudoconcavity.",
+        "Discuss how the biased estimation of intrinsic reward gradients (due to ignored dependencies) affects the δ-efficiency and δ-attraction criteria, and whether this bias can be corrected or bounded.",
+        "Include a broader discussion of related work, particularly on optimization landscapes in RL (e.g., recent work on gradient domination, PL conditions) and how the proposed criteria relate to these concepts.",
+        "Suggest concrete algorithms or heuristics for adjusting exploration bonus weights over time to balance coherence and pseudoconcavity, potentially based on the proposed criteria."
+      ],
+      "questions": [
+        "How do the proposed criteria (especially pseudoconcavity and ϵ-coherence) scale with the dimensionality of the policy parameter space? Are there known results on the prevalence of local optima in realistic policy landscapes?",
+        "The paper states that intrinsic reward gradients are often biased due to neglected dependencies. Can you quantify the impact of this bias on the convergence guarantees of the overall algorithm?",
+        "For the δ-efficiency and δ-attraction criteria, how should δ be chosen in practice to ensure efficient learning? Are there known lower bounds for common exploration strategies?",
+        "The maze example shows that exploration improves gradient estimate quality even when the true return landscape is already pseudoconcave. Is this primarily due to better reward sampling, or does exploration also change the gradient variance/magnitude?",
+        "How does your framework accommodate exploration strategies that are not additive reward bonuses, such as parameter noise or intrinsic curiosity modules?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The paper is technically sound in its definitions and illustrative examples. The four criteria are clearly defined and motivated. However, the analysis is primarily conceptual and illustrative rather than theoretically rigorous. The claims about exploration effects are plausible and well-argued but not backed by formal proofs or extensive empirical validation. The assumptions about gradient estimation (e.g., biased intrinsic reward gradients) are noted but not deeply analyzed."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The paper offers a novel unifying perspective on exploration in policy gradients, distinguishing between objective smoothing and gradient distribution effects. This reframing is valuable for the field. However, the contribution is somewhat incremental relative to prior work on entropy regularization and optimization landscapes. The proposed criteria are a useful conceptual tool but lack immediate practical algorithms or strong theoretical advancements."
+      },
+      "presentation": {
+        "score": 5,
+        "justification": "The paper is well-structured, clearly written, and accessible. The abstract and introduction effectively motivate the problem. The background section is concise but sufficient. The illustrative examples (with visualizations) are particularly effective in conveying the core ideas. The conclusion summarizes the contributions and future directions clearly. Some technical details (e.g., the exact form of intrinsic rewards, gradient estimation procedures) could be more explicit but are generally understandable."
+      },
+      "overall_rating": {
+        "score": 6,
+        "justification": "This is a borderline paper with clear strengths in conceptual clarity and framing. It provides a useful lens for understanding exploration in policy gradients and introduces a coherent analytical framework. However, it falls short in theoretical depth and empirical scope. The ideas are promising but require more rigorous analysis and validation in complex settings to be considered a strong contribution. The paper is likely to inspire follow-up work but as a standalone research idea, it is somewhat preliminary."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:455::rhetoric_heavier",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:332",
+    "paper_position": 4,
+    "title": "How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?",
+    "variant_name": "main",
+    "paper_metadata": {
+      "Rating_gt": 6.8,
+      "Decision_gt": "Accept",
+      "Rating_pred": 5.25,
+      "Decision_pred": "Reject",
+      "hardness": 0.2959740435
+    },
+    "review": {
+      "summary": "This paper addresses the challenge of transfer learning for 3D medical imaging tasks, where large-scale annotated datasets analogous to ImageNet are lacking. The authors make two main contributions: (1) constructing AbdomenAtlas 1.1, a large-scale dataset of 9,262 CT volumes with per-voxel annotations for 25 anatomical structures and pseudo-annotations for 7 tumor types; and (2) developing SuPreM, a suite of supervised pre-trained models (U-Net, SegResNet, Swin UNETR) on this dataset. Key claimed results include: supervised pre-training is far more data- and compute-efficient than self-supervised alternatives (e.g., matching performance with 99.6% fewer data and 96.5% less computation); SuPreM models transfer better to downstream segmentation tasks, including novel classes and external datasets, outperforming existing pre-trained models; and the learned features enable strong direct inference and fine-tuning performance across diverse clinical settings.",
+      "strengths": [
+        "The creation of AbdomenAtlas 1.1 is a significant practical contribution, addressing a critical bottleneck in 3D medical imaging research by providing a large, annotated dataset.",
+        "The paper provides extensive empirical evaluation across multiple dimensions: data efficiency, annotation efficiency, computational efficiency, direct inference on external datasets, and transfer to novel classes and tasks.",
+        "The efficiency claims are compelling and well-supported by experiments (e.g., Figure 2a showing supervised pre-training with 21 volumes matches self-supervised with 5,050 volumes).",
+        "The work is timely and addresses an important debate in medical AI foundation models regarding supervised vs. self-supervised pre-training.",
+        "The release of pre-trained models (SuPreM) facilitates reproducibility and community adoption."
+      ],
+      "weaknesses": [
+        "The paper lacks a clear, controlled ablation study isolating the effect of dataset scale vs. annotation quality vs. pre-training objective. The comparison to self-supervised methods uses different amounts of data, making it difficult to attribute gains solely to supervision.",
+        "The description of the dataset construction process is somewhat vague. Terms like 'interactive segmentation', 'importance score', and 'pseudo annotations' are not detailed enough to assess potential biases or quality limitations.",
+        "The comparison to existing self-supervised methods (e.g., Tang et al. 2022) may not be entirely fair if the self-supervised models were not also trained on the full AbdomenAtlas 1.1 (9,262 volumes). The scaling experiments in Figure 2a suggest self-supervised performance saturates; it's unclear if this is a fundamental limitation or a training/data issue.",
+        "The claim that supervised features learn 'objectness' for segmentation is intuitive but not rigorously validated. The paper would benefit from feature analysis or visualization to support this mechanistic explanation.",
+        "While external validation is performed, the 'proprietary dataset' used for key evaluations (Tables 2, 4, Figure 1, 3) is not described, limiting the ability to assess the generality of those results."
+      ],
+      "suggestions": [
+        "Conduct a more controlled comparison: train both supervised and self-supervised models on identical subsets of AbdomenAtlas 1.1 (varying sizes) to isolate the effect of the pre-training objective.",
+        "Provide more technical details on the dataset creation: define the 'importance score' calculation, describe the interactive segmentation pipeline and inter-rater agreement, and clarify the nature and generation process of 'pseudo annotations' for tumors.",
+        "Include an analysis of the learned representations (e.g., via feature visualization, probing tasks, or similarity analysis) to provide evidence for the claim that supervised pre-training learns more transferable, segmentation-relevant features.",
+        "Benchmark against a wider range of state-of-the-art self-supervised and supervised pre-training methods for 3D data, not just the specific comparison to Tang et al. 2022.",
+        "Discuss the limitations of AbdomenAtlas 1.1 more explicitly: potential label noise, class imbalances, geographic/clinical biases despite multi-hospital sourcing, and the implications for model generalization."
+      ],
+      "questions": [
+        "Can you provide more details on the 'pseudo annotations' for the seven tumor types? How were they generated, and what is their estimated accuracy compared to expert annotations?",
+        "For the self-supervised baseline (Tang et al. 2022), were the models retrained on the exact same data splits as your supervised models, or were the published weights used? If the latter, what was the composition of their pre-training data?",
+        "In Figure 2a, the self-supervised performance appears to saturate with more data. Was any hyperparameter tuning or longer training performed for the self-supervised model at the larger data scales (e.g., 5,050 volumes) to ensure fair comparison?",
+        "The 'proprietary dataset' is used extensively for evaluation. Can you describe its basic characteristics: number of scans, annotation protocol, class distribution, and how it was split for fine-tuning/validation?",
+        "You claim supervised pre-training learns 'objectness'. Did you perform any experiments to validate this, such as measuring performance on segmenting unseen object categories with minimal shots or analyzing attention maps?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The core technical claims are supported by extensive experiments (efficiency curves, external validation, novel class transfer). However, there are methodological concerns: the comparison between supervised and self-supervised pre-training is not fully controlled (different data amounts, unclear if self-supervised models were optimized for the new large dataset). The dataset construction process lacks sufficient detail to assess potential confounding factors like annotation quality and bias. The statistical tests (t-tests) are appropriately applied, but the foundational comparison could be more rigorous."
+      },
+      "contribution": {
+        "score": 5,
+        "justification": "The contribution is highly significant. AbdomenAtlas 1.1 is a major resource that fills a critical gap in the field. The empirical demonstration that supervised pre-training can be extremely efficient and effective for 3D medical tasks, given sufficient annotated data, provides a strong counterpoint to the prevailing trend towards self-supervision. The release of pre-trained models (SuPreM) further amplifies the practical impact. This work could reshape the community's approach to building 3D medical foundation models."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is generally well-structured and clearly argues its thesis. The figures effectively illustrate key points about efficiency and transfer performance. However, some sections are vague, particularly regarding dataset construction ('interactive segmentation', 'pseudo annotations') and the description of the proprietary evaluation dataset. The related work section provides good context, but the method section could be more detailed to enable conceptual reproduction."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "This is a strong paper with a substantial and timely contribution. The creation of a large-scale annotated 3D medical dataset and the accompanying pre-trained models are valuable resources for the community. The empirical results demonstrating the efficiency and effectiveness of supervised pre-training are compelling and well-presented. The main weaknesses are methodological: the supervised vs. self-supervised comparison could be more controlled and rigorous, and the dataset description lacks sufficient detail. These issues prevent a higher score, but the core contributions are solid and the work is clearly publishable with revisions to address these concerns."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:332::main",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:332",
+    "paper_position": 4,
+    "title": "How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?",
+    "variant_name": "plain_core",
+    "paper_metadata": {
+      "Rating_gt": 6.8,
+      "Decision_gt": "Accept",
+      "Rating_pred": 5.25,
+      "Decision_pred": "Reject",
+      "hardness": 0.2959740435
+    },
+    "review": {
+      "summary": "This paper addresses the challenge of transfer learning for 3D medical imaging tasks, where supervised pre-training has been limited by the lack of large, annotated 3D datasets comparable to ImageNet. The authors make two main contributions: (1) the construction of AbdomenAtlas 1.1, a large-scale dataset of 9,262 CT volumes with per-voxel annotations for 25 anatomical structures and pseudo-annotations for 7 tumor types; and (2) the development of Supervised Pre-trained Models (SuPreM) using this dataset. Key claimed results include: (a) SuPreM achieves comparable transfer learning ability with dramatically less data and computation than self-supervised approaches (21 vs. 5,050 CT volumes, 40 vs. 1,152 GPU hours); (b) SuPreM transfers better to novel datasets, classes, and tasks than existing pre-trained models; and (c) supervised pre-training scales effectively with more annotated data.",
+      "strengths": [
+        "The creation of AbdomenAtlas 1.1 addresses a critical bottleneck in 3D medical imaging research by providing a large-scale, annotated dataset that enables supervised pre-training.",
+        "The paper presents compelling efficiency claims: supervised pre-training requires orders of magnitude less data and computation than self-supervised alternatives while achieving comparable or better transfer performance.",
+        "The work provides empirical evidence that supervised pre-training transfers well to diverse downstream tasks including novel organ segmentation, tumor classification, and out-of-distribution datasets.",
+        "The release of both dataset and pre-trained models (SuPreM) represents a valuable resource for the community, facilitating reproducibility and further research.",
+        "The paper thoughtfully examines transfer learning across multiple dimensions: data efficiency, annotation efficiency, computational efficiency, and task generalization."
+      ],
+      "weaknesses": [
+        "The comparison between supervised and self-supervised pre-training lacks crucial methodological details: which specific self-supervised methods were compared, their hyperparameters, and whether they were optimized for the medical imaging domain.",
+        "The claim that supervised pre-training requires '99.6% fewer data' (21 vs. 5,050 volumes) is presented without sufficient context about the self-supervised baseline's data requirements or why such a large discrepancy exists.",
+        "The paper does not adequately address potential biases in AbdomenAtlas 1.1, which aggregates data from 88 hospitals worldwide. Differences in scanning protocols, patient populations, and annotation quality could affect generalization claims.",
+        "The evaluation on 'proprietary datasets' limits reproducibility and independent verification of key results, particularly for tumor classification tasks.",
+        "The scaling experiments (from 21 to 9,262 volumes) show modest performance gains (90.4% to 91.3% on TotalSegmentator), raising questions about the marginal utility of such large-scale annotation efforts.",
+        "The paper lacks ablation studies examining which aspects of supervised pre-training contribute most to transfer performance (e.g., segmentation vs. classification supervision, annotation quality effects)."
+      ],
+      "suggestions": [
+        "Include detailed comparisons with state-of-the-art self-supervised methods specifically designed for 3D medical imaging (e.g., models pre-trained on large unlabeled CT collections).",
+        "Provide more transparency about the self-supervised baselines: architecture, pre-training objectives, hyperparameters, and computational budgets.",
+        "Conduct sensitivity analyses to understand how annotation quality and consistency across the 9,262 volumes affect pre-training effectiveness.",
+        "Include experiments comparing supervised pre-training on AbdomenAtlas 1.1 with supervised pre-training on existing smaller medical datasets to quantify the value of scale.",
+        "Release evaluation protocols and, if possible, validation splits for proprietary datasets to enable fair comparison with future work.",
+        "Discuss the ethical considerations and potential biases in aggregating data from 88 hospitals across different healthcare systems and patient populations.",
+        "Explore whether the efficiency gains of supervised pre-training hold across different model architectures beyond U-Net, SegResNet, and Swin UNETR."
+      ],
+      "questions": [
+        "Which specific self-supervised methods were used for comparison, and were they pre-trained on the same CT data distribution as AbdomenAtlas 1.1?",
+        "What explains the dramatic data efficiency difference (21 vs. 5,050 volumes)? Is this due to fundamental limitations of self-supervised learning or suboptimal implementation/configuration?",
+        "How was the 'importance score' for each volume computed from uncertainty, consistency, and overlap, and how does this affect the quality and representativeness of the dataset?",
+        "What percentage of the 9,262 volumes required manual correction by radiologists versus being primarily AI-generated with minimal human oversight?",
+        "For the tumor classification task, what was the baseline performance of models trained from scratch on the proprietary dataset, and how does SuPreM compare?",
+        "Are there plans to expand AbdomenAtlas beyond abdominal CT to other modalities (MRI, PET) or body regions to test the generality of the findings?",
+        "What are the licensing terms for AbdomenAtlas 1.1 and SuPreM, and what restrictions exist on commercial use?"
+      ],
+      "soundness": {
+        "score": 3,
+        "justification": "The technical claims are intriguing but insufficiently supported. While the creation of AbdomenAtlas 1.1 is methodologically sound, the comparisons with self-supervised methods lack critical details about baseline implementations. The dramatic efficiency claims (99.6% less data, 28.8x less computation) require more rigorous validation and explanation. The evaluation on proprietary datasets limits reproducibility. However, the core dataset construction and model training appear technically competent."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "The contribution is significant: AbdomenAtlas 1.1 fills an important gap as a large-scale annotated 3D medical imaging dataset, enabling supervised pre-training research. The SuPreM models provide a valuable baseline for the community. The empirical demonstration that supervised pre-training can be highly efficient for 3D medical tasks challenges prevailing assumptions about the necessity of self-supervised approaches. However, the novelty is somewhat limited as the supervised vs. self-supervised comparison is well-studied in 2D vision, just not in 3D medical imaging."
+      },
+      "presentation": {
+        "score": 3,
+        "justification": "The paper is generally clear but lacks sufficient methodological detail for reproduction. Key comparisons are described at a high level without necessary implementation specifics. The structure is logical, but some sections (like the efficiency claims) would benefit from more detailed explanations and visualizations. The use of proprietary datasets without detailed evaluation protocols limits the paper's clarity and reproducibility."
+      },
+      "overall_rating": {
+        "score": 6,
+        "justification": "This is a borderline paper with both significant strengths and weaknesses. The creation of AbdomenAtlas 1.1 and SuPreM models represents a substantial contribution to the field that will enable much future research. The efficiency claims are provocative and, if validated, could shift practice in 3D medical imaging. However, the paper suffers from insufficient methodological detail in comparisons, overreliance on proprietary data for key evaluations, and incomplete analysis of potential dataset biases. With major revisions addressing these issues, this could be a strong contribution. In its current form, it provides valuable resources but incomplete evidence for its central claims about supervised pre-training efficiency."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:332::plain_core",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:332",
+    "paper_position": 4,
+    "title": "How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?",
+    "variant_name": "rhetoric_heavy",
+    "paper_metadata": {
+      "Rating_gt": 6.8,
+      "Decision_gt": "Accept",
+      "Rating_pred": 5.25,
+      "Decision_pred": "Reject",
+      "hardness": 0.2959740435
+    },
+    "review": {
+      "summary": "This paper addresses the lack of large-scale annotated 3D datasets for medical imaging transfer learning, analogous to ImageNet for 2D. The authors construct AbdomenAtlas 1.1, a dataset of 9,262 CT volumes with per-voxel annotations for 25 anatomical structures and pseudo-annotations for 7 tumor types. They then train supervised models (SuPreM) on this dataset and demonstrate their transfer learning efficacy across various 3D segmentation and classification tasks. Key claims include: (1) supervised pre-training on annotated 3D data is more data- and compute-efficient than self-supervised methods, (2) SuPreM models transfer better to novel datasets, classes, and tasks than existing pre-trained models, and (3) the performance scales with the size of the annotated pre-training dataset.",
+      "strengths": [
+        "The creation of AbdomenAtlas 1.1 is a significant and valuable contribution. A large-scale, per-voxel annotated 3D CT dataset is a major resource for the community.",
+        "The paper provides a comprehensive empirical study comparing supervised pre-training on this new dataset against self-supervised baselines across multiple tasks (segmentation, classification) and datasets.",
+        "The reported efficiency gains (e.g., 21 annotated volumes matching performance from 5,050 unlabeled volumes) are striking and, if robust, highlight a key practical advantage of supervised pre-training when annotations are available.",
+        "The work tackles an important and underexplored question in 3D medical imaging: the relative merits of supervised vs. self-supervised pre-training given a large annotated source.",
+        "The release of pre-trained model weights (SuPreM) lowers the barrier to entry for researchers and practitioners."
+      ],
+      "weaknesses": [
+        "The paper's tone is overly definitive and promotional (e.g., 'definitively', 'conclusively', 'vastly superior'). This undermines scientific objectivity. Claims of definitive superiority require exceptionally strong evidence and careful caveats.",
+        "The comparison to self-supervised methods is potentially incomplete. The paper states baselines were trained on 2,100 or 5,050 CT volumes, but it's unclear which specific self-supervised algorithms were used (e.g., MAE, contrastive learning, masked image modeling for 3D), their hyperparameters, and whether they were trained to convergence on comparable compute. A fair comparison requires state-of-the-art self-supervised methods optimized for 3D data.",
+        "The 'pseudo annotations' for seven tumor types are not well described. Their creation process, quality, and potential impact on pre-training are unclear. If these are weak or noisy labels, they could affect the supervised pre-training objective.",
+        "The claim that supervised features are 'inherently more relevant' to segmentation is an assertion, not a proven fact. While intuitive, it requires more analysis (e.g., feature visualization, probing tasks) to substantiate beyond final task performance.",
+        "The scaling experiments (21 to 9,262 volumes) are a strength, but the curve and saturation points are not shown in detail. It's unclear if the supervised advantage holds across the entire scale or diminishes as self-supervised data scales further.",
+        "The paper does not adequately discuss the limitations of its approach, primarily the immense cost and expertise required to create AbdomenAtlas 1.1. This limits the replicability and scalability of the supervised approach compared to self-supervision on raw data."
+      ],
+      "suggestions": [
+        "Tone down the absolutist language (e.g., 'definitively', 'guaranteed') and present findings as empirical observations with appropriate confidence intervals and statistical testing.",
+        "Include a detailed description of the self-supervised baselines: architecture, pretext task, training schedule, and hyperparameter tuning. Compare against multiple leading self-supervised methods for 3D data.",
+        "Provide more details on the 'pseudo annotations' for tumors: generation method, validation, and how they are incorporated into the supervised pre-training loss.",
+        "Add a more thorough analysis of the learned features. For example, use linear probing or canonical correlation analysis to compare the transferability of features from supervised vs. self-supervised models at intermediate layers.",
+        "Discuss the cost-benefit analysis more explicitly. Acknowledge the high initial annotation cost for supervised pre-training versus the higher compute/data cost for self-supervision. This is a key trade-off for the community.",
+        "Present scaling laws more clearly: show plots of transfer performance vs. pre-training data size for both supervised and self-supervised methods to visualize the efficiency claim.",
+        "Clarify the fine-tuning protocols. How many layers were fine-tuned? Was it full fine-tuning or head-only? This affects the interpretation of transferability."
+      ],
+      "questions": [
+        "Which specific self-supervised learning methods were used as baselines (e.g., MAE, SimCLR, BYOL, masked autoencoder for 3D)? Were their hyperparameters optimized using a validation set from the target tasks?",
+        "Can you provide more details on the 'pseudo annotations' for the seven tumor types? How were they generated, and what is their estimated Dice score or accuracy compared to a radiologist's annotation?",
+        "For the efficiency claim (21 vols vs. 5050 vols), were the self-supervised models trained on the 5050 volumes until validation loss plateaued? What was the exact performance metric used to declare 'identical' transfer ability?",
+        "The dataset combines public sources. What measures were taken to prevent data leakage between the pre-training (AbdomenAtlas) and the evaluation datasets (e.g., TotalSegmentator, Swiss/East Asian data)?",
+        "You mention fine-tuning for 'tumor classification' and compare to radiologist performance. What was the ground truth for this classification task (biopsy, pathology)? How was the radiologist performance benchmark established?",
+        "The abstract states the model was trained with '672 masks' from 21 volumes. Does this mean each volume has 32 masks (21*32=672)? How does this relate to the 25 anatomical structures? Are all structures present in every volume?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The core methodology of creating a dataset and training supervised models is sound. The experimental design includes multiple transfer tasks, which is good. However, the technical soundness is hampered by: (1) insufficient details on the self-supervised baselines, making it difficult to assess if the comparison is fair and state-of-the-art; (2) lack of statistical significance testing for the reported improvements; (3) unclear description of pseudo-annotation quality and its effect. The dramatic efficiency claims require very rigorous validation to be fully convincing."
+      },
+      "contribution": {
+        "score": 5,
+        "justification": "The contribution is high. The AbdomenAtlas 1.1 dataset is a major resource that fills a critical gap. The systematic study of supervised pre-training for 3D medical imaging is timely and important. The released models (SuPreM) are a practical contribution. The work shifts the discourse by providing evidence that with large-scale annotations, supervised pre-training can be highly efficient and effective, challenging the prevailing trend towards self-supervision in domains with scarce labels."
+      },
+      "presentation": {
+        "score": 3,
+        "justification": "The paper is structured logically but is written in an overly assertive and promotional style that detracts from scientific rigor. Key methodological details are omitted, particularly regarding baseline implementations and pseudo-annotations. The figures and tables referenced in the text (e.g., 'As shown') are not included in the provided text, making it impossible to evaluate the evidence. The claims are repeated frequently without always being backed by the presented text."
+      },
+      "overall_rating": {
+        "score": 6,
+        "justification": "This is a borderline paper. The core idea and resource (dataset) are significant and potentially impactful for the field. However, in its current form, the presentation and experimental validation have substantial weaknesses. The lack of detail on baselines and the overly definitive tone undermine confidence in the claimed superiority. The paper would be greatly strengthened by a more balanced, detailed, and rigorous analysis. With major revisions addressing the comparison methodology and toning down the claims, it could be a strong contribution."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:332::rhetoric_heavy",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:332",
+    "paper_position": 4,
+    "title": "How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?",
+    "variant_name": "rhetoric_heavier",
+    "paper_metadata": {
+      "Rating_gt": 6.8,
+      "Decision_gt": "Accept",
+      "Rating_pred": 5.25,
+      "Decision_pred": "Reject",
+      "hardness": 0.2959740435
+    },
+    "review": {
+      "summary": "This paper addresses the lack of large-scale annotated 3D datasets for medical imaging, analogous to ImageNet for 2D vision. The authors construct AbdomenAtlas 1.1, a dataset of 9,262 CT volumes with per-voxel annotations for 25 anatomical structures and pseudo-annotations for 7 tumor types. They then develop SuPreM, a suite of supervised pre-trained models (U-Net, SegResNet, Swin UNETR) on this dataset. Key claims: (1) Supervised pre-training on AbdomenAtlas yields superior transfer learning performance compared to existing self-supervised methods across various segmentation tasks. (2) It achieves remarkable data/computational efficiency: a model trained with only 21 CT volumes matches the transfer ability of a self-supervised model trained with 5,050 volumes. (3) The learned features generalize well to external datasets, novel classes, and even different tasks (e.g., tumor classification).",
+      "strengths": [
+        "The creation of AbdomenAtlas 1.1 is a significant and practical contribution, addressing a major bottleneck in 3D medical imaging research.",
+        "The paper provides a comprehensive empirical investigation, comparing supervised pre-training against strong self-supervised baselines across multiple tasks (segmentation, classification), datasets, and data regimes (few-shot, full-data).",
+        "The demonstration of extreme data and computational efficiency for supervised pre-training (21 vs. 5050 CT volumes, 40 vs. 1152 GPU hours) is compelling and well-supported by experiments.",
+        "The release of pre-trained model suites (SuPreM) for multiple architectures enhances reproducibility and practical utility for the community.",
+        "The analysis extends beyond standard segmentation to include challenging scenarios like fine-grained tumor classification and direct inference on external datasets, showcasing the versatility of the learned features."
+      ],
+      "weaknesses": [
+        "The paper's central claim about supervised pre-training's superiority is heavily dependent on the specific self-supervised baseline chosen (Tang et al., 2022). A broader comparison with other state-of-the-art self-supervised methods (e.g., MAE, DINO) adapted for 3D is missing, limiting the generality of the conclusion.",
+        "The 'pseudo-annotations' for tumors are not clearly defined or validated. The method for generating them and their quality relative to expert annotations is unclear, which could affect the interpretation of results involving tumor tasks.",
+        "While the dataset is large, its composition from 17 existing public datasets raises questions about potential data leakage or overlap between pre-training and evaluation sets (e.g., TotalSegmentator). The de-duplication process is mentioned but not detailed.",
+        "The claim that supervised features are 'more interpretable' is stated but not demonstrated or analyzed in the paper.",
+        "The scaling experiments (Fig 2a) show supervised pre-training benefits from more data, but the performance gains plateau quickly (90.4% to 91.3%). A deeper analysis of the scaling laws and the point of diminishing returns would strengthen the contribution."
+      ],
+      "suggestions": [
+        "Include comparisons with a wider array of modern self-supervised pre-training methods for 3D data to more robustly establish the superiority of the supervised approach.",
+        "Provide a detailed subsection or appendix explaining the methodology for generating 'pseudo-annotations' for tumors, including quality assurance measures and potential limitations.",
+        "Clarify the data splitting and de-duplication protocol to ensure no overlap between AbdomenAtlas 1.1 and the test sets used for evaluation (TotalSegmentator, proprietary datasets). A diagram or table showing dataset provenance would help.",
+        "Expand the analysis of why supervised pre-training is so data-efficient. Provide visualizations or feature space analysis (e.g., t-SNE) comparing features from supervised vs. self-supervised models to support the claim of learning 'more relevant' features.",
+        "Discuss the limitations of AbdomenAtlas 1.1 more thoroughly, such as its focus on abdominal CT, the potential bias from aggregating existing datasets, and the challenges of scaling annotation efforts to other modalities (MRI, ultrasound) or body regions."
+      ],
+      "questions": [
+        "What specific self-supervised method from Tang et al. (2022) was used as the primary baseline (e.g., Swin UNETR pre-trained with contrastive learning, masked autoencoding)? Were the hyperparameters and computational budgets for self-supervised pre-training optimized to be comparable to those used for SuPreM?",
+        "Can you detail the 'intelligent selection process' and 'quantitative importance score' used to guide radiologists' annotations? How does this active learning strategy impact the final dataset quality compared to random selection?",
+        "For the direct inference results on external datasets (Table 3), how does the performance of SuPreM without fine-tuning compare to a simple baseline of training a model from scratch on a small, representative sample from the target hospital? This would better contextualize the 'out-of-distribution' performance.",
+        "The paper states AbdomenAtlas contains CTs from '88 hospitals worldwide.' What is the geographic and demographic distribution? Is there any analysis of how performance varies across these sub-populations to assess fairness/bias?",
+        "What is the licensing and access plan for AbdomenAtlas 1.1 and the SuPreM models? Given the sensitivity of medical data, what mechanisms are in place to ensure responsible and ethical use by the research community?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The core experimental methodology is sound and well-described. The comparisons between supervised and self-supervised pre-training are controlled for architecture and compute (where specified). The statistical reporting (mean ± std, t-tests) is appropriate. However, the technical soundness is slightly hampered by the reliance on a single, albeit strong, self-supervised baseline and the lack of clarity surrounding the tumor pseudo-annotations. The dramatic efficiency claims are supported by the presented data."
+      },
+      "contribution": {
+        "score": 5,
+        "justification": "The contribution is highly significant. The AbdomenAtlas 1.1 dataset itself is a major resource that fills a critical gap in the field. The systematic investigation into supervised 3D pre-training provides valuable empirical evidence challenging the prevailing trend towards self-supervision in data-rich domains. The released model suite and the findings on data efficiency are directly actionable for researchers and practitioners, potentially shifting strategies in medical imaging model development."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is generally well-structured, with a clear narrative from problem statement to dataset creation, method, experiments, and conclusion. The writing is confident and persuasive. However, some important details are glossed over (pseudo-annotations, dataset de-duplication, baseline specifics). The figures and tables are referenced but not included in the provided text, making it harder to fully assess their clarity. The claims are sometimes stated very strongly ('irrefutably', 'decisively') where a more measured tone might be appropriate given the empirical nature of the work."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "This is a strong paper with a substantial contribution. The creation of a large-scale annotated 3D dataset and a comprehensive empirical study on supervised pre-training is highly valuable for the medical imaging and transfer learning communities. The work is technically sound and well-presented overall. The primary weaknesses are the limited comparison to the broader landscape of self-supervised methods and some missing details about dataset construction. These issues prevent it from being an exceptional/landmark paper (9-10) but it is firmly in the accept range (7-8). The findings are likely to stimulate important discussion and follow-up work."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:332::rhetoric_heavier",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:348",
+    "paper_position": 5,
+    "title": "Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs",
+    "variant_name": "main",
+    "paper_metadata": {
+      "Rating_gt": 3.75,
+      "Decision_gt": "Reject",
+      "Rating_pred": 5.25,
+      "Decision_pred": "Reject",
+      "hardness": 0.3078914704
+    },
+    "review": {
+      "summary": "The paper introduces Know2BIO, a comprehensive biomedical knowledge graph benchmark integrating data from 30 sources, featuring ~219k nodes and ~6.2M edges across 11 biomedical categories. Key innovations include a dual-view (instance/ontology) structure, multi-modal node features (text, sequences, structures), and an automated update mechanism. The authors benchmark 13 KG representation learning models on link prediction tasks across the three views, finding hyperbolic models excel on the ontology view and complex models on the instance view.",
+      "strengths": [
+        "Comprehensive data integration from 30 diverse biomedical sources, covering a wide range of biomedical categories.",
+        "Dual-view (instance and ontology) structure enables multi-view learning, a valuable feature for benchmarking.",
+        "Inclusion of multi-modal node features (text, sequences, structures) supports integration with modern NLP and multi-modal methods.",
+        "Automated update mechanism addresses a critical limitation of static biomedical KGs.",
+        "Extensive benchmarking of 13 KG representation models across three views provides a solid baseline for future work.",
+        "Clear documentation of data sources, alignment challenges, and construction process."
+      ],
+      "weaknesses": [
+        "The paper lacks a clear comparison of Know2BIO's novelty against the most recent biomedical KGs (e.g., iBKH, CKG) beyond basic statistics. The claim of being 'more comprehensive' is not deeply validated.",
+        "The evaluation is limited to standard link prediction. There is no demonstration of the benchmark's utility for downstream biomedical tasks (e.g., drug target prediction, disease gene discovery), which is crucial for establishing real-world impact.",
+        "The multi-modal node features are listed but not utilized in the benchmarking experiments. Their value and integration strategies are not demonstrated, leaving a key advertised feature unevaluated.",
+        "The automated update mechanism is described at a high level but lacks technical details (e.g., update frequency, change detection, handling of conflicting updates) and validation of its effectiveness.",
+        "Some claims about model performance (e.g., hyperbolic models being best for hierarchy) are not novel and are simply confirmed on this new graph. The analysis does not provide new insights into why certain models work better on different views of biomedical data.",
+        "The handling of confidence scores and edge weights is mentioned as a limitation but not addressed in the benchmark, potentially affecting model performance and realism."
+      ],
+      "suggestions": [
+        "Conduct downstream task evaluations (e.g., drug-disease link prediction, protein function prediction) to demonstrate the practical utility of Know2BIO beyond link prediction.",
+        "Include experiments that integrate the provided multi-modal node features (e.g., using language model embeddings for text, GNNs for structures) to showcase the benchmark's potential for multi-modal learning.",
+        "Provide a more detailed technical description of the automated update pipeline, including algorithms for change detection, entity resolution during updates, and versioning.",
+        "Perform an ablation study on the impact of different data sources or categories to understand which components contribute most to benchmark difficulty and model performance.",
+        "Compare Know2BIO's structural properties (e.g., degree distribution, connectivity, hierarchy) quantitatively with existing biomedical KGs to better justify its uniqueness.",
+        "Address the edge weight/confidence score limitation by providing a weighted version of the graph and evaluating models that can leverage such information."
+      ],
+      "questions": [
+        "What is the specific update frequency (e.g., monthly, quarterly) and what triggers an update? How are conflicts between updated sources resolved?",
+        "For the multi-modal features, are the protein/compound structures provided as 3D coordinates or graph representations? What preprocessing was applied?",
+        "The paper mentions bridge nodes connect the two views. What is the exact nature of these bridge relations? Are they manually defined or derived from the source data?",
+        "What were the specific confidence thresholds used for sources like STRING and DisGeNET, and what was the rationale for choosing them?",
+        "The compound identifier alignment is described as 'arduous.' What percentage of compound nodes could not be aligned between DrugBank and MeSH IDs, and how does this affect the graph's connectivity?",
+        "Are there plans to provide predefined train/validation/test splits for different downstream tasks (not just link prediction) to facilitate future benchmarking?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The technical construction of the KG appears sound, with careful documentation of data sources and alignment challenges. The benchmarking methodology is standard and appropriately executed with hyperparameter tuning. However, the core claims about the benchmark's advantages (automated updates, multi-modal utility) are not fully validated through experiments. The evaluation is technically correct but limited in scope."
+      },
+      "contribution": {
+        "score": 3,
+        "justification": "Know2BIO aggregates and aligns data from many sources into a dual-view KG, which is a useful engineering contribution. However, the conceptual novelty is moderate. Dual-view KGs and multi-modal features are not new ideas, and the automated update mechanism, while important, is described at a high level without novel algorithmic insights. The benchmark's primary contribution is as a new, large-scale dataset rather than a methodological advance."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is generally well-structured and clear. The schema diagram, tables of statistics, and model results are helpful. The description of the KG construction process is detailed. Some sections could be improved: the automated update mechanism needs more detail, and the value of multi-modal features should be highlighted earlier and more prominently. The writing is mostly clear but occasionally verbose."
+      },
+      "overall_rating": {
+        "score": 6,
+        "justification": "Know2BIO is a solid engineering effort that provides a valuable new resource for the biomedical KG community. Its scale, dual-view structure, and multi-modal features are strengths. However, the paper falls short of demonstrating the benchmark's full potential. The evaluation is routine, key advertised features (updates, multi-modal learning) are not experimentally validated, and the novelty is more incremental than transformative. It is a useful benchmark that would benefit from more compelling validation and analysis to rise to a higher rating."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:348::main",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:348",
+    "paper_position": 5,
+    "title": "Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs",
+    "variant_name": "plain_core",
+    "paper_metadata": {
+      "Rating_gt": 3.75,
+      "Decision_gt": "Reject",
+      "Rating_pred": 5.25,
+      "Decision_pred": "Reject",
+      "hardness": 0.3078914704
+    },
+    "review": {
+      "summary": "The paper introduces Know2BIO, a comprehensive biomedical knowledge graph benchmark that integrates data from 30 sources across 11 biomedical categories, comprising ~219,000 nodes and ~6.2 million edges. Key innovations include dual-view representation (instance and ontology views), multi-modal node features (text, sequences, structures), and support for automated updates. The authors benchmark 13 KG embedding models on link prediction across the three views, finding that hyperbolic models excel in the ontology view while complex models perform better in the instance view.",
+      "strengths": [
+        "Comprehensive integration of diverse biomedical data sources (30 sources, 11 categories) into a unified benchmark.",
+        "Dual-view representation (instance and ontology) is a novel and thoughtful design for capturing different aspects of biomedical knowledge.",
+        "Inclusion of multi-modal node features (text, sequences, structures) enables richer learning beyond graph structure alone.",
+        "Automated update mechanism addresses the critical need for keeping biomedical knowledge current.",
+        "Extensive benchmarking of 13 KG embedding models across three views provides valuable baseline results for the community."
+      ],
+      "weaknesses": [
+        "The paper lacks clarity on how exactly the automated updating works—no technical details or evaluation of update quality are provided.",
+        "Entity alignment challenges are acknowledged but not quantitatively assessed; the impact of imperfect alignment on benchmark quality is unclear.",
+        "The evaluation focuses only on link prediction; other important KG tasks like node classification or entity alignment are not benchmarked.",
+        "No ablation studies on the utility of multi-modal features—their contribution to model performance is not demonstrated.",
+        "The \"whole view\" evaluation includes bridge nodes but their specific role and impact are not analyzed in depth.",
+        "Limited discussion of how Know2BIO compares to existing biomedical KGs beyond scale and multi-view design."
+      ],
+      "suggestions": [
+        "Provide technical details of the automated update pipeline, including how new entities/relations are integrated and alignment is maintained.",
+        "Include evaluation of entity alignment quality (e.g., precision/recall of mapped entities across sources) to assess benchmark reliability.",
+        "Benchmark additional tasks beyond link prediction, such as node classification or few-shot relation prediction, to showcase broader utility.",
+        "Conduct ablation studies to quantify the impact of multi-modal features on model performance.",
+        "Add a qualitative case study illustrating how the dual-view structure benefits a downstream biomedical application.",
+        "Compare Know2BIO's coverage and overlap with existing biomedical KGs more systematically, perhaps via a Venn diagram or overlap statistics."
+      ],
+      "questions": [
+        "How exactly does the automated update mechanism work? What triggers updates, and how are conflicts or redundancies handled?",
+        "What percentage of nodes/edges have multi-modal features, and how were missing features handled during benchmarking?",
+        "Can you provide more details on the bridge nodes—how many exist, and what relation types connect the instance and ontology views?",
+        "Were any quality checks performed on the integrated data? For example, how were contradictory assertions from different sources resolved?",
+        "Why were only unweighted edges used in benchmarking despite acknowledging that weighted edges could benefit some models?",
+        "What are the specific limitations of the current entity alignment approach, and what errors might propagate into the benchmark?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The benchmark construction is well-motivated and the experimental methodology for link prediction is standard and appropriately described. However, key technical aspects like the automated update mechanism and entity alignment quality are insufficiently detailed, leaving gaps in reproducibility and reliability assessment."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "Know2BIO offers a valuable resource as a large-scale, multi-view, multi-modal biomedical KG benchmark. The dual-view design is novel, and the inclusion of updateability addresses an important practical need. However, the conceptual advance over existing biomedical KGs is incremental, focusing more on scale and integration than fundamental innovation."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is generally clear and well-structured, with useful tables summarizing data sources and results. However, some sections (e.g., automated updating, bridge nodes) lack detail, and the writing occasionally becomes repetitive (e.g., restating statistics). The dual-view concept could be explained more intuitively with a diagram."
+      },
+      "overall_rating": {
+        "score": 6,
+        "justification": "Know2BIO is a solid contribution that provides a useful benchmark for the biomedical KG community. Its strengths include comprehensive data integration, multi-modal features, and dual-view design. However, the paper has notable weaknesses: lack of detail on key technical components (updating, alignment), limited task benchmarking, and insufficient analysis of multi-modal feature impact. These issues prevent it from being a strong accept, but it is a borderline/weak accept as it provides a valuable resource that, with improvements, could be more impactful."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:348::plain_core",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:348",
+    "paper_position": 5,
+    "title": "Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs",
+    "variant_name": "rhetoric_heavy",
+    "paper_metadata": {
+      "Rating_gt": 3.75,
+      "Decision_gt": "Reject",
+      "Rating_pred": 5.25,
+      "Decision_pred": "Reject",
+      "hardness": 0.3078914704
+    },
+    "review": {
+      "summary": "The paper introduces Know2BIO, a comprehensive biomedical knowledge graph benchmark that integrates data from 30 sources across 11 biomedical categories, featuring ~219k nodes and ~6.2M edges. Key innovations include: (1) dual-view (instance and ontology) structure enabling multi-view learning, (2) automated update capability to reflect evolving knowledge, (3) multi-modal node features (text, sequences, structures), and (4) extensive benchmarking of 13 KG representation learning models across Euclidean, complex, and hyperbolic spaces. The authors claim Know2BIO is more comprehensive, up-to-date, and feature-rich than existing biomedical KGs, and demonstrate its utility through link prediction experiments showing different model families excel in different views (hyperbolic for ontology, complex for instance).",
+      "strengths": [
+        "Comprehensive data integration from 30 diverse biomedical sources, covering 11 categories with substantial scale (~219k nodes, ~6.2M edges).",
+        "Novel dual-view (instance and ontology) structure with bridge nodes, enabling multi-view learning tasks not supported by existing benchmarks.",
+        "Inclusion of multi-modal node features (text descriptions, protein/compound sequences and structures) facilitates integration with NLP and multi-modal methods.",
+        "Automated update framework addresses a critical gap in biomedical KG benchmarks, allowing the KG to stay current with scientific advances.",
+        "Rigorous benchmarking of 13 KG representation models across three spaces (Euclidean, complex, hyperbolic) with hyperparameter tuning and clear evaluation protocols.",
+        "Detailed discussion of entity alignment challenges and practical solutions, providing transparency about construction complexities."
+      ],
+      "weaknesses": [
+        "The paper lacks clarity on how exactly the automated update mechanism works technically (e.g., scheduling, conflict resolution, versioning).",
+        "Limited discussion of potential biases introduced by confidence score thresholds and the decision to use an unweighted graph, which may affect model performance.",
+        "No comparison to state-of-the-art biomedical KG models that leverage multi-modal features (e.g., language model-enhanced embeddings), despite mentioning such future work.",
+        "The evaluation focuses solely on link prediction; other relevant tasks like node classification, clustering, or real-world biomedical applications are not explored.",
+        "The claim that Know2BIO is 'definitive' is overstated given the inherent incompleteness of biomedical knowledge and rapid evolution of the field.",
+        "The dual-view separation, while innovative, is not quantitatively justified (e.g., via structural analysis) beyond intuitive description."
+      ],
+      "suggestions": [
+        "Provide a detailed technical description of the automated update pipeline, including data versioning, change detection, and consistency checks.",
+        "Include experiments with weighted edges (using available confidence scores) to assess the impact on model performance and benchmark robustness.",
+        "Benchmark models that explicitly leverage multi-modal node features (e.g., language model embeddings, GNNs on molecular graphs) to demonstrate Know2BIO's value for multi-modal integration.",
+        "Evaluate on additional tasks beyond link prediction (e.g., node classification, clustering) to showcase broader utility.",
+        "Perform a quantitative analysis of the dual-view structure (e.g., degree distributions, clustering coefficients) to justify its design and highlight differences from single-view KGs.",
+        "Discuss ethical considerations (e.g., data licensing, privacy for clinical data) and limitations regarding reproducibility due to manual account requirements for some sources."
+      ],
+      "questions": [
+        "Can you provide more details on the automated update mechanism? How frequently are updates performed, and how are conflicts between sources resolved?",
+        "What specific criteria were used to select the 30 data sources, and how do you ensure coverage balance across the 11 biomedical categories?",
+        "Why were edge weights (confidence scores) not used in the benchmark evaluation, given their availability in sources like STRING and DisGeNET?",
+        "How do the bridge nodes between instance and ontology views affect model performance? Are there ablation studies isolating their contribution?",
+        "What are the computational requirements (time, memory) for regenerating/updating Know2BIO from scratch, and how scalable is the pipeline to additional sources?",
+        "Have you considered evaluating temporal link prediction to assess the KG's ability to capture evolving knowledge, given the update capability?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The paper is technically sound overall: the KG construction process is well-described, entity alignment challenges are addressed transparently, and benchmarking experiments follow standard practices (link prediction, hyperparameter tuning, multiple metrics). However, some aspects lack depth: the automated update mechanism is underspecified, the choice of unweighted edges is not rigorously justified, and the evaluation is limited to traditional KG models without testing multi-modal integration. No major logical flaws are present, but certain assumptions (e.g., dual-view separation) could benefit from more empirical validation."
+      },
+      "contribution": {
+        "score": 4,
+        "justification": "Know2BIO makes a meaningful contribution by addressing key limitations of existing biomedical KGs: it integrates more sources, includes multi-modal features, supports automated updates, and introduces a dual-view structure. The scale and diversity are impressive, and the benchmark fills a gap for evaluating KG models in a realistic, evolving biomedical context. However, the novelty is incremental rather than transformative—it extends existing ideas (multi-view, multi-modal KGs) to the biomedical domain with careful engineering. The automated update feature is a notable practical advance, but its technical implementation is not fully detailed."
+      },
+      "presentation": {
+        "score": 3,
+        "justification": "The paper is generally well-structured and clear, with helpful tables and a conceptual figure. However, some sections are overly verbose (e.g., abstract/introduction use excessive emphatic language), while others lack necessary detail (e.g., update mechanism, dual-view rationale). The writing is accessible but could be more concise. The reproducibility of the KG construction is hampered by manual steps (account creation for some sources), though scripts are provided. Overall, the presentation is adequate but could be improved with more technical precision and streamlined exposition."
+      },
+      "overall_rating": {
+        "score": 6,
+        "justification": "Know2BIO is a solid engineering contribution that provides a valuable resource for the biomedical KG community. Its strengths—comprehensive data integration, dual-view structure, multi-modal features, and update capability—address real needs. However, the paper has limitations: the evaluation is narrow (link prediction only), the update mechanism is vague, and multi-modal features are not leveraged in experiments. The work is technically reasonable and useful, but falls short of a 'definitive' benchmark due to these gaps. It represents a strong incremental advance rather than a landmark contribution."
+      },
+      "confidence": 4
+    },
+    "review_generation": {
+      "review_key": "index:348::rhetoric_heavy",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  },
+  {
+    "paper_key": "index:348",
+    "paper_position": 5,
+    "title": "Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs",
+    "variant_name": "rhetoric_heavier",
+    "paper_metadata": {
+      "Rating_gt": 3.75,
+      "Decision_gt": "Reject",
+      "Rating_pred": 5.25,
+      "Decision_pred": "Reject",
+      "hardness": 0.3078914704
+    },
+    "review": {
+      "summary": "The paper introduces Know2BIO, a comprehensive biomedical knowledge graph benchmark that integrates data from 30 diverse sources, covering 11 biomedical categories with ~219k nodes and ~6.2M edges. Key innovations include: (1) a dual-view structure (instance and ontology views) enabling multi-view learning, (2) automated updating capability to keep the KG current, (3) rich multi-modal node features (text, sequences, structures), and (4) extensive benchmarking of 13 KG representation models across three embedding spaces (Euclidean, complex, hyperbolic). The authors demonstrate that hyperbolic models excel in the ontology view, complex models in the instance view, and advocate evaluation on the combined whole view.",
+      "strengths": [
+        "Comprehensive data integration from 30 diverse biomedical sources, creating a substantially larger and more diverse benchmark than existing alternatives.",
+        "Novel dual-view (instance/ontology) structure explicitly designed to support advanced multi-view learning tasks.",
+        "Inclusion of rich multi-modal node features (text, sequences, structures) enables integration with modern NLP and multi-modal methods.",
+        "Automated updating framework addresses a critical limitation of static biomedical KGs and ensures long-term relevance.",
+        "Rigorous benchmarking of 13 representative KG models across three embedding spaces provides a solid baseline for future research."
+      ],
+      "weaknesses": [
+        "The entity alignment process, while critical, is described at a high level; specific challenges, error rates, or validation of alignment quality are not quantified.",
+        "The paper claims \"automated updating\" but does not detail the update mechanism, frequency, or how consistency is maintained across sources.",
+        "Benchmarking focuses solely on link prediction; other important KG tasks (e.g., node classification, clustering, or real-world downstream applications like drug repurposing) are not evaluated.",
+        "The impact of multi-modal features is not empirically demonstrated—the benchmarking uses only structural KG data, leaving the utility of the provided features unvalidated.",
+        "Some claims about superiority over existing KGs (e.g., \"more comprehensively and accurately\") are not backed by direct comparative experiments on the same tasks."
+      ],
+      "suggestions": [
+        "Include a quantitative analysis of entity alignment quality (e.g., precision/recall of mapped identifiers) and discuss potential sources of alignment errors.",
+        "Provide more technical details on the automated update pipeline: architecture, conflict resolution, versioning, and how updates affect benchmark consistency.",
+        "Expand benchmarking to include (1) tasks leveraging multi-modal features (e.g., feature-enhanced link prediction), and (2) downstream biomedical applications to demonstrate practical utility.",
+        "Conduct direct comparative experiments with other biomedical KGs (e.g., DRKG, OpenBioLink) on identical tasks to substantiate claims of superiority.",
+        "Discuss computational requirements for updating and using Know2BIO, as scalability is a claimed advantage."
+      ],
+      "questions": [
+        "What specific mechanisms ensure identifier alignment remains consistent during automated updates, especially when source schemas change?",
+        "How are conflicts between different sources (e.g., contradictory relationships) resolved during KG construction and updates?",
+        "Can you provide an example of a biomedical discovery task (beyond link prediction) where the dual-view structure offers a clear advantage over a single-view KG?",
+        "What is the planned update frequency for Know2BIO, and will benchmark splits be updated accordingly or kept static for comparability?",
+        "Were any ablation studies performed to understand the contribution of individual data sources or modalities to overall benchmark performance?"
+      ],
+      "soundness": {
+        "score": 4,
+        "justification": "The core methodology for KG construction and benchmarking is sound and well-grounded in existing practices. The experimental setup for link prediction is rigorous, with appropriate metrics, hyperparameter tuning, and model selection. However, key technical aspects are under-specified: the entity alignment process lacks validation, the automated update mechanism is not detailed, and the benefits of multi-modal features are not empirically demonstrated. These omissions reduce the reproducibility and full assessment of technical soundness."
+      },
+      "contribution": {
+        "score": 5,
+        "justification": "Know2BIO makes significant contributions: it is arguably the most comprehensive biomedical KG benchmark to date in terms of source diversity and multi-modal features. The dual-view structure and automated updating are novel and address important limitations of existing resources. The extensive benchmarking provides a valuable baseline. However, the novelty is more in scale, integration, and design than in fundamental algorithmic innovation. The impact would be greater with demonstrated applications beyond standard link prediction."
+      },
+      "presentation": {
+        "score": 4,
+        "justification": "The paper is generally well-structured, with clear motivation, related work, and description of the KG. The dual-view concept is explained effectively. However, some sections are overly high-level: the construction and alignment process would benefit from more concrete examples or flowcharts; the update mechanism is mentioned but not elaborated; and the results, while comprehensive, could be better visualized to highlight differences between views and model classes. The writing is clear but occasionally uses strong superlatives without full empirical backing."
+      },
+      "overall_rating": {
+        "score": 7,
+        "justification": "Know2BIO is a solid and valuable contribution that addresses important gaps in biomedical KG resources. Its scale, multi-modality, dual-view design, and update capability are clear strengths that will benefit the community. The benchmarking is extensive and provides a useful reference. However, the paper would be strengthened by more technical details on alignment and updates, validation of multi-modal utility, and evaluation on tasks beyond link prediction. As presented, it is a strong, publishable resource paper with minor weaknesses that could be addressed in revision."
+      },
+      "confidence": 5
+    },
+    "review_generation": {
+      "review_key": "index:348::rhetoric_heavier",
+      "model_name": "deepseek-v3.2",
+      "input_kind": "full_paper"
+    }
+  }
+]

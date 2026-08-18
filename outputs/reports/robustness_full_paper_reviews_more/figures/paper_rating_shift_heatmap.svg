@@ -1,0 +1,104 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='670' height='626' viewBox='0 0 670 626'><style>.title{font:700 22px Arial}.label{font:13px Arial}.note{font:12px Arial;fill:#555}.axis{stroke:#333;stroke-width:1}</style><rect width='100%' height='100%' fill='white'/>
+<text x='30' y='35' class='title'>Rating Shift by Paper and Variant</text>
+<text x='255.0' y='55' class='label' text-anchor='middle'>plain_core</text>
+<text x='405.0' y='55' class='label' text-anchor='middle'>rhetoric_heavy</text>
+<text x='555.0' y='55' class='label' text-anchor='middle'>rhetoric_heavier</text>
+<text x='20' y='92' class='label'>index:123</text>
+<rect x='180' y='70' width='148' height='32' fill='rgb(245,125,125)'/>
+<text x='255.0' y='92' class='label' text-anchor='middle'>-2.0</text>
+<rect x='330' y='70' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='405.0' y='92' class='label' text-anchor='middle'>-1.0</text>
+<rect x='480' y='70' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='92' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='126' class='label'>index:134</text>
+<rect x='180' y='104' width='148' height='32' fill='rgb(245,125,125)'/>
+<text x='255.0' y='126' class='label' text-anchor='middle'>-2.0</text>
+<rect x='330' y='104' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='126' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='104' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='555.0' y='126' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='160' class='label'>index:138</text>
+<rect x='180' y='138' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='255.0' y='160' class='label' text-anchor='middle'>-1.0</text>
+<rect x='330' y='138' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='405.0' y='160' class='label' text-anchor='middle'>-1.0</text>
+<rect x='480' y='138' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='160' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='194' class='label'>index:259</text>
+<rect x='180' y='172' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='194' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='172' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='194' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='172' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='194' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='228' class='label'>index:279</text>
+<rect x='180' y='206' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='228' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='206' width='148' height='32' fill='rgb(185,245,185)'/>
+<text x='405.0' y='228' class='label' text-anchor='middle'>+1.0</text>
+<rect x='480' y='206' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='228' class='label' text-anchor='middle'></text>
+<text x='20' y='262' class='label'>index:326</text>
+<rect x='180' y='240' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='262' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='240' width='148' height='32' fill='rgb(185,245,185)'/>
+<text x='405.0' y='262' class='label' text-anchor='middle'>+1.0</text>
+<rect x='480' y='240' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='262' class='label' text-anchor='middle'></text>
+<text x='20' y='296' class='label'>index:332</text>
+<rect x='180' y='274' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='296' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='274' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='296' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='274' width='148' height='32' fill='rgb(185,245,185)'/>
+<text x='555.0' y='296' class='label' text-anchor='middle'>+1.0</text>
+<text x='20' y='330' class='label'>index:348</text>
+<rect x='180' y='308' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='330' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='308' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='330' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='308' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='330' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='364' class='label'>index:455</text>
+<rect x='180' y='342' width='148' height='32' fill='rgb(185,245,185)'/>
+<text x='255.0' y='364' class='label' text-anchor='middle'>+1.0</text>
+<rect x='330' y='342' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='364' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='342' width='148' height='32' fill='rgb(185,245,185)'/>
+<text x='555.0' y='364' class='label' text-anchor='middle'>+1.0</text>
+<text x='20' y='398' class='label'>index:481</text>
+<rect x='180' y='376' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='376' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='405.0' y='398' class='label' text-anchor='middle'>-1.0</text>
+<rect x='480' y='376' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='432' class='label'>index:503</text>
+<rect x='180' y='410' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='432' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='410' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='405.0' y='432' class='label' text-anchor='middle'>-1.0</text>
+<rect x='480' y='410' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='432' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='466' class='label'>index:539</text>
+<rect x='180' y='444' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='466' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='444' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='466' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='444' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='555.0' y='466' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='500' class='label'>index:585</text>
+<rect x='180' y='478' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='500' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='478' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='500' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='478' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='500' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='534' class='label'>index:609</text>
+<rect x='180' y='512' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='534' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='512' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='534' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='512' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='534' class='label' text-anchor='middle'>+0.0</text>
+</svg>

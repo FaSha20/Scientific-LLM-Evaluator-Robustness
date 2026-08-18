@@ -1,0 +1,57 @@
+paper_key,paper_position,title,variant_name,rating,decision,soundness,presentation,contribution,confidence,Rating_gt,Rating_pred,Decision_gt,Decision_pred,hardness
+index:134,1,Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs,main,7.0,Accept,4.0,4.0,5.0,4.0,4.75,6.0,Reject,Accept,0.3950632489
+index:134,1,Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs,plain_core,5.0,Reject,3.0,3.0,4.0,4.0,4.75,6.0,Reject,Accept,0.3950632489
+index:134,1,Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs,rhetoric_heavy,7.0,Accept,4.0,4.0,5.0,4.0,4.75,6.0,Reject,Accept,0.3950632489
+index:134,1,Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs,rhetoric_heavier,6.0,Accept,4.0,3.0,4.0,4.0,4.75,6.0,Reject,Accept,0.3950632489
+index:585,2,Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection,main,7.0,Accept,4.0,4.0,4.0,4.0,4.25,6.0,Reject,Accept,0.5162160292
+index:585,2,Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection,plain_core,7.0,Accept,4.0,4.0,4.0,4.0,4.25,6.0,Reject,Accept,0.5162160292
+index:585,2,Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection,rhetoric_heavy,7.0,Accept,4.0,5.0,4.0,5.0,4.25,6.0,Reject,Accept,0.5162160292
+index:585,2,Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection,rhetoric_heavier,7.0,Accept,4.0,5.0,4.0,4.0,4.25,6.0,Reject,Accept,0.5162160292
+index:455,3,Behind the Myth of Exploration in Policy Gradients,main,5.0,Reject,3.0,4.0,4.0,4.0,5.33,3.5,Reject,Reject,0.271709617
+index:455,3,Behind the Myth of Exploration in Policy Gradients,plain_core,6.0,Accept,4.0,4.0,3.0,4.0,5.33,3.5,Reject,Reject,0.271709617
+index:455,3,Behind the Myth of Exploration in Policy Gradients,rhetoric_heavy,5.0,Reject,3.0,4.0,3.0,4.0,5.33,3.5,Reject,Reject,0.271709617
+index:455,3,Behind the Myth of Exploration in Policy Gradients,rhetoric_heavier,6.0,Accept,4.0,5.0,4.0,4.0,5.33,3.5,Reject,Reject,0.271709617
+index:332,4,How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?,main,7.0,Accept,4.0,4.0,5.0,4.0,6.8,5.25,Accept,Reject,0.2959740435
+index:332,4,How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?,plain_core,7.0,Accept,4.0,4.0,5.0,4.0,6.8,5.25,Accept,Reject,0.2959740435
+index:332,4,How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?,rhetoric_heavy,7.0,Accept,4.0,4.0,5.0,5.0,6.8,5.25,Accept,Reject,0.2959740435
+index:332,4,How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?,rhetoric_heavier,8.0,Accept,4.0,4.0,5.0,5.0,6.8,5.25,Accept,Reject,0.2959740435
+index:348,5,Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs,main,7.0,Accept,4.0,4.0,4.0,5.0,3.75,5.25,Reject,Reject,0.3078914704
+index:348,5,Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs,plain_core,7.0,Accept,4.0,4.0,4.0,4.0,3.75,5.25,Reject,Reject,0.3078914704
+index:348,5,Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs,rhetoric_heavy,7.0,Accept,4.0,5.0,4.0,5.0,3.75,5.25,Reject,Reject,0.3078914704
+index:348,5,Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs,rhetoric_heavier,7.0,Accept,4.0,4.0,5.0,4.0,3.75,5.25,Reject,Reject,0.3078914704
+index:503,6,Counterfactual Data Augmentation with Contrastive Learning,main,7.0,Accept,4.0,5.0,4.0,4.0,4.75,6.0,Reject,Accept,0.3717745586
+index:503,6,Counterfactual Data Augmentation with Contrastive Learning,plain_core,7.0,Accept,4.0,4.0,4.0,4.0,4.75,6.0,Reject,Accept,0.3717745586
+index:503,6,Counterfactual Data Augmentation with Contrastive Learning,rhetoric_heavy,6.0,Accept,4.0,4.0,4.0,4.0,4.75,6.0,Reject,Accept,0.3717745586
+index:503,6,Counterfactual Data Augmentation with Contrastive Learning,rhetoric_heavier,7.0,Accept,4.0,4.0,4.0,4.0,4.75,6.0,Reject,Accept,0.3717745586
+index:609,7,Hierarchical Gaussian Mixture Normalizing Flows Modeling for Multi-Class Anomaly Detection,main,7.0,Accept,4.0,4.0,4.0,4.0,4.25,6.0,Reject,Accept,0.4041326966
+index:609,7,Hierarchical Gaussian Mixture Normalizing Flows Modeling for Multi-Class Anomaly Detection,plain_core,7.0,Accept,4.0,4.0,4.0,4.0,4.25,6.0,Reject,Accept,0.4041326966
+index:609,7,Hierarchical Gaussian Mixture Normalizing Flows Modeling for Multi-Class Anomaly Detection,rhetoric_heavy,7.0,Accept,4.0,4.0,4.0,4.0,4.25,6.0,Reject,Accept,0.4041326966
+index:609,7,Hierarchical Gaussian Mixture Normalizing Flows Modeling for Multi-Class Anomaly Detection,rhetoric_heavier,7.0,Accept,4.0,5.0,4.0,4.0,4.25,6.0,Reject,Accept,0.4041326966
+index:138,8,Effective Structural Encodings via Local Curvature Profiles,main,7.0,Accept,4.0,5.0,4.0,4.0,5.75,5.75,Accept,Accept,0.1310563302
+index:138,8,Effective Structural Encodings via Local Curvature Profiles,plain_core,6.0,Accept,4.0,4.0,4.0,4.0,5.75,5.75,Accept,Accept,0.1310563302
+index:138,8,Effective Structural Encodings via Local Curvature Profiles,rhetoric_heavy,6.0,Accept,4.0,3.0,4.0,4.0,5.75,5.75,Accept,Accept,0.1310563302
+index:138,8,Effective Structural Encodings via Local Curvature Profiles,rhetoric_heavier,7.0,Accept,4.0,5.0,4.0,4.0,5.75,5.75,Accept,Accept,0.1310563302
+index:123,9,Vision-Language Models are Zero-Shot Reward Models for Reinforcement Learning,main,8.0,Accept,4.0,5.0,4.0,5.0,5.6,5.0,Accept,Reject,0.4172225075
+index:123,9,Vision-Language Models are Zero-Shot Reward Models for Reinforcement Learning,plain_core,6.0,Accept,4.0,4.0,4.0,4.0,5.6,5.0,Accept,Reject,0.4172225075
+index:123,9,Vision-Language Models are Zero-Shot Reward Models for Reinforcement Learning,rhetoric_heavy,7.0,Accept,4.0,4.0,4.0,5.0,5.6,5.0,Accept,Reject,0.4172225075
+index:123,9,Vision-Language Models are Zero-Shot Reward Models for Reinforcement Learning,rhetoric_heavier,8.0,Accept,4.0,5.0,5.0,5.0,5.6,5.0,Accept,Reject,0.4172225075
+index:259,10,Scaling Supervised Local Learning with Augmented Auxiliary Networks,main,7.0,Accept,4.0,4.0,4.0,4.0,6.25,5.75,Accept,Accept,0.1041747195
+index:259,10,Scaling Supervised Local Learning with Augmented Auxiliary Networks,plain_core,7.0,Accept,4.0,4.0,4.0,4.0,6.25,5.75,Accept,Accept,0.1041747195
+index:259,10,Scaling Supervised Local Learning with Augmented Auxiliary Networks,rhetoric_heavy,7.0,Accept,4.0,5.0,4.0,5.0,6.25,5.75,Accept,Accept,0.1041747195
+index:259,10,Scaling Supervised Local Learning with Augmented Auxiliary Networks,rhetoric_heavier,7.0,Accept,4.0,4.0,4.0,4.0,6.25,5.75,Accept,Accept,0.1041747195
+index:279,11,Emerging Semantic Segmentation from Positive and Negative Coarse Label Learning,main,5.0,Reject,3.0,3.0,4.0,4.0,4.75,3.75,Reject,Reject,0.1921210029
+index:279,11,Emerging Semantic Segmentation from Positive and Negative Coarse Label Learning,plain_core,5.0,Reject,3.0,3.0,4.0,4.0,4.75,3.75,Reject,Reject,0.1921210029
+index:279,11,Emerging Semantic Segmentation from Positive and Negative Coarse Label Learning,rhetoric_heavy,6.0,Accept,4.0,3.0,4.0,4.0,4.75,3.75,Reject,Reject,0.1921210029
+index:279,11,Emerging Semantic Segmentation from Positive and Negative Coarse Label Learning,rhetoric_heavier,,,,,,,4.75,3.75,Reject,Reject,0.1921210029
+index:539,12,Teaching Arithmetic to Small Transformers,main,7.0,Accept,4.0,5.0,4.0,5.0,6.0,3.0,Accept,Reject,0.4999352699
+index:539,12,Teaching Arithmetic to Small Transformers,plain_core,7.0,Accept,4.0,5.0,4.0,4.0,6.0,3.0,Accept,Reject,0.4999352699
+index:539,12,Teaching Arithmetic to Small Transformers,rhetoric_heavy,7.0,Accept,4.0,5.0,4.0,5.0,6.0,3.0,Accept,Reject,0.4999352699
+index:539,12,Teaching Arithmetic to Small Transformers,rhetoric_heavier,6.0,Accept,4.0,3.0,3.0,4.0,6.0,3.0,Accept,Reject,0.4999352699
+index:481,13,Towards Causal Foundation Model: on Duality between Causal Inference and Attention,main,7.0,Accept,4.0,5.0,4.0,5.0,3.75,5.75,Reject,Accept,0.5039861216
+index:481,13,Towards Causal Foundation Model: on Duality between Causal Inference and Attention,plain_core,7.0,Accept,4.0,5.0,4.0,5.0,3.75,5.75,Reject,Accept,0.5039861216
+index:481,13,Towards Causal Foundation Model: on Duality between Causal Inference and Attention,rhetoric_heavy,6.0,Accept,3.0,4.0,4.0,4.0,3.75,5.75,Reject,Accept,0.5039861216
+index:481,13,Towards Causal Foundation Model: on Duality between Causal Inference and Attention,rhetoric_heavier,7.0,Accept,4.0,4.0,4.0,4.0,3.75,5.75,Reject,Accept,0.5039861216
+index:326,14,SEA: Sparse Linear Attention with Estimated Attention Mask,main,6.0,Accept,4.0,3.0,4.0,4.0,6.67,4.5,Accept,Reject,0.4115283213
+index:326,14,SEA: Sparse Linear Attention with Estimated Attention Mask,plain_core,6.0,Accept,4.0,3.0,4.0,4.0,6.67,4.5,Accept,Reject,0.4115283213
+index:326,14,SEA: Sparse Linear Attention with Estimated Attention Mask,rhetoric_heavy,7.0,Accept,4.0,4.0,4.0,4.0,6.67,4.5,Accept,Reject,0.4115283213
+index:326,14,SEA: Sparse Linear Attention with Estimated Attention Mask,rhetoric_heavier,,,,,,,6.67,4.5,Accept,Reject,0.4115283213

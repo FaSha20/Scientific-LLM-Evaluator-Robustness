@@ -1,0 +1,16 @@
+paper_key,paper_position,title,variant_name,main_rating,variant_rating,rating_shift,abs_rating_shift,main_decision,variant_decision,decision_flip,hardness,Rating_gt,Rating_pred,soundness_shift,abs_soundness_shift,presentation_shift,abs_presentation_shift,contribution_shift,abs_contribution_shift,mean_abs_score_dim_shift
+index:134,1,Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs,plain_core,7.0,6.0,-1.0,1.0,Accept,Accept,False,0.3950632489,4.75,6.0,0.0,0.0,1.0,1.0,-1.0,1.0,0.6666666666666666
+index:134,1,Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs,rhetoric_heavy,7.0,7.0,0.0,0.0,Accept,Accept,False,0.3950632489,4.75,6.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+index:134,1,Beyond Differentiability: Neurosymbolic Learning with Black-Box Programs,rhetoric_heavier,7.0,7.0,0.0,0.0,Accept,Accept,False,0.3950632489,4.75,6.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+index:585,2,Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection,plain_core,7.0,7.0,0.0,0.0,Accept,Accept,False,0.5162160292,4.25,6.0,0.0,0.0,-1.0,1.0,0.0,0.0,0.3333333333333333
+index:585,2,Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection,rhetoric_heavy,7.0,7.0,0.0,0.0,Accept,Accept,False,0.5162160292,4.25,6.0,0.0,0.0,-2.0,2.0,0.0,0.0,0.6666666666666666
+index:585,2,Which Examples to Annotate for In-Context Learning? Towards Effective and Efficient Selection,rhetoric_heavier,7.0,7.0,0.0,0.0,Accept,Accept,False,0.5162160292,4.25,6.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+index:455,3,Behind the Myth of Exploration in Policy Gradients,plain_core,6.0,5.0,-1.0,1.0,Accept,Reject,True,0.271709617,5.33,3.5,-1.0,1.0,-1.0,1.0,0.0,0.0,0.6666666666666666
+index:455,3,Behind the Myth of Exploration in Policy Gradients,rhetoric_heavy,6.0,5.0,-1.0,1.0,Accept,Reject,True,0.271709617,5.33,3.5,-1.0,1.0,-1.0,1.0,0.0,0.0,0.6666666666666666
+index:455,3,Behind the Myth of Exploration in Policy Gradients,rhetoric_heavier,6.0,6.0,0.0,0.0,Accept,Accept,False,0.271709617,5.33,3.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+index:332,4,How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?,plain_core,7.0,6.0,-1.0,1.0,Accept,Accept,False,0.2959740435,6.8,5.25,-1.0,1.0,-1.0,1.0,-1.0,1.0,1.0
+index:332,4,How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?,rhetoric_heavy,7.0,6.0,-1.0,1.0,Accept,Accept,False,0.2959740435,6.8,5.25,0.0,0.0,-1.0,1.0,0.0,0.0,0.3333333333333333
+index:332,4,How Well Do Supervised 3D Models Transfer to Medical Imaging Tasks?,rhetoric_heavier,7.0,7.0,0.0,0.0,Accept,Accept,False,0.2959740435,6.8,5.25,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+index:348,5,Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs,plain_core,6.0,6.0,0.0,0.0,Accept,Accept,False,0.3078914704,3.75,5.25,0.0,0.0,0.0,0.0,1.0,1.0,0.3333333333333333
+index:348,5,Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs,rhetoric_heavy,6.0,6.0,0.0,0.0,Accept,Accept,False,0.3078914704,3.75,5.25,0.0,0.0,-1.0,1.0,1.0,1.0,0.6666666666666666
+index:348,5,Know2BIO: A Comprehensive Dual-View Benchmark for Evolving Biomedical Knowledge Graphs,rhetoric_heavier,6.0,7.0,1.0,1.0,Accept,Accept,False,0.3078914704,3.75,5.25,0.0,0.0,0.0,0.0,2.0,2.0,0.6666666666666666
