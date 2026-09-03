@@ -1,0 +1,27 @@
+vllm serve Qwen/Qwen3-4B \
+  --host 0.0.0.0 \
+  --port 8001 \
+  --max-model-len 40960 \
+  --gpu-memory-utilization 0.85
+
+source /home/dev/venvs/vllm-qwen/bin/activate
+
+
+python3 scripts/generate_reviews.py   --dataset scistylebench   --input-path data/SciStyleBench/variant_items_15class.csv   --output-dir outputs/scistylebench/deepseek_v3_avalai_15class   --review-prompt-path prompts/research_idea_evaluation.txt   --url https://api.avalai.ir/v1/chat/completions   --api-key aa-6I3P1SpUUyeYzMnCKooe3EhF0LJPFu8XHC2h0oGU6LOfTfJ6  --model-name deepseek-v3.2   --temperature 0   --seed 42   --heatmap-sample-size 30   --heatmap-seed 42   --limit 50
+
+python3 scripts/generate_reviews.py   --dataset scistylebench   --input-path data/SciStyleBench/variant_items_15class.csv   --output-dir outputs/scistylebench/qwen35b_15class   --review-prompt-path prompts/research_idea_evaluation.txt   --url http://31.14.120.138:14041/v1/chat/completions   --api-key ""   --model-name qwen3.5-35b-a3b   --temperature 0   --seed 42   --heatmap-sample-size 30   --heatmap-seed 42   --no-resume --limit 50
+
+python3 scripts/generate_reviews.py \
+  --dataset scistylebench \
+  --input-path data/SciStyleBench/variant_items_15class.csv \
+  --output-dir outputs/scistylebench/qwen4b_15class_fixed \
+  --review-prompt-path prompts/research_idea_evaluation.txt \
+  --url http://localhost:8001/v1/chat/completions \
+  --api-key "" \
+  --model-name Qwen/Qwen3-4B \
+  --temperature 0 \
+  --seed 42 \
+  --heatmap-sample-size 30 \
+  --heatmap-seed 42 \
+  --no-resume \
+  --limit 50

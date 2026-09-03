@@ -74,16 +74,24 @@ def generate_variant_reviews(
     output_dir: str | Path,
     review_prompt_path: str | Path,
     call_llm: CallLLM,
+    limit: int | None = None,
     url: str | None = None,
     api_key: str | None = None,
     model_name: str = "deepseek-v3.2",
     temperature: float = 0.2,
+    max_tokens: int | None = None,
+    seed: int | None = None,
     max_retries: int = 3,
     resume: bool = True,
+    run_label: str | None = None,
 ) -> list[dict[str, Any]]:
     records = read_json(input_path)
     if not isinstance(records, list):
         raise ValueError("Input variant dataset must be a JSON array")
+    if limit is not None:
+        if limit <= 0:
+            raise ValueError("limit must be a positive integer")
+        records = records[:limit]
 
     output_path = Path(output_dir)
     checkpoint_path = output_path / "review_generation_checkpoint.jsonl"
@@ -124,6 +132,8 @@ def generate_variant_reviews(
                 url=url,
                 api_key=api_key,
                 model_name=model_name,
+                max_tokens=max_tokens,
+                seed=seed,
                 max_retries=max_retries,
             )
 
@@ -138,6 +148,8 @@ def generate_variant_reviews(
                     "review_key": review_key,
                     "model_name": model_name,
                     "input_kind": "full_paper",
+                    "run_label": run_label,
+                    "seed": seed,
                 },
             }
             append_jsonl(checkpoint_path, generated)

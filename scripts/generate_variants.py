@@ -10,7 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 from scientific_llm_evaluator_robustness.pipeline import generate_rhetoric_variants
-from utils import AVAL_AI_KEY, AVAL_AI_URL, DEEPSEEK_V3, call_llm
+from utils import AVAL_AI_KEY, AVAL_AI_KEY_ROHBAN, AVAL_AI_URL, DEEPSEEK_V3, call_llm
 
 
 def parse_args() -> argparse.Namespace:
@@ -46,7 +46,7 @@ def main() -> None:
         seed=args.seed,
         text_field=args.text_field,
         url=AVAL_AI_URL,
-        api_key=AVAL_AI_KEY,
+        api_key=AVAL_AI_KEY_ROHBAN,
         model_name=DEEPSEEK_V3,
         temperature=args.temperature,
         max_retries=args.max_retries,
