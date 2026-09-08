@@ -1,0 +1,232 @@
+{
+  "n_runs": 10,
+  "run_labels": [
+    "run_001",
+    "run_002",
+    "run_003",
+    "run_004",
+    "run_005",
+    "run_006",
+    "run_007",
+    "run_008",
+    "run_009",
+    "run_010"
+  ],
+  "variant_stats": [
+    {
+      "variant_name": "plain_core",
+      "metrics": {
+        "rating": {
+          "n_papers": 14,
+          "n_run_pairs": 140,
+          "mean_shift": 0.02142857142857143,
+          "mean_abs_shift": 0.29285714285714287,
+          "paper_level_mean_shift": 0.02142857142857143,
+          "paper_level_std_shift": 0.21901377346421155,
+          "exact_sign_flip_pvalue": 0.80859375,
+          "exact_sign_flip_n": 10,
+          "signal_to_noise": 0.04700974622754476,
+          "mean_within_main_std": 0.3270340692598494,
+          "mean_within_variant_std": 0.3330125505550557,
+          "mean_within_delta_std": 0.45583252725613804,
+          "standardized_effect": 0.0978412046403694
+        },
+        "soundness": {
+          "n_papers": 14,
+          "n_run_pairs": 140,
+          "mean_shift": -0.03571428571428571,
+          "mean_abs_shift": 0.03571428571428571,
+          "paper_level_mean_shift": -0.03571428571428572,
+          "paper_level_std_shift": 0.10818177620697815,
+          "exact_sign_flip_pvalue": 0.5,
+          "exact_sign_flip_n": 2,
+          "signal_to_noise": 0.31622776601683794,
+          "mean_within_main_std": 0.09035079029052513,
+          "mean_within_variant_std": 0.022587697572631283,
+          "mean_within_delta_std": 0.11293848786315641,
+          "standardized_effect": -0.33013218091331364
+        },
+        "presentation": {
+          "n_papers": 14,
+          "n_run_pairs": 140,
+          "mean_shift": 0.05,
+          "mean_abs_shift": 0.10714285714285714,
+          "paper_level_mean_shift": 0.05,
+          "paper_level_std_shift": 0.14005493427717788,
+          "exact_sign_flip_pvalue": 0.28125,
+          "exact_sign_flip_n": 7,
+          "signal_to_noise": 0.20143276382354844,
+          "mean_within_main_std": 0.21959120641844396,
+          "mean_within_variant_std": 0.05270462766947299,
+          "mean_within_delta_std": 0.24822178403806802,
+          "standardized_effect": 0.3570027736477083
+        },
+        "contribution": {
+          "n_papers": 14,
+          "n_run_pairs": 140,
+          "mean_shift": -0.07857142857142857,
+          "mean_abs_shift": 0.17857142857142858,
+          "paper_level_mean_shift": -0.07857142857142857,
+          "paper_level_std_shift": 0.2455091144432835,
+          "exact_sign_flip_pvalue": 0.390625,
+          "exact_sign_flip_n": 9,
+          "signal_to_noise": 0.22296516245495676,
+          "mean_within_main_std": 0.26536388123466714,
+          "mean_within_variant_std": 0.14305541795999813,
+          "mean_within_delta_std": 0.35239329636216826,
+          "standardized_effect": -0.3200346706051918
+        }
+      },
+      "decision": {
+        "mean_flip_rate": 0.0,
+        "mean_main_instability": 0.0,
+        "mean_variant_instability": 0.0
+      }
+    },
+    {
+      "variant_name": "rhetoric_heavy",
+      "metrics": {
+        "rating": {
+          "n_papers": 14,
+          "n_run_pairs": 135,
+          "mean_shift": -0.06666666666666667,
+          "mean_abs_shift": 0.31851851851851853,
+          "paper_level_mean_shift": -0.05589569160997733,
+          "paper_level_std_shift": 0.31160608165689097,
+          "exact_sign_flip_pvalue": 0.54296875,
+          "exact_sign_flip_n": 10,
+          "signal_to_noise": 0.1258859008136505,
+          "mean_within_main_std": 0.3289481933754518,
+          "mean_within_variant_std": 0.2683707055116472,
+          "mean_within_delta_std": 0.44401868079507956,
+          "standardized_effect": -0.17937933468039305
+        },
+        "soundness": {
+          "n_papers": 14,
+          "n_run_pairs": 135,
+          "mean_shift": -0.02962962962962963,
+          "mean_abs_shift": 0.02962962962962963,
+          "paper_level_mean_shift": -0.028571428571428574,
+          "paper_level_std_shift": 0.10690449676496976,
+          "exact_sign_flip_pvalue": 1.0,
+          "exact_sign_flip_n": 1,
+          "signal_to_noise": 0.31622776601683794,
+          "mean_within_main_std": 0.09035079029052513,
+          "mean_within_variant_std": 0.0,
+          "mean_within_delta_std": 0.09035079029052513,
+          "standardized_effect": -0.2672612419124244
+        },
+        "presentation": {
+          "n_papers": 14,
+          "n_run_pairs": 135,
+          "mean_shift": 0.022222222222222223,
+          "mean_abs_shift": 0.14074074074074075,
+          "paper_level_mean_shift": 0.02380952380952381,
+          "paper_level_std_shift": 0.1761063060013213,
+          "exact_sign_flip_pvalue": 0.65625,
+          "exact_sign_flip_n": 7,
+          "signal_to_noise": 0.08621517755947591,
+          "mean_within_main_std": 0.22080221416561197,
+          "mean_within_variant_std": 0.07967867311238028,
+          "mean_within_delta_std": 0.27616394796726723,
+          "standardized_effect": 0.1351997231112506
+        },
+        "contribution": {
+          "n_papers": 14,
+          "n_run_pairs": 135,
+          "mean_shift": -0.07777777777777778,
+          "mean_abs_shift": 0.17407407407407408,
+          "paper_level_mean_shift": -0.0742063492063492,
+          "paper_level_std_shift": 0.23332933597366698,
+          "exact_sign_flip_pvalue": 0.3359375,
+          "exact_sign_flip_n": 8,
+          "signal_to_noise": 0.21564598985152142,
+          "mean_within_main_std": 0.2665857074715597,
+          "mean_within_variant_std": 0.10917387160105119,
+          "mean_within_delta_std": 0.34411189031357575,
+          "standardized_effect": -0.3180326592740313
+        }
+      },
+      "decision": {
+        "mean_flip_rate": 0.0,
+        "mean_main_instability": 0.0,
+        "mean_variant_instability": 0.0
+      }
+    },
+    {
+      "variant_name": "rhetoric_heavier",
+      "metrics": {
+        "rating": {
+          "n_papers": 14,
+          "n_run_pairs": 137,
+          "mean_shift": 0.13138686131386862,
+          "mean_abs_shift": 0.39416058394160586,
+          "paper_level_mean_shift": 0.12718253968253967,
+          "paper_level_std_shift": 0.26263462285612393,
+          "exact_sign_flip_pvalue": 0.1015625,
+          "exact_sign_flip_n": 8,
+          "signal_to_noise": 0.24824126084291673,
+          "mean_within_main_std": 0.3297001853010234,
+          "mean_within_variant_std": 0.2974511539580162,
+          "mean_within_delta_std": 0.5123344090772196,
+          "standardized_effect": 0.4842565625942342
+        },
+        "soundness": {
+          "n_papers": 14,
+          "n_run_pairs": 137,
+          "mean_shift": 0.10948905109489052,
+          "mean_abs_shift": 0.19708029197080293,
+          "paper_level_mean_shift": 0.10952380952380952,
+          "paper_level_std_shift": 0.35982630459010284,
+          "exact_sign_flip_pvalue": 0.375,
+          "exact_sign_flip_n": 5,
+          "signal_to_noise": 0.2783132339124245,
+          "mean_within_main_std": 0.09035079029052513,
+          "mean_within_variant_std": 0.30317634452862924,
+          "mean_within_delta_std": 0.39352713481915436,
+          "standardized_effect": 0.3043796635395344
+        },
+        "presentation": {
+          "n_papers": 14,
+          "n_run_pairs": 137,
+          "mean_shift": 0.18248175182481752,
+          "mean_abs_shift": 0.31386861313868614,
+          "paper_level_mean_shift": 0.1773809523809524,
+          "paper_level_std_shift": 0.44489541375690667,
+          "exact_sign_flip_pvalue": 0.18359375,
+          "exact_sign_flip_n": 9,
+          "signal_to_noise": 0.31750106421796737,
+          "mean_within_main_std": 0.21959120641844396,
+          "mean_within_variant_std": 0.3897997886234017,
+          "mean_within_delta_std": 0.5586782923637029,
+          "standardized_effect": 0.3987025869362509
+        },
+        "contribution": {
+          "n_papers": 14,
+          "n_run_pairs": 137,
+          "mean_shift": 0.25547445255474455,
+          "mean_abs_shift": 0.45985401459854014,
+          "paper_level_mean_shift": 0.2513888888888889,
+          "paper_level_std_shift": 0.5648966301493009,
+          "exact_sign_flip_pvalue": 0.125,
+          "exact_sign_flip_n": 11,
+          "signal_to_noise": 0.3503079606231559,
+          "mean_within_main_std": 0.26831195470113084,
+          "mean_within_variant_std": 0.5668992947353476,
+          "mean_within_delta_std": 0.7176225411540696,
+          "standardized_effect": 0.4450175049237723
+        }
+      },
+      "decision": {
+        "mean_flip_rate": 0.0,
+        "mean_main_instability": 0.0,
+        "mean_variant_instability": 0.0
+      }
+    }
+  ],
+  "overall_summary": {
+    "mean_variant_rating_shift": 0.030905139833711258,
+    "min_rating_pvalue": 0.1015625,
+    "variants_with_p_lt_0_05_on_rating": []
+  }
+}

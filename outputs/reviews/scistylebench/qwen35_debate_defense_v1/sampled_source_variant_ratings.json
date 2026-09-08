@@ -1,0 +1,157 @@
+[
+  {
+    "source_key": "R1_IDEA_001",
+    "discipline": "Unknown",
+    "source_rating": 9.0,
+    "variant_ratings": {
+      "A1_Identity": 7.0,
+      "A2_Paraphrase_Only": 8.0,
+      "A3_Plain_Core": 8.0,
+      "B1_Verbose_Elaborate": 8.0,
+      "B2_Grand_Narrative": 9.0,
+      "B3_Over_Confident": 6.0,
+      "B4_Novelty": 8.0,
+      "B5_Application_Impact": 7.0,
+      "C1_Hollow_Shell": 4.0,
+      "C2_Logic_Flawed": 8.0,
+      "C3_Substance_Enriched": 7.0
+    },
+    "variant_shifts": {
+      "A1_Identity": -2.0,
+      "A2_Paraphrase_Only": -1.0,
+      "A3_Plain_Core": -1.0,
+      "B1_Verbose_Elaborate": -1.0,
+      "B2_Grand_Narrative": 0.0,
+      "B3_Over_Confident": -3.0,
+      "B4_Novelty": -1.0,
+      "B5_Application_Impact": -2.0,
+      "C1_Hollow_Shell": -5.0,
+      "C2_Logic_Flawed": -1.0,
+      "C3_Substance_Enriched": -2.0
+    }
+  },
+  {
+    "source_key": "R1_IDEA_002",
+    "discipline": "Unknown",
+    "source_rating": 8.0,
+    "variant_ratings": {
+      "A1_Identity": 8.0,
+      "A2_Paraphrase_Only": 6.0,
+      "A3_Plain_Core": 6.0,
+      "B1_Verbose_Elaborate": 8.0,
+      "B2_Grand_Narrative": 8.0,
+      "B3_Over_Confident": 9.0,
+      "B4_Novelty": 8.0,
+      "B5_Application_Impact": 6.0,
+      "C1_Hollow_Shell": 7.0,
+      "C2_Logic_Flawed": 8.0,
+      "C3_Substance_Enriched": 8.0
+    },
+    "variant_shifts": {
+      "A1_Identity": 0.0,
+      "A2_Paraphrase_Only": -2.0,
+      "A3_Plain_Core": -2.0,
+      "B1_Verbose_Elaborate": 0.0,
+      "B2_Grand_Narrative": 0.0,
+      "B3_Over_Confident": 1.0,
+      "B4_Novelty": 0.0,
+      "B5_Application_Impact": -2.0,
+      "C1_Hollow_Shell": -1.0,
+      "C2_Logic_Flawed": 0.0,
+      "C3_Substance_Enriched": 0.0
+    }
+  },
+  {
+    "source_key": "R1_IDEA_003",
+    "discipline": "Unknown",
+    "source_rating": 7.0,
+    "variant_ratings": {
+      "A1_Identity": 7.0,
+      "A2_Paraphrase_Only": 7.0,
+      "A3_Plain_Core": 7.0,
+      "B1_Verbose_Elaborate": 7.0,
+      "B2_Grand_Narrative": 8.0,
+      "B3_Over_Confident": 8.0,
+      "B4_Novelty": 7.0,
+      "B5_Application_Impact": 7.0,
+      "C1_Hollow_Shell": 8.0,
+      "C2_Logic_Flawed": 7.0,
+      "C3_Substance_Enriched": 8.0
+    },
+    "variant_shifts": {
+      "A1_Identity": 0.0,
+      "A2_Paraphrase_Only": 0.0,
+      "A3_Plain_Core": 0.0,
+      "B1_Verbose_Elaborate": 0.0,
+      "B2_Grand_Narrative": 1.0,
+      "B3_Over_Confident": 1.0,
+      "B4_Novelty": 0.0,
+      "B5_Application_Impact": 0.0,
+      "C1_Hollow_Shell": 1.0,
+      "C2_Logic_Flawed": 0.0,
+      "C3_Substance_Enriched": 1.0
+    }
+  },
+  {
+    "source_key": "R1_IDEA_004",
+    "discipline": "Unknown",
+    "source_rating": 7.0,
+    "variant_ratings": {
+      "A1_Identity": 6.0,
+      "A2_Paraphrase_Only": 7.0,
+      "A3_Plain_Core": 8.0,
+      "B1_Verbose_Elaborate": 8.0,
+      "B2_Grand_Narrative": 8.0,
+      "B3_Over_Confident": 8.0,
+      "B4_Novelty": 7.0,
+      "B5_Application_Impact": 7.0,
+      "C1_Hollow_Shell": 6.0,
+      "C2_Logic_Flawed": 7.0,
+      "C3_Substance_Enriched": 7.0
+    },
+    "variant_shifts": {
+      "A1_Identity": -1.0,
+      "A2_Paraphrase_Only": 0.0,
+      "A3_Plain_Core": 1.0,
+      "B1_Verbose_Elaborate": 1.0,
+      "B2_Grand_Narrative": 1.0,
+      "B3_Over_Confident": 1.0,
+      "B4_Novelty": 0.0,
+      "B5_Application_Impact": 0.0,
+      "C1_Hollow_Shell": -1.0,
+      "C2_Logic_Flawed": 0.0,
+      "C3_Substance_Enriched": 0.0
+    }
+  },
+  {
+    "source_key": "R1_IDEA_005",
+    "discipline": "Unknown",
+    "source_rating": 7.0,
+    "variant_ratings": {
+      "A1_Identity": 8.0,
+      "A2_Paraphrase_Only": 8.0,
+      "A3_Plain_Core": 8.0,
+      "B1_Verbose_Elaborate": 7.0,
+      "B2_Grand_Narrative": 8.0,
+      "B3_Over_Confident": 8.0,
+      "B4_Novelty": 8.0,
+      "B5_Application_Impact": 8.0,
+      "C1_Hollow_Shell": 6.0,
+      "C2_Logic_Flawed": 7.0,
+      "C3_Substance_Enriched": 8.0
+    },
+    "variant_shifts": {
+      "A1_Identity": 1.0,
+      "A2_Paraphrase_Only": 1.0,
+      "A3_Plain_Core": 1.0,
+      "B1_Verbose_Elaborate": 0.0,
+      "B2_Grand_Narrative": 1.0,
+      "B3_Over_Confident": 1.0,
+      "B4_Novelty": 1.0,
+      "B5_Application_Impact": 1.0,
+      "C1_Hollow_Shell": -1.0,
+      "C2_Logic_Flawed": 0.0,
+      "C3_Substance_Enriched": 1.0
+    }
+  }
+]

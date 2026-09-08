@@ -1,0 +1,519 @@
+{
+  "dataset": {
+    "n_sources": 5,
+    "n_variants": 55
+  },
+  "rating_threshold": 0.25,
+  "overall": {
+    "n": 55,
+    "mean_source_rating": 7.6,
+    "mean_variant_rating": 7.381818181818182,
+    "mean_shift": -0.21818181818181817,
+    "mean_abs_shift": 0.8363636363636363,
+    "direction_accuracy": 0.4,
+    "expected_counts": {
+      "same": 40,
+      "down": 10,
+      "up": 5
+    },
+    "predicted_counts": {
+      "down": 17,
+      "same": 21,
+      "up": 17
+    },
+    "confusion": {
+      "down": {
+        "down": 5,
+        "same": 4,
+        "up": 1
+      },
+      "same": {
+        "down": 11,
+        "same": 15,
+        "up": 14
+      },
+      "up": {
+        "down": 1,
+        "same": 2,
+        "up": 2
+      }
+    }
+  },
+  "by_variant_group": [
+    {
+      "n": 15,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.266666666666667,
+      "mean_shift": -0.3333333333333333,
+      "mean_abs_shift": 0.8666666666666667,
+      "direction_accuracy": 0.3333333333333333,
+      "expected_counts": {
+        "same": 15
+      },
+      "predicted_counts": {
+        "down": 6,
+        "same": 5,
+        "up": 4
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 6,
+          "same": 5,
+          "up": 4
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant_group": "A_baseline_expression_control"
+    },
+    {
+      "n": 25,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.64,
+      "mean_shift": 0.04,
+      "mean_abs_shift": 0.76,
+      "direction_accuracy": 0.4,
+      "expected_counts": {
+        "same": 25
+      },
+      "predicted_counts": {
+        "down": 5,
+        "same": 10,
+        "up": 10
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 5,
+          "same": 10,
+          "up": 10
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant_group": "B_rhetoric_and_framing"
+    },
+    {
+      "n": 15,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.066666666666666,
+      "mean_shift": -0.5333333333333333,
+      "mean_abs_shift": 0.9333333333333333,
+      "direction_accuracy": 0.4666666666666667,
+      "expected_counts": {
+        "down": 10,
+        "up": 5
+      },
+      "predicted_counts": {
+        "down": 6,
+        "same": 6,
+        "up": 3
+      },
+      "confusion": {
+        "down": {
+          "down": 5,
+          "same": 4,
+          "up": 1
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 1,
+          "same": 2,
+          "up": 2
+        }
+      },
+      "variant_group": "C_substance_and_logic"
+    }
+  ],
+  "by_variant": [
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.2,
+      "mean_shift": -0.4,
+      "mean_abs_shift": 0.8,
+      "direction_accuracy": 0.4,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "down": 2,
+        "same": 2,
+        "up": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 2,
+          "same": 2,
+          "up": 1
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "A1_Identity"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.2,
+      "mean_shift": -0.4,
+      "mean_abs_shift": 0.8,
+      "direction_accuracy": 0.4,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "down": 2,
+        "same": 2,
+        "up": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 2,
+          "same": 2,
+          "up": 1
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "A2_Paraphrase_Only"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.4,
+      "mean_shift": -0.2,
+      "mean_abs_shift": 1.0,
+      "direction_accuracy": 0.2,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "down": 2,
+        "same": 1,
+        "up": 2
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 2,
+          "same": 1,
+          "up": 2
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "A3_Plain_Core"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.6,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.4,
+      "direction_accuracy": 0.6,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "down": 1,
+        "same": 3,
+        "up": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 3,
+          "up": 1
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B1_Verbose_Elaborate"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 8.2,
+      "mean_shift": 0.6,
+      "mean_abs_shift": 0.6,
+      "direction_accuracy": 0.4,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "same": 2,
+        "up": 3
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 2,
+          "up": 3
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B2_Grand_Narrative"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.8,
+      "mean_shift": 0.2,
+      "mean_abs_shift": 1.4,
+      "direction_accuracy": 0.0,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "down": 1,
+        "up": 4
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 0,
+          "up": 4
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B3_Over_Confident"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.6,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.4,
+      "direction_accuracy": 0.6,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "down": 1,
+        "same": 3,
+        "up": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 3,
+          "up": 1
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B4_Novelty"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.0,
+      "mean_shift": -0.6,
+      "mean_abs_shift": 1.0,
+      "direction_accuracy": 0.4,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "down": 2,
+        "same": 2,
+        "up": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 2,
+          "same": 2,
+          "up": 1
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B5_Application_Impact"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 6.2,
+      "mean_shift": -1.4,
+      "mean_abs_shift": 1.8,
+      "direction_accuracy": 0.8,
+      "expected_counts": {
+        "down": 5
+      },
+      "predicted_counts": {
+        "down": 4,
+        "up": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 4,
+          "same": 0,
+          "up": 1
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "C1_Hollow_Shell"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.4,
+      "mean_shift": -0.2,
+      "mean_abs_shift": 0.2,
+      "direction_accuracy": 0.2,
+      "expected_counts": {
+        "down": 5
+      },
+      "predicted_counts": {
+        "down": 1,
+        "same": 4
+      },
+      "confusion": {
+        "down": {
+          "down": 1,
+          "same": 4,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "C2_Logic_Flawed"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.6,
+      "mean_variant_rating": 7.6,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.8,
+      "direction_accuracy": 0.4,
+      "expected_counts": {
+        "up": 5
+      },
+      "predicted_counts": {
+        "down": 1,
+        "same": 2,
+        "up": 2
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 1,
+          "same": 2,
+          "up": 2
+        }
+      },
+      "variant": "C3_Substance_Enriched"
+    }
+  ]
+}

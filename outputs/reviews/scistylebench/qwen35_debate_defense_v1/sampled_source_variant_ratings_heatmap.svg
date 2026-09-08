@@ -1,0 +1,141 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1686' height='260' viewBox='0 0 1686 260'><style>.title{font:700 22px Arial}.label{font:12px Arial}.note{font:12px Arial;fill:#555}</style><rect width='100%' height='100%' fill='white'/>
+<text x='30' y='35' class='title'>Sampled Source-Centered Rating Shift Heatmap</text>
+<text x='30' y='52' class='note'>Cell text = variant rating minus source rating. Color intensity tracks shift magnitude.</text>
+<text x='289.0' y='55' class='label' text-anchor='middle'>Source</text>
+<text x='407.0' y='55' class='label' text-anchor='middle'>A1_Identity</text>
+<text x='525.0' y='55' class='label' text-anchor='middle'>A2_Paraphrase_Only</text>
+<text x='643.0' y='55' class='label' text-anchor='middle'>A3_Plain_Core</text>
+<text x='761.0' y='55' class='label' text-anchor='middle'>B1_Verbose_Elaborate</text>
+<text x='879.0' y='55' class='label' text-anchor='middle'>B2_Grand_Narrative</text>
+<text x='997.0' y='55' class='label' text-anchor='middle'>B3_Over_Confident</text>
+<text x='1115.0' y='55' class='label' text-anchor='middle'>B4_Novelty</text>
+<text x='1233.0' y='55' class='label' text-anchor='middle'>B5_Application_Impact</text>
+<text x='1351.0' y='55' class='label' text-anchor='middle'>C1_Hollow_Shell</text>
+<text x='1469.0' y='55' class='label' text-anchor='middle'>C2_Logic_Flawed</text>
+<text x='1587.0' y='55' class='label' text-anchor='middle'>C3_Substance_Enriched</text>
+<text x='20' y='86' class='label'>R1_IDEA_001 [Unknown]</text>
+<rect x='230' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='86' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='70' width='116' height='22' fill='rgb(245,197,197)'/>
+<text x='407.0' y='86' class='label' text-anchor='middle'>-2.0</text>
+<rect x='466' y='70' width='116' height='22' fill='rgb(245,221,221)'/>
+<text x='525.0' y='86' class='label' text-anchor='middle'>-1.0</text>
+<rect x='584' y='70' width='116' height='22' fill='rgb(245,221,221)'/>
+<text x='643.0' y='86' class='label' text-anchor='middle'>-1.0</text>
+<rect x='702' y='70' width='116' height='22' fill='rgb(245,221,221)'/>
+<text x='761.0' y='86' class='label' text-anchor='middle'>-1.0</text>
+<rect x='820' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='879.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='938' y='70' width='116' height='22' fill='rgb(245,173,173)'/>
+<text x='997.0' y='86' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1056' y='70' width='116' height='22' fill='rgb(245,221,221)'/>
+<text x='1115.0' y='86' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1174' y='70' width='116' height='22' fill='rgb(245,197,197)'/>
+<text x='1233.0' y='86' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1292' y='70' width='116' height='22' fill='rgb(245,125,125)'/>
+<text x='1351.0' y='86' class='label' text-anchor='middle'>-5.0</text>
+<rect x='1410' y='70' width='116' height='22' fill='rgb(245,221,221)'/>
+<text x='1469.0' y='86' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1528' y='70' width='116' height='22' fill='rgb(245,197,197)'/>
+<text x='1587.0' y='86' class='label' text-anchor='middle'>-2.0</text>
+<text x='20' y='110' class='label'>R1_IDEA_002 [Unknown]</text>
+<rect x='230' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='110' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='94' width='116' height='22' fill='rgb(245,197,197)'/>
+<text x='525.0' y='110' class='label' text-anchor='middle'>-2.0</text>
+<rect x='584' y='94' width='116' height='22' fill='rgb(245,197,197)'/>
+<text x='643.0' y='110' class='label' text-anchor='middle'>-2.0</text>
+<rect x='702' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='879.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='938' y='94' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='997.0' y='110' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1056' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='94' width='116' height='22' fill='rgb(245,197,197)'/>
+<text x='1233.0' y='110' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1292' y='94' width='116' height='22' fill='rgb(245,221,221)'/>
+<text x='1351.0' y='110' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1410' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='134' class='label'>R1_IDEA_003 [Unknown]</text>
+<rect x='230' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='134' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='643.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='702' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='118' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='879.0' y='134' class='label' text-anchor='middle'>+1.0</text>
+<rect x='938' y='118' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='997.0' y='134' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1056' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='118' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='1351.0' y='134' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1410' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='118' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='1587.0' y='134' class='label' text-anchor='middle'>+1.0</text>
+<text x='20' y='158' class='label'>R1_IDEA_004 [Unknown]</text>
+<rect x='230' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='158' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='142' width='116' height='22' fill='rgb(245,221,221)'/>
+<text x='407.0' y='158' class='label' text-anchor='middle'>-1.0</text>
+<rect x='466' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='142' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='643.0' y='158' class='label' text-anchor='middle'>+1.0</text>
+<rect x='702' y='142' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='761.0' y='158' class='label' text-anchor='middle'>+1.0</text>
+<rect x='820' y='142' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='879.0' y='158' class='label' text-anchor='middle'>+1.0</text>
+<rect x='938' y='142' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='997.0' y='158' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1056' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='142' width='116' height='22' fill='rgb(245,221,221)'/>
+<text x='1351.0' y='158' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1410' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='182' class='label'>R1_IDEA_005 [Unknown]</text>
+<rect x='230' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='182' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='166' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='407.0' y='182' class='label' text-anchor='middle'>+1.0</text>
+<rect x='466' y='166' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='525.0' y='182' class='label' text-anchor='middle'>+1.0</text>
+<rect x='584' y='166' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='643.0' y='182' class='label' text-anchor='middle'>+1.0</text>
+<rect x='702' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='166' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='879.0' y='182' class='label' text-anchor='middle'>+1.0</text>
+<rect x='938' y='166' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='997.0' y='182' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1056' y='166' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='1115.0' y='182' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1174' y='166' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='1233.0' y='182' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1292' y='166' width='116' height='22' fill='rgb(245,221,221)'/>
+<text x='1351.0' y='182' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1410' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='166' width='116' height='22' fill='rgb(221,245,221)'/>
+<text x='1587.0' y='182' class='label' text-anchor='middle'>+1.0</text>
+</svg>
