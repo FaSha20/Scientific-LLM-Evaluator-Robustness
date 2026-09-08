@@ -84,14 +84,33 @@ These fields are saved in checkpoints and beside each source/variant review.
 Use a fresh output directory for the new behavior: resume skips completed debates
 and does not retrofit these fields into old checkpoints.
 
-Debate runs now also create `debate_heatmaps/README.md` with one SVG heatmap per
+Debate runs create `debate_heatmaps/README.md` with one PNG heatmap per
 source/variant review and the saved critic feedback, reviewer rebuttals, and
 before/after justifications. Open the Markdown preview to see the heatmaps and
-notes together, or open individual SVG files in a browser. Columns show reviewer
+notes together, or open individual PNG files. Columns show reviewer
 before, critic recommendation, reviewer after, and signed score change. Colors
 are normalized within each dimension's scale (1–5; overall 1–10); gray N/A cells
 are missing/null/invalid scores, not zero. Multiple recommendations remain separate
 rows and are never averaged. All saved debates are included without sampling.
+Debate mode skips the unrelated robustness figures and source/variant SVG heatmap.
+Identical repeated debate records share one image; unchanged images are reused on
+reruns through content-based filenames. Distinct reviews remain separate even if
+their scores match. Existing images from older runs are not deleted automatically;
+use a fresh output directory to avoid mixing old SVGs with the new PNG output.
+
+`mean_score_shift_before_after.png` adds one two-panel summary: mean overall
+variant-minus-source rating before/after criticism, and mean reviewer revision
+(after minus before). The first uses identical complete source/variant pairs at
+both stages; the second counts source reviews once and reports variant revisions
+on those same complete pairs. Invalid/missing scores are excluded, not replaced by
+zero. Sample sizes are shown. The accompanying JSON includes all dimensions.
+These descriptive means do not establish critic bias or causation, and a positive
+variant-minus-source shift is not necessarily an upward reviewer revision.
+
+The critic prompt now explicitly audits both inflated and unduly harsh scores,
+requires grounded recommendations, and avoids speculative upgrades or forced
+directional balance. Testing the revised prompt requires a fresh generation run;
+rerendering saved results updates charts only, not reviews or critic feedback.
 
 To visualize an existing run without making any LLM calls (after `pip install -e .`):
 

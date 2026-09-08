@@ -307,11 +307,13 @@ def generate_scistylebench_reviews(
     write_json(output_root / "rating_effect_summary.json", summary)
     write_json(output_root / "sampled_source_variant_ratings.json", sampled_heatmap_rows)
     (output_root / "rating_effect_summary.md").write_text(render_direction_summary(summary), encoding="utf-8")
-    write_source_rating_heatmap_svg(output_root / "sampled_source_variant_ratings_heatmap.svg", sampled_heatmap_rows)
-    report = build_robustness_report(
-        input_path=reviews_path,
-        output_dir=robustness_report_dir or output_root / "robustness_report",
-    )
+    report = None
+    if not debate:
+        write_source_rating_heatmap_svg(output_root / "sampled_source_variant_ratings_heatmap.svg", sampled_heatmap_rows)
+        report = build_robustness_report(
+            input_path=reviews_path,
+            output_dir=robustness_report_dir or output_root / "robustness_report",
+        )
 
     return {
         "output_dir": str(output_root),
@@ -319,9 +321,9 @@ def generate_scistylebench_reviews(
         "n_variants": sum(len(record["variants"]) for record in grouped_reviews),
         "reviews_path": str(reviews_path),
         "summary_path": str(output_root / "rating_effect_summary.json"),
-        "heatmap_path": str(output_root / "sampled_source_variant_ratings_heatmap.svg"),
-        "robustness_report_dir": report["output_dir"],
-        "robustness_report_figures_dir": report["figures_dir"],
+        "heatmap_path": str(output_root / "sampled_source_variant_ratings_heatmap.svg") if not debate else None,
+        "robustness_report_dir": report["output_dir"] if report else None,
+        "robustness_report_figures_dir": report["figures_dir"] if report else None,
         "debate_enabled": debate,
         "debate_heatmaps_path": str(debate_heatmaps_path) if debate_heatmaps_path else None,
     }

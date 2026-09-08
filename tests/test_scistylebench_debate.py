@@ -106,7 +106,8 @@ def test_scistylebench_debate_persists_draft_critique_and_revision(tmp_path):
     assert len(calls) == 6  # source + variant: draft, critic, then reviewer revision
     assert result["debate_enabled"] is True
     assert result["debate_heatmaps_path"].endswith("README.md")
-    assert len(list((tmp_path / "out" / "debate_heatmaps").glob("*.svg"))) == 2
+    assert len(list((tmp_path / "out" / "debate_heatmaps").glob("*.png"))) == 3
+    assert not list((tmp_path / "out").rglob("*.svg"))
     assert "testable mechanism" in (tmp_path / "out" / "debate_heatmaps" / "README.md").read_text(encoding="utf-8")
     records = json.loads((tmp_path / "out" / "scistylebench_reviews.json").read_text(encoding="utf-8"))
     assert records[0]["source_review"]["summary"] == "Revised"
@@ -124,5 +125,4 @@ def test_scistylebench_debate_persists_draft_critique_and_revision(tmp_path):
         assert debate["score_comparison"][0]["reviewer_score_before"] == 3
         assert debate["score_comparison"][0]["reviewer_score_after"] == 3
     assert (tmp_path / "out" / "source_review_debates_checkpoint.jsonl").exists()
-    assert (tmp_path / "out" / "robustness_report" / "figures" / "mean_rating_shift.svg").exists()
-    assert (tmp_path / "out" / "robustness_report" / "figures" / "paper_rating_shift_heatmap.svg").exists()
+    assert not (tmp_path / "out" / "robustness_report").exists()
