@@ -35,7 +35,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", default="outputs/variant_reviews")
     parser.add_argument(
         "--review-prompt-path",
-        default="prompts/review_generation.md",
+        default="prompts/review_gen/review_generation.md",
     )
     parser.add_argument(
         "--limit",
@@ -53,6 +53,35 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--api-key", default=None)
     parser.add_argument("--model-name", default=QWEN4B)
     parser.add_argument("--run-label", default=None)
+    parser.add_argument(
+        "--robustness-report-dir",
+        default=None,
+        help=(
+            "Directory for the SciStyleBench robustness figures. Defaults to "
+            "<output-dir>/robustness_report."
+        ),
+    )
+    parser.add_argument(
+        "--debate",
+        action="store_true",
+        help="Run a critic-and-revision pass after each initial SciStyleBench review.",
+    )
+    parser.add_argument(
+        "--critic-prompt-path",
+        default="prompts/review_gen/review_critic.txt",
+        help="System prompt for the independent review critic.",
+    )
+    parser.add_argument(
+        "--critic-model-name",
+        default=None,
+        help="Critic model; defaults to --model-name.",
+    )
+    parser.add_argument(
+        "--critic-temperature",
+        type=float,
+        default=0.7,
+        help="Sampling temperature for the critic's alternative interpretations.",
+    )
     parser.add_argument("--no-resume", action="store_true")
     return parser.parse_args()
 
@@ -86,14 +115,14 @@ def main() -> None:
         return
 
     scistylebench_prompt = args.review_prompt_path
-    if scistylebench_prompt == "prompts/review_generation.md":
-        scistylebench_prompt = "prompts/research_idea_evaluation.txt"
+    if scistylebench_prompt == "prompts/review_gen/review_generation.md":
+        scistylebench_prompt = "prompts/review_gen/research_idea_evaluation.txt"
 
     scistylebench_output = args.output_dir
     if scistylebench_output == "outputs/variant_reviews":
         scistylebench_output = "outputs/scistylebench/qwen4b_summary_idea"
 
-    generate_scistylebench_reviews(
+    result = generate_scistylebench_reviews(
         csv_path=resolve_project_path(args.input_path),
         output_dir=resolve_project_path(scistylebench_output),
         review_prompt_path=resolve_project_path(scistylebench_prompt),
@@ -110,7 +139,18 @@ def main() -> None:
         run_label=args.run_label,
         heatmap_sample_size=args.heatmap_sample_size,
         heatmap_seed=args.heatmap_seed,
+        debate=args.debate,
+        critic_prompt_path=resolve_project_path(args.critic_prompt_path) if args.debate else None,
+        critic_model_name=args.critic_model_name,
+        critic_temperature=args.critic_temperature,
+        robustness_report_dir=(
+            resolve_project_path(args.robustness_report_dir)
+            if args.robustness_report_dir
+            else None
+        ),
     )
+    print("Robustness report generated:")
+    print(f"figures_dir: {result['robustness_report_figures_dir']}")
 
 
 if __name__ == "__main__":

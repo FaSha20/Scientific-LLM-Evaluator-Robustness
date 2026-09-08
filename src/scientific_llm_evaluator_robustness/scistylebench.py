@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import html
+import json
 import random
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -10,6 +11,7 @@ from typing import Any
 
 from .io import append_jsonl, read_jsonl, write_json
 from .llm import CallLLM
+from .robustness_report import build_robustness_report
 
 
 IDEA_SCORE_DIMS = (
@@ -59,6 +61,45 @@ def build_summary_idea_input(*, discipline: str | None, idea_text: str) -> str:
     )
 
 
+def build_review_critique_input(*, review_input: str, draft_review: dict[str, Any]) -> str:
+    """Build the critic's input without exposing any benchmark-label metadata."""
+    return (
+        "Audit the draft review against the research idea below. The draft is an "
+        "evaluation of an idea summary, not a completed paper.\n\n"
+        "<research_idea>\n"
+        f"{review_input}\n"
+        "</research_idea>\n\n"
+        "<draft_review>\n"
+        f"{json.dumps(draft_review, ensure_ascii=False, indent=2)}\n"
+        "</draft_review>"
+    )
+
+
+def build_review_revision_input(
+    *,
+    review_input: str,
+    draft_review: dict[str, Any],
+    critic_feedback: dict[str, Any],
+) -> str:
+    """Ask the original reviewer to revise, rather than delegate the decision to the critic."""
+    return (
+        "Regenerate the complete review of the research idea below after considering "
+        "an independent critique of your draft. Independently verify every critique: "
+        "the critic is advisory and may be mistaken. Apply feedback only when it is "
+        "grounded in the idea, and do not mechanically average scores. Return the full "
+        "JSON review in exactly the schema specified in the system instructions.\n\n"
+        "<research_idea>\n"
+        f"{review_input}\n"
+        "</research_idea>\n\n"
+        "<draft_review>\n"
+        f"{json.dumps(draft_review, ensure_ascii=False, indent=2)}\n"
+        "</draft_review>\n\n"
+        "<critic_feedback>\n"
+        f"{json.dumps(critic_feedback, ensure_ascii=False, indent=2)}\n"
+        "</critic_feedback>"
+    )
+
+
 def generate_scistylebench_reviews(
     *,
     csv_path: str | Path,
@@ -77,6 +118,11 @@ def generate_scistylebench_reviews(
     run_label: str | None = None,
     heatmap_sample_size: int = 30,
     heatmap_seed: int = 42,
+    debate: bool = False,
+    critic_prompt_path: str | Path | None = None,
+    critic_model_name: str | None = None,
+    critic_temperature: float = 0.7,
+    robustness_report_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     rows = load_scistylebench_rows(csv_path, limit=limit)
     output_root = Path(output_dir)
@@ -163,6 +209,79 @@ def generate_scistylebench_reviews(
         append_jsonl(pair_checkpoint, payload)
         pair_reviews[pair_key] = payload
 
+    if debate:
+        if critic_prompt_path is None:
+            raise ValueError("critic_prompt_path is required when debate=True")
+        critic_prompt = Path(critic_prompt_path).read_text(encoding="utf-8")
+        critic_model = critic_model_name or model_name
+        source_debate_checkpoint = output_root / "source_review_debates_checkpoint.jsonl"
+        pair_debate_checkpoint = output_root / "pair_review_debates_checkpoint.jsonl"
+        source_debates = _load_source_checkpoint(source_debate_checkpoint) if resume else {}
+        pair_debates = _load_pair_checkpoint(pair_debate_checkpoint) if resume else {}
+
+        for index, source in enumerate(unique_sources, start=1):
+            source_key = source["source_key"]
+            if source_key in source_debates:
+                print(f"[source debate {index}/{total_source_calls}] Skipping completed {source_key}")
+                continue
+            print(f"[source debate {index}/{total_source_calls}] Critiquing and revising {source_key}")
+            review_input = build_summary_idea_input(
+                discipline=source.get("discipline"),
+                idea_text=str(source["source_text"]),
+            )
+            debate_record = _run_review_debate(
+                call_llm=call_llm,
+                review_input=review_input,
+                draft_review=compact_review(source_reviews[source_key].get("review", {})),
+                reviewer_prompt=prompt_text,
+                critic_prompt=critic_prompt,
+                url=url,
+                api_key=api_key,
+                reviewer_model_name=model_name,
+                critic_model_name=critic_model,
+                reviewer_temperature=temperature,
+                critic_temperature=critic_temperature,
+                max_tokens=max_tokens,
+                seed=seed,
+                max_retries=max_retries,
+            )
+            payload = {"source_key": source_key, **debate_record}
+            append_jsonl(source_debate_checkpoint, payload)
+            source_debates[source_key] = payload
+
+        for index, row in enumerate(rows, start=1):
+            pair_key = _pair_key(row)
+            if pair_key in pair_debates:
+                print(f"[variant debate {index}/{total_pair_calls}] Skipping completed {pair_key}")
+                continue
+            print(f"[variant debate {index}/{total_pair_calls}] Critiquing and revising {pair_key}")
+            review_input = build_summary_idea_input(
+                discipline=row.get("discipline"),
+                idea_text=str(row.get("variant_text") or ""),
+            )
+            debate_record = _run_review_debate(
+                call_llm=call_llm,
+                review_input=review_input,
+                draft_review=compact_review(pair_reviews[pair_key].get("review", {})),
+                reviewer_prompt=prompt_text,
+                critic_prompt=critic_prompt,
+                url=url,
+                api_key=api_key,
+                reviewer_model_name=model_name,
+                critic_model_name=critic_model,
+                reviewer_temperature=temperature,
+                critic_temperature=critic_temperature,
+                max_tokens=max_tokens,
+                seed=seed,
+                max_retries=max_retries,
+            )
+            payload = {"pair_key": pair_key, **debate_record}
+            append_jsonl(pair_debate_checkpoint, payload)
+            pair_debates[pair_key] = payload
+
+        source_reviews = _apply_debate_results(source_reviews, source_debates)
+        pair_reviews = _apply_debate_results(pair_reviews, pair_debates)
+
     grouped_reviews = build_grouped_reviews(
         rows=rows,
         source_reviews=source_reviews,
@@ -176,20 +295,110 @@ def generate_scistylebench_reviews(
         seed=heatmap_seed,
     )
 
-    write_json(output_root / "scistylebench_reviews.json", grouped_reviews)
+    reviews_path = output_root / "scistylebench_reviews.json"
+    write_json(reviews_path, grouped_reviews)
     write_json(output_root / "rating_effect_summary.json", summary)
     write_json(output_root / "sampled_source_variant_ratings.json", sampled_heatmap_rows)
     (output_root / "rating_effect_summary.md").write_text(render_direction_summary(summary), encoding="utf-8")
     write_source_rating_heatmap_svg(output_root / "sampled_source_variant_ratings_heatmap.svg", sampled_heatmap_rows)
+    report = build_robustness_report(
+        input_path=reviews_path,
+        output_dir=robustness_report_dir or output_root / "robustness_report",
+    )
 
     return {
         "output_dir": str(output_root),
         "n_sources": len(grouped_reviews),
         "n_variants": sum(len(record["variants"]) for record in grouped_reviews),
-        "reviews_path": str(output_root / "scistylebench_reviews.json"),
+        "reviews_path": str(reviews_path),
         "summary_path": str(output_root / "rating_effect_summary.json"),
         "heatmap_path": str(output_root / "sampled_source_variant_ratings_heatmap.svg"),
+        "robustness_report_dir": report["output_dir"],
+        "robustness_report_figures_dir": report["figures_dir"],
+        "debate_enabled": debate,
     }
+
+
+def _run_review_debate(
+    *,
+    call_llm: CallLLM,
+    review_input: str,
+    draft_review: dict[str, Any],
+    reviewer_prompt: str,
+    critic_prompt: str,
+    url: str | None,
+    api_key: str | None,
+    reviewer_model_name: str,
+    critic_model_name: str,
+    reviewer_temperature: float,
+    critic_temperature: float,
+    max_tokens: int | None,
+    seed: int | None,
+    max_retries: int,
+) -> dict[str, Any]:
+    critic_feedback = compact_critic_feedback(
+        call_llm(
+            build_review_critique_input(review_input=review_input, draft_review=draft_review),
+            critic_prompt,
+            jsonify=True,
+            temp=critic_temperature,
+            url=url,
+            api_key=api_key,
+            model_name=critic_model_name,
+            max_tokens=max_tokens,
+            seed=seed,
+            max_retries=max_retries,
+        )
+    )
+    final_review = compact_review(
+        call_llm(
+            build_review_revision_input(
+                review_input=review_input,
+                draft_review=draft_review,
+                critic_feedback=critic_feedback,
+            ),
+            reviewer_prompt,
+            jsonify=True,
+            temp=reviewer_temperature,
+            url=url,
+            api_key=api_key,
+            model_name=reviewer_model_name,
+            max_tokens=max_tokens,
+            seed=seed,
+            max_retries=max_retries,
+        )
+    )
+    return {
+        "draft_review": draft_review,
+        "critic_feedback": critic_feedback,
+        "final_review": final_review,
+        "debate_generation": {
+            "reviewer_model_name": reviewer_model_name,
+            "critic_model_name": critic_model_name,
+            "reviewer_temperature": reviewer_temperature,
+            "critic_temperature": critic_temperature,
+            "seed": seed,
+        },
+    }
+
+
+def _apply_debate_results(
+    reviews: dict[str, dict[str, Any]],
+    debates: dict[str, dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    resolved: dict[str, dict[str, Any]] = {}
+    for key, review_record in reviews.items():
+        record = dict(review_record)
+        debate_record = debates.get(key)
+        if debate_record:
+            record["review"] = debate_record.get("final_review", record.get("review", {}))
+            record["debate"] = {
+                "draft_review": debate_record.get("draft_review", {}),
+                "critic_feedback": debate_record.get("critic_feedback", {}),
+                "generation": debate_record.get("debate_generation", {}),
+            }
+        resolved[key] = record
+    return resolved
 
 
 def build_grouped_reviews(
@@ -210,6 +419,8 @@ def build_grouped_reviews(
             "source_review": compact_review(source_review),
             "variants": [],
         }
+        if source_reviews.get(source_key, {}).get("debate"):
+            grouped[source_key]["source_review_debate"] = source_reviews[source_key]["debate"]
 
     for row in rows:
         source_key = _source_key(row)
@@ -221,14 +432,13 @@ def build_grouped_reviews(
         source_scores = extract_scores(grouped[source_key]["source_review"])
         variant_review = compact_review(pair.get("review", {}))
         variant_scores = extract_scores(variant_review)
-        grouped[source_key]["variants"].append(
-            {
-                "variant": row.get("variant"),
-                "variant_group": row.get("variant_group"),
-                "expected_quality_direction": normalize_direction(row.get("expected_quality_direction")),
-                "variant_text": row.get("variant_text"),
-                "review": variant_review,
-                "score_shift": {
+        variant_record = {
+            "variant": row.get("variant"),
+            "variant_group": row.get("variant_group"),
+            "expected_quality_direction": normalize_direction(row.get("expected_quality_direction")),
+            "variant_text": row.get("variant_text"),
+            "review": variant_review,
+            "score_shift": {
                     "overall_rating": _subtract_scores(variant_scores["rating"], source_scores["rating"]),
                     "problem_significance": _subtract_scores(
                         variant_scores["problem_significance"],
@@ -258,9 +468,11 @@ def build_grouped_reviews(
                         variant_scores["scientific_insight"],
                         source_scores["scientific_insight"],
                     ),
-                },
-            }
-        )
+            },
+        }
+        if pair.get("debate"):
+            variant_record["review_debate"] = pair["debate"]
+        grouped[source_key]["variants"].append(variant_record)
 
     for record in grouped.values():
         record["variants"].sort(key=lambda item: (str(item.get("variant_group")), str(item.get("variant"))))
@@ -441,6 +653,34 @@ def compact_review(review: Any) -> dict[str, Any]:
         "technical_plausibility": _compact_scored_item(data.get("technical_plausibility")),
         "scientific_insight": _compact_scored_item(data.get("scientific_insight")),
         "overall_rating": _compact_scored_item(data.get("overall_rating")),
+        "confidence": _score_value(data.get("confidence")),
+    }
+
+
+def compact_critic_feedback(feedback: Any) -> dict[str, Any]:
+    """Normalize critic output so malformed optional fields cannot break a run."""
+    data = feedback if isinstance(feedback, dict) else {}
+    score_questions: list[dict[str, Any]] = []
+    raw_questions = data.get("score_questions")
+    if isinstance(raw_questions, list):
+        for item in raw_questions:
+            if not isinstance(item, dict):
+                continue
+            score_questions.append(
+                {
+                    "dimension": _string_value(item.get("dimension")),
+                    "question_mark": _string_value(item.get("question_mark")),
+                    "concern": _string_value(item.get("concern")),
+                    "speculative_alternative": _string_value(item.get("speculative_alternative")),
+                    "recommended_score": _score_value(item.get("recommended_score")),
+                    "rationale": _string_value(item.get("rationale")),
+                }
+            )
+    return {
+        "overall_assessment": _string_value(data.get("overall_assessment")),
+        "score_questions": score_questions,
+        "unsupported_claims": _string_list(data.get("unsupported_claims")),
+        "revision_priorities": _string_list(data.get("revision_priorities")),
         "confidence": _score_value(data.get("confidence")),
     }
 

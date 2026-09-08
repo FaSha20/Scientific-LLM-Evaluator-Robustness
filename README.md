@@ -49,3 +49,27 @@ The pipeline will preserve the original record metadata and add generated text f
 python -m pip install -e .
 python -m pytest
 ```
+
+## SciStyleBench review debate
+
+The SciStyleBench runner can optionally add a three-step reviewer–critic–reviewer
+loop. It first creates the ordinary review, asks an independent critic to question
+only score sections whose grounding or calibration is doubtful (including clearly
+labeled speculative alternatives), then asks the original reviewer to regenerate
+the complete review while treating that feedback as advisory.
+
+```bash
+python3 scripts/generate_reviews.py \
+  --dataset scistylebench \
+  --input-path data/SciStyleBench/variant_items_15class.csv \
+  --output-dir outputs/scistylebench/qwen4b_debate \
+  --review-prompt-path prompts/review_gen/research_idea_evaluation.txt \
+  --debate \
+  --critic-prompt-path prompts/review_gen/review_critic.txt
+```
+
+Use `--critic-model-name` to use a different critic model and
+`--critic-temperature` (default `0.7`) to vary its alternative interpretations.
+Debate runs save resumable draft/critic/revision checkpoints and include that
+provenance beside the final reviews in `scistylebench_reviews.json`. The final
+review remains the one used for the robustness summaries and heatmap.
