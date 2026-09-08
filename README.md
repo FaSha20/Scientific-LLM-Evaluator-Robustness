@@ -73,3 +73,31 @@ Use `--critic-model-name` to use a different critic model and
 Debate runs save resumable draft/critic/revision checkpoints and include that
 provenance beside the final reviews in `scistylebench_reviews.json`. The final
 review remains the one used for the robustness summaries and heatmap.
+
+The final reviewer is instructed to defend its initial assessment against each
+feedback item, concede grounded criticism, and justify changed or retained scores.
+Debate metadata includes `feedback_responses` (decisions, defenses, justifications)
+and `score_comparison` (reviewer scores before/after, critic `recommended_score`
+values indexed by feedback item, and original/final justifications for each dimension).
+An empty recommendations list means the critic did not question that dimension.
+These fields are saved in checkpoints and beside each source/variant review.
+Use a fresh output directory for the new behavior: resume skips completed debates
+and does not retrofit these fields into old checkpoints.
+
+Debate runs now also create `debate_heatmaps/README.md` with one SVG heatmap per
+source/variant review and the saved critic feedback, reviewer rebuttals, and
+before/after justifications. Open the Markdown preview to see the heatmaps and
+notes together, or open individual SVG files in a browser. Columns show reviewer
+before, critic recommendation, reviewer after, and signed score change. Colors
+are normalized within each dimension's scale (1–5; overall 1–10); gray N/A cells
+are missing/null/invalid scores, not zero. Multiple recommendations remain separate
+rows and are never averaged. All saved debates are included without sampling.
+
+To visualize an existing run without making any LLM calls (after `pip install -e .`):
+
+```powershell
+python -m scientific_llm_evaluator_robustness.debate_visualization --input-path outputs/scistylebench/debate_defense_v1/scistylebench_reviews.json
+```
+
+Older checkpoints can still show scores, but cannot show reviewer rebuttals that
+were never saved. Missing rebuttals are explicitly labeled.

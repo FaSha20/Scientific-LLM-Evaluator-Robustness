@@ -10,6 +10,7 @@ from statistics import mean
 from typing import Any
 
 from .io import append_jsonl, read_jsonl, write_json
+from .debate_visualization import write_debate_visualizations
 from .llm import CallLLM
 from .robustness_report import build_robustness_report
 
@@ -86,7 +87,9 @@ def build_review_revision_input(
         "Regenerate the complete review of the research idea below after considering "
         "an independent critique of your draft. Independently verify every critique: "
         "the critic is advisory and may be mistaken. Apply feedback only when it is "
-        "grounded in the idea, and do not mechanically average scores. Return the full "
+        "grounded in the idea, and do not mechanically average scores. Defend your "
+        "initial draft against each feedback item; concede valid criticism and justify "
+        "every changed or retained challenged score. Return the full "
         "JSON review in exactly the schema specified in the system instructions.\n\n"
         "<research_idea>\n"
         f"{review_input}\n"
@@ -297,6 +300,10 @@ def generate_scistylebench_reviews(
 
     reviews_path = output_root / "scistylebench_reviews.json"
     write_json(reviews_path, grouped_reviews)
+    debate_heatmaps_path = (
+        write_debate_visualizations(grouped_reviews, output_root / "debate_heatmaps")
+        if debate else None
+    )
     write_json(output_root / "rating_effect_summary.json", summary)
     write_json(output_root / "sampled_source_variant_ratings.json", sampled_heatmap_rows)
     (output_root / "rating_effect_summary.md").write_text(render_direction_summary(summary), encoding="utf-8")
@@ -316,6 +323,7 @@ def generate_scistylebench_reviews(
         "robustness_report_dir": report["output_dir"],
         "robustness_report_figures_dir": report["figures_dir"],
         "debate_enabled": debate,
+        "debate_heatmaps_path": str(debate_heatmaps_path) if debate_heatmaps_path else None,
     }
 
 
@@ -350,14 +358,27 @@ def _run_review_debate(
             max_retries=max_retries,
         )
     )
-    final_review = compact_review(
-        call_llm(
+    revision = call_llm(
             build_review_revision_input(
                 review_input=review_input,
                 draft_review=draft_review,
                 critic_feedback=critic_feedback,
             ),
-            reviewer_prompt,
+            reviewer_prompt + '\n\n' + (
+                'For this revision, extend the original review JSON schema with '
+                'a top-level feedback_responses array. For every item in score_questions, '
+                'unsupported_claims, and revision_priorities, include an object with '
+                'feedback_type (the list name), feedback_index (zero-based), '
+                'decision (accept, partially_accept, or reject), defense (an evidence-grounded '
+                'defense of your initial assessment), and justification (why the feedback '
+                'is applicable or not, and why affected scores change or stay unchanged). '
+                'Defend supported judgments, not errors. Assess each item independently. '
+                'Change scores only when applicable feedback warrants it; accepting a '
+                'textual correction need not change a score. Never automatically adopt '
+                'recommended_score. Explain every score change in the final dimension '
+                'justification, citing the initial score and applicable feedback. '
+                'Return all original review fields plus feedback_responses in one JSON object.'
+            ),
             jsonify=True,
             temp=reviewer_temperature,
             url=url,
@@ -366,12 +387,33 @@ def _run_review_debate(
             max_tokens=max_tokens,
             seed=seed,
             max_retries=max_retries,
-        )
     )
+    final_review = compact_review(revision)
+    raw_responses = revision.get("feedback_responses", []) if isinstance(revision, dict) else []
+    feedback_responses = (
+        [response for response in raw_responses if isinstance(response, dict)]
+        if isinstance(raw_responses, list) else []
+    )
+    score_comparison = []
+    for dimension in (*IDEA_SCORE_DIMS, "overall_rating"):
+        score_comparison.append({
+            "dimension": dimension,
+            "reviewer_score_before": _score_value(draft_review.get(dimension)),
+            "critic_recommendations": [
+                {"feedback_index": index, "recommended_score": question["recommended_score"]}
+                for index, question in enumerate(critic_feedback["score_questions"])
+                if question["dimension"] == dimension
+            ],
+            "reviewer_score_after": _score_value(final_review.get(dimension)),
+            "justification_before": _compact_scored_item(draft_review.get(dimension))["justification"],
+            "justification_after": final_review[dimension]["justification"],
+        })
     return {
         "draft_review": draft_review,
         "critic_feedback": critic_feedback,
         "final_review": final_review,
+        "feedback_responses": feedback_responses,
+        "score_comparison": score_comparison,
         "debate_generation": {
             "reviewer_model_name": reviewer_model_name,
             "critic_model_name": critic_model_name,
@@ -395,6 +437,8 @@ def _apply_debate_results(
             record["debate"] = {
                 "draft_review": debate_record.get("draft_review", {}),
                 "critic_feedback": debate_record.get("critic_feedback", {}),
+                "feedback_responses": debate_record.get("feedback_responses", []),
+                "score_comparison": debate_record.get("score_comparison", []),
                 "generation": debate_record.get("debate_generation", {}),
             }
         resolved[key] = record
