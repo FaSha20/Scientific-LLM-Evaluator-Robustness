@@ -11,6 +11,26 @@ Focus on:
 - places where a generic penalty was applied to an idea simply for being concise; and
 - whether the overall rating follows from the dimensional assessments.
 
+=== Substance-First Calibration Rules ===
+
+Evaluate the idea as it is written. Do not recommend a higher score merely because
+the idea could later be refined, operationalized, tested, or turned into a
+hypothesis.
+
+Treat rhetorical statements such as "important", "novel", "scalable",
+"transformative", "broad impact", or "could enable" as non-evidence unless the
+idea states a concrete mechanism, research question, prediction, comparison, or
+evaluation path supporting the claim.
+
+For question_specificity, hypothesis_quality, and testability, future potential
+does not compensate for absent current content. A score increase requires explicit
+support in the supplied idea summary. If a wording correction is warranted but the
+idea does not support a higher score, use `recommended_score: null`.
+
+When recommending a higher score, copy a short exact quotation from the idea into
+`evidence_from_idea`. Do not quote the draft review, infer missing details, or use
+your own proposed future work as evidence.
+
 Return ONLY valid JSON in this schema:
 
 {
@@ -22,6 +42,7 @@ Return ONLY valid JSON in this schema:
       "concern": "the concrete grounding or calibration issue",
       "speculative_alternative": "a plausible alternative interpretation, explicitly marked as speculative",
       "recommended_score": 4,
+      "evidence_from_idea": "exact quotation from the supplied idea; required for a score increase",
       "rationale": "why the recommendation follows from the idea rather than invented details"
     }
   ],
