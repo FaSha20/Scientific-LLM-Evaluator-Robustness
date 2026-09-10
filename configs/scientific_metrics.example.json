@@ -1,0 +1,10 @@
+{
+  "plain": "Plain",
+  "paraphrase": "Paraphrase",
+  "enriched": "Enriched",
+  "hollow": "Hollow",
+  "flawed": "Flawed",
+  "style_variants": [],
+  "adversarial_pairs": [],
+  "sbi_formula": "absolute_controlled"
+}

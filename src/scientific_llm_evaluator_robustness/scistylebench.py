@@ -13,6 +13,7 @@ from .io import append_jsonl, read_jsonl, write_json
 from .debate_visualization import write_debate_visualizations
 from .llm import CallLLM
 from .robustness_report import build_robustness_report
+from .scientific_metrics import validate_metrics_config, write_scientific_metrics
 
 
 IDEA_SCORE_DIMS = (
@@ -126,7 +127,9 @@ def generate_scistylebench_reviews(
     critic_model_name: str | None = None,
     critic_temperature: float = 0.7,
     robustness_report_dir: str | Path | None = None,
+    metrics_config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    metrics_config = validate_metrics_config(metrics_config)
     rows = load_scistylebench_rows(csv_path, limit=limit)
     output_root = Path(output_dir)
     output_root.mkdir(parents=True, exist_ok=True)
@@ -300,6 +303,7 @@ def generate_scistylebench_reviews(
 
     reviews_path = output_root / "scistylebench_reviews.json"
     write_json(reviews_path, grouped_reviews)
+    scientific_metrics = write_scientific_metrics(grouped_reviews, output_root, metrics_config)
     debate_heatmaps_path = (
         write_debate_visualizations(grouped_reviews, output_root / "debate_heatmaps")
         if debate else None
@@ -326,6 +330,7 @@ def generate_scistylebench_reviews(
         "robustness_report_figures_dir": report["figures_dir"] if report else None,
         "debate_enabled": debate,
         "debate_heatmaps_path": str(debate_heatmaps_path) if debate_heatmaps_path else None,
+        "scientific_metrics": scientific_metrics,
     }
 
 

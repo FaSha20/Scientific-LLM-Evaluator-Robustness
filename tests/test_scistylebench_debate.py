@@ -105,6 +105,9 @@ def test_scistylebench_debate_persists_draft_critique_and_revision(tmp_path):
 
     assert len(calls) == 6  # source + variant: draft, critic, then reviewer revision
     assert result["debate_enabled"] is True
+    assert (tmp_path / "out" / "scientific_robustness_metrics.png").exists()
+    metrics = json.loads((tmp_path / "out" / "scientific_robustness_metrics.json").read_text(encoding="utf-8"))
+    assert {row["metric"] for row in metrics["summaries"]} == {"SBI", "SRR", "AWR"}
     assert result["debate_heatmaps_path"].endswith("README.md")
     assert len(list((tmp_path / "out" / "debate_heatmaps").glob("*.png"))) == 3
     assert not list((tmp_path / "out").rglob("*.svg"))
