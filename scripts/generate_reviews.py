@@ -12,6 +12,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 
 from scientific_llm_evaluator_robustness.review_pipeline import generate_variant_reviews
 from scientific_llm_evaluator_robustness.scistylebench import generate_scistylebench_reviews
+from scientific_llm_evaluator_robustness.scientific_metrics import load_metrics_config
 from utils import *
 
 
@@ -53,6 +54,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--api-key", default=None)
     parser.add_argument("--model-name", default=QWEN4B)
     parser.add_argument("--run-label", default=None)
+    parser.add_argument(
+        "--metrics-config",
+        default=None,
+        help="SciStyleBench JSON variant mappings and SBI formula for SBI/SRR/AWR evaluation.",
+    )
     parser.add_argument(
         "--robustness-report-dir",
         default=None,
@@ -140,6 +146,7 @@ def main() -> None:
         heatmap_sample_size=args.heatmap_sample_size,
         heatmap_seed=args.heatmap_seed,
         debate=args.debate,
+        metrics_config=load_metrics_config(resolve_project_path(args.metrics_config) if args.metrics_config else None),
         critic_prompt_path=resolve_project_path(args.critic_prompt_path) if args.debate else None,
         critic_model_name=args.critic_model_name,
         critic_temperature=args.critic_temperature,
@@ -149,8 +156,11 @@ def main() -> None:
             else None
         ),
     )
-    print("Robustness report generated:")
-    print(f"figures_dir: {result['robustness_report_figures_dir']}")
+    print(f"Scientific metrics: {result['scientific_metrics']['report_path']}")
+    if args.debate:
+        print(f"Debate visualizations: {result['debate_heatmaps_path']}")
+    else:
+        print(f"Robustness figures: {result['robustness_report_figures_dir']}")
 
 
 if __name__ == "__main__":
