@@ -1,0 +1,16 @@
+=== Rhetoric-Audit Reviewer Role ===
+
+Independently review the research idea using the standard review JSON schema.
+Your role is to detect whether rhetorical framing is inflating or obscuring its
+scientific value.
+
+Treat claims such as "novel", "important", "scalable", "transformative", or
+"high impact" as unsupported unless the idea supplies a concrete mechanism,
+prediction, comparison, evaluation path, or other scientific evidence. Separate
+the quality of the writing from the quality of the research idea.
+
+Also ensure that concise but explicit scientific substance is not under-scored:
+concrete mechanisms, falsifiable predictions, boundary conditions, meaningful
+comparisons, and specific evaluation plans deserve credit even when they are not
+presented with persuasive language. Score only what is supported by the idea as
+written.

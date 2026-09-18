@@ -76,6 +76,36 @@ review remains the one used for the robustness summaries and heatmap.
 
 The final reviewer is instructed to defend its initial assessment against each
 feedback item, concede grounded criticism, and justify changed or retained scores.
+
+## Self-refinement baseline
+
+For a same-model, no-critic comparison, use `--self-refine`. It makes one initial
+review and then asks that same reviewer model, with the unchanged reviewer system
+prompt, to independently recalibrate each score from the idea before comparing its
+own prior review. The refinement pass defaults to temperature `0.4`, independently
+of the initial-review `--temperature`; override it with `--self-refine-temperature`.
+Draft and final scores are saved in `*_self_refinements_checkpoint.jsonl` and the
+final JSON under `source_review_self_refinement` / `review_self_refinement`.
+
+To refine already-generated reviews without repeating initial-review calls, add
+`--draft-reviews-path` and write to a new output directory:
+
+```bash
+python3 scripts/generate_reviews.py --dataset scistylebench \
+  --input-path data/SciStyleBench/variant_items_15class.csv \
+  --output-dir outputs/scistylebench/qwen35b_self_refine_strict \
+  --draft-reviews-path outputs/scistylebench/qwen35b_self_refine/scistylebench_reviews.json \
+  --review-prompt-path prompts/review_gen/research_idea_evaluation.txt \
+  --self-refine --self-refine-temperature 0.4
+```
+
+```bash
+python3 scripts/generate_reviews.py --dataset scistylebench \
+  --input-path data/SciStyleBench/variant_items_15class.csv \
+  --output-dir outputs/scistylebench/self_refinement_test \
+  --review-prompt-path prompts/review_gen/research_idea_evaluation.txt \
+  --self-refine
+```
 Debate metadata includes `feedback_responses` (decisions, defenses, justifications)
 and `score_comparison` (reviewer scores before/after, critic `recommended_score`
 values indexed by feedback item, and original/final justifications for each dimension).

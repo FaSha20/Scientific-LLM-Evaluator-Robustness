@@ -11,6 +11,9 @@ from typing import Any
 
 from .io import append_jsonl, read_jsonl, write_json
 from .debate_visualization import write_debate_visualizations
+from .review_merge import merge_grouped_reviews
+from .self_refinement_visualization import write_self_refinement_visualizations
+from .moderation_visualization import write_moderation_visualizations
 from .llm import CallLLM
 from .robustness_report import build_robustness_report
 from .scientific_metrics import validate_metrics_config, write_scientific_metrics
@@ -104,6 +107,49 @@ def build_review_revision_input(
     )
 
 
+def build_self_refinement_input(*, review_input: str, draft_review: dict[str, Any]) -> str:
+    """Ask the original reviewer to audit and regenerate its own review."""
+    return (
+        "Regenerate the complete review of the research idea below. Treat the previous "
+        "review as provisional evidence, not as an answer to preserve. First independently "
+        "re-evaluate every scoring dimension directly from the idea. For each dimension, "
+        "actively test whether the prior score is too high, too low, or correctly calibrated; "
+        "compare the draft only after that reassessment. Correct unsupported claims, omitted "
+        "substance, and score/justification mismatches. Do not retain a score merely because "
+        "it appeared in the draft, and do not change a score merely to create disagreement. "
+        "Change a score exactly when the idea provides stronger support for a different score. "
+        "Return the full JSON review in exactly the schema specified in the system instructions.\n\n"
+        "<research_idea>\n"
+        f"{review_input}\n"
+        "</research_idea>\n\n"
+        "<previous_review>\n"
+        f"{json.dumps(draft_review, ensure_ascii=False, indent=2)}\n"
+        "</previous_review>"
+    )
+
+
+def build_moderator_input(
+    *,
+    review_input: str,
+    technical_review: dict[str, Any],
+    rhetoric_review: dict[str, Any],
+) -> str:
+    """Give the moderator two independently generated assessments to synthesize."""
+    return (
+        "Produce one final review of the research idea using the two independent "
+        "assessments below.\n\n"
+        "<research_idea>\n"
+        f"{review_input}\n"
+        "</research_idea>\n\n"
+        "<technical_scientific_review>\n"
+        f"{json.dumps(technical_review, ensure_ascii=False, indent=2)}\n"
+        "</technical_scientific_review>\n\n"
+        "<rhetoric_audit_review>\n"
+        f"{json.dumps(rhetoric_review, ensure_ascii=False, indent=2)}\n"
+        "</rhetoric_audit_review>"
+    )
+
+
 def generate_scistylebench_reviews(
     *,
     csv_path: str | Path,
@@ -123,18 +169,65 @@ def generate_scistylebench_reviews(
     heatmap_sample_size: int = 30,
     heatmap_seed: int = 42,
     debate: bool = False,
+    self_refine: bool = False,
+    self_refine_temperature: float = 0.4,
+    self_refine_system_addendum_path: str | Path | None = None,
+    draft_reviews_path: str | Path | None = None,
     critic_prompt_path: str | Path | None = None,
     critic_model_name: str | None = None,
     critic_temperature: float = 0.7,
+    moderated_panel: bool = False,
+    technical_prompt_path: str | Path | None = None,
+    rhetoric_prompt_path: str | Path | None = None,
+    moderator_prompt_path: str | Path | None = None,
     robustness_report_dir: str | Path | None = None,
     metrics_config: dict[str, Any] | None = None,
+    variant_prefixes: tuple[str, ...] = (),
+    variant_names: tuple[str, ...] = (),
+    source_ids: tuple[str, ...] = (),
+    merge_existing_reviews: bool = False,
 ) -> dict[str, Any]:
     metrics_config = validate_metrics_config(metrics_config)
     rows = load_scistylebench_rows(csv_path, limit=limit)
+    if source_ids:
+        selected_source_ids = {source_id for source_id in source_ids if source_id}
+        rows = [
+            row for row in rows
+            if str(row.get("source_idea_id") or _source_key(row)) in selected_source_ids
+        ]
+        if not rows:
+            raise ValueError(f"No records matched source IDs: {', '.join(sorted(selected_source_ids))}")
+    if variant_prefixes:
+        prefixes = tuple(prefix for prefix in variant_prefixes if prefix)
+        rows = [row for row in rows if str(row.get("variant") or "").startswith(prefixes)]
+        if not rows:
+            raise ValueError(f"No variants matched prefixes: {', '.join(prefixes)}")
+    if variant_names:
+        selected_variant_names = {name for name in variant_names if name}
+        rows = [row for row in rows if str(row.get("variant") or "") in selected_variant_names]
+        if not rows:
+            raise ValueError(f"No variants matched names: {', '.join(sorted(selected_variant_names))}")
     output_root = Path(output_dir)
     output_root.mkdir(parents=True, exist_ok=True)
 
+    if sum((debate, self_refine, moderated_panel)) > 1:
+        raise ValueError("debate, self_refine, and moderated_panel are mutually exclusive")
+    if draft_reviews_path is not None and not self_refine:
+        raise ValueError("draft_reviews_path requires self_refine=True")
+
     prompt_text = Path(review_prompt_path).read_text(encoding="utf-8")
+    self_refinement_prompt = prompt_text
+    if self_refine_system_addendum_path is not None:
+        self_refinement_prompt += "\n\n" + Path(self_refine_system_addendum_path).read_text(encoding="utf-8")
+    technical_prompt = prompt_text
+    rhetoric_prompt = ""
+    moderator_prompt = ""
+    if moderated_panel:
+        if technical_prompt_path is None or rhetoric_prompt_path is None or moderator_prompt_path is None:
+            raise ValueError("all panel prompt paths are required when moderated_panel=True")
+        technical_prompt += "\n\n" + Path(technical_prompt_path).read_text(encoding="utf-8")
+        rhetoric_prompt = prompt_text + "\n\n" + Path(rhetoric_prompt_path).read_text(encoding="utf-8")
+        moderator_prompt = prompt_text + "\n\n" + Path(moderator_prompt_path).read_text(encoding="utf-8")
     source_checkpoint = output_root / "source_reviews_checkpoint.jsonl"
     pair_checkpoint = output_root / "pair_reviews_checkpoint.jsonl"
     completed_sources = _load_source_checkpoint(source_checkpoint) if resume else {}
@@ -145,7 +238,15 @@ def generate_scistylebench_reviews(
 
     unique_sources = _unique_sources(rows)
     total_source_calls = len(unique_sources)
-    for index, source in enumerate(unique_sources, start=1):
+    if draft_reviews_path is not None:
+        source_reviews, pair_reviews = _load_saved_draft_reviews(
+            draft_reviews_path=draft_reviews_path,
+            unique_sources=unique_sources,
+            rows=rows,
+        )
+
+    initial_sources = [] if draft_reviews_path is not None else unique_sources
+    for index, source in enumerate(initial_sources, start=1):
         source_key = source["source_key"]
         if source_key in source_reviews:
             print(f"[source {index}/{total_source_calls}] Skipping completed {source_key}")
@@ -158,7 +259,7 @@ def generate_scistylebench_reviews(
         review = compact_review(
             call_llm(
                 review_input,
-                prompt_text,
+                technical_prompt,
                 jsonify=True,
                 temp=temperature,
                 url=url,
@@ -179,7 +280,10 @@ def generate_scistylebench_reviews(
         source_reviews[source_key] = payload
 
     total_pair_calls = len(rows)
-    for index, row in enumerate(rows, start=1):
+    # Saved drafts can be partial (for example, an existing A/B/C run extended
+    # with H variants).  Reuse matching drafts and generate only missing rows.
+    initial_rows = rows
+    for index, row in enumerate(initial_rows, start=1):
         pair_key = _pair_key(row)
         if pair_key in pair_reviews:
             print(f"[variant {index}/{total_pair_calls}] Skipping completed {pair_key}")
@@ -192,7 +296,7 @@ def generate_scistylebench_reviews(
         review = compact_review(
             call_llm(
                 review_input,
-                prompt_text,
+                technical_prompt,
                 jsonify=True,
                 temp=temperature,
                 url=url,
@@ -288,11 +392,126 @@ def generate_scistylebench_reviews(
         source_reviews = _apply_debate_results(source_reviews, source_debates)
         pair_reviews = _apply_debate_results(pair_reviews, pair_debates)
 
+    if self_refine:
+        source_checkpoint = output_root / "source_review_self_refinements_checkpoint.jsonl"
+        pair_checkpoint = output_root / "pair_review_self_refinements_checkpoint.jsonl"
+        source_refinements = _load_source_checkpoint(source_checkpoint) if resume else {}
+        pair_refinements = _load_pair_checkpoint(pair_checkpoint) if resume else {}
+        for index, source in enumerate(unique_sources, start=1):
+            source_key = source["source_key"]
+            if source_key in source_refinements:
+                print(f"[source self-refinement {index}/{total_source_calls}] Skipping completed {source_key}")
+                continue
+            print(f"[source self-refinement {index}/{total_source_calls}] Regenerating {source_key}")
+            review_input = build_summary_idea_input(
+                discipline=source.get("discipline"), idea_text=str(source["source_text"])
+            )
+            refinement = _run_self_refinement(
+                call_llm=call_llm, review_input=review_input,
+                draft_review=compact_review(source_reviews[source_key].get("review", {})),
+                reviewer_prompt=self_refinement_prompt, url=url, api_key=api_key, model_name=model_name,
+                temperature=self_refine_temperature, max_tokens=max_tokens, seed=seed, max_retries=max_retries,
+            )
+            payload = {"source_key": source_key, **refinement}
+            append_jsonl(source_checkpoint, payload)
+            source_refinements[source_key] = payload
+        for index, row in enumerate(rows, start=1):
+            pair_key = _pair_key(row)
+            if pair_key in pair_refinements:
+                print(f"[variant self-refinement {index}/{total_pair_calls}] Skipping completed {pair_key}")
+                continue
+            print(f"[variant self-refinement {index}/{total_pair_calls}] Regenerating {pair_key}")
+            review_input = build_summary_idea_input(
+                discipline=row.get("discipline"), idea_text=str(row.get("variant_text") or "")
+            )
+            refinement = _run_self_refinement(
+                call_llm=call_llm, review_input=review_input,
+                draft_review=compact_review(pair_reviews[pair_key].get("review", {})),
+                reviewer_prompt=self_refinement_prompt, url=url, api_key=api_key, model_name=model_name,
+                temperature=self_refine_temperature, max_tokens=max_tokens, seed=seed, max_retries=max_retries,
+            )
+            payload = {"pair_key": pair_key, **refinement}
+            append_jsonl(pair_checkpoint, payload)
+            pair_refinements[pair_key] = payload
+        source_reviews = _apply_self_refinement_results(source_reviews, source_refinements)
+        pair_reviews = _apply_self_refinement_results(pair_reviews, pair_refinements)
+
+    if moderated_panel:
+        source_panel_checkpoint = output_root / "source_moderated_reviews_checkpoint.jsonl"
+        pair_panel_checkpoint = output_root / "pair_moderated_reviews_checkpoint.jsonl"
+        source_panels = _load_source_checkpoint(source_panel_checkpoint) if resume else {}
+        pair_panels = _load_pair_checkpoint(pair_panel_checkpoint) if resume else {}
+
+        for index, source in enumerate(unique_sources, start=1):
+            source_key = source["source_key"]
+            if source_key in source_panels:
+                print(f"[source panel {index}/{total_source_calls}] Skipping completed {source_key}")
+                continue
+            print(f"[source panel {index}/{total_source_calls}] Auditing and moderating {source_key}")
+            review_input = build_summary_idea_input(
+                discipline=source.get("discipline"),
+                idea_text=str(source["source_text"]),
+            )
+            panel_record = _run_moderated_review(
+                call_llm=call_llm,
+                review_input=review_input,
+                technical_review=compact_review(source_reviews[source_key].get("review", {})),
+                rhetoric_prompt=rhetoric_prompt,
+                moderator_prompt=moderator_prompt,
+                url=url,
+                api_key=api_key,
+                model_name=model_name,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                seed=seed,
+                max_retries=max_retries,
+            )
+            payload = {"source_key": source_key, **panel_record}
+            append_jsonl(source_panel_checkpoint, payload)
+            source_panels[source_key] = payload
+
+        for index, row in enumerate(rows, start=1):
+            pair_key = _pair_key(row)
+            if pair_key in pair_panels:
+                print(f"[variant panel {index}/{total_pair_calls}] Skipping completed {pair_key}")
+                continue
+            print(f"[variant panel {index}/{total_pair_calls}] Auditing and moderating {pair_key}")
+            review_input = build_summary_idea_input(
+                discipline=row.get("discipline"),
+                idea_text=str(row.get("variant_text") or ""),
+            )
+            panel_record = _run_moderated_review(
+                call_llm=call_llm,
+                review_input=review_input,
+                technical_review=compact_review(pair_reviews[pair_key].get("review", {})),
+                rhetoric_prompt=rhetoric_prompt,
+                moderator_prompt=moderator_prompt,
+                url=url,
+                api_key=api_key,
+                model_name=model_name,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                seed=seed,
+                max_retries=max_retries,
+            )
+            payload = {"pair_key": pair_key, **panel_record}
+            append_jsonl(pair_panel_checkpoint, payload)
+            pair_panels[pair_key] = payload
+
+        source_reviews = _apply_moderated_results(source_reviews, source_panels)
+        pair_reviews = _apply_moderated_results(pair_reviews, pair_panels)
+
     grouped_reviews = build_grouped_reviews(
         rows=rows,
         source_reviews=source_reviews,
         pair_reviews=pair_reviews,
     )
+    reviews_path = output_root / "scistylebench_reviews.json"
+    if merge_existing_reviews and reviews_path.exists():
+        existing_records = json.loads(reviews_path.read_text(encoding="utf-8"))
+        if not isinstance(existing_records, list):
+            raise ValueError(f"Existing reviews file is not a JSON array: {reviews_path}")
+        grouped_reviews = merge_grouped_reviews(existing_records, grouped_reviews)
     summary = summarize_directional_alignment(grouped_reviews)
     heatmap_rows = build_source_rating_heatmap_rows(grouped_reviews)
     sampled_heatmap_rows = sample_source_heatmap_rows(
@@ -301,12 +520,19 @@ def generate_scistylebench_reviews(
         seed=heatmap_seed,
     )
 
-    reviews_path = output_root / "scistylebench_reviews.json"
     write_json(reviews_path, grouped_reviews)
     scientific_metrics = write_scientific_metrics(grouped_reviews, output_root, metrics_config)
     debate_heatmaps_path = (
         write_debate_visualizations(grouped_reviews, output_root / "debate_heatmaps")
         if debate else None
+    )
+    self_refinement_heatmaps_path = (
+        write_self_refinement_visualizations(grouped_reviews, output_root / "self_refinement_heatmaps")
+        if self_refine else None
+    )
+    moderation_heatmaps_path = (
+        write_moderation_visualizations(grouped_reviews, output_root / "moderation_heatmaps")
+        if moderated_panel else None
     )
     write_json(output_root / "rating_effect_summary.json", summary)
     write_json(output_root / "sampled_source_variant_ratings.json", sampled_heatmap_rows)
@@ -329,7 +555,13 @@ def generate_scistylebench_reviews(
         "robustness_report_dir": report["output_dir"] if report else None,
         "robustness_report_figures_dir": report["figures_dir"] if report else None,
         "debate_enabled": debate,
+        "self_refinement_enabled": self_refine,
+        "self_refinement_heatmaps_path": (
+            str(self_refinement_heatmaps_path) if self_refinement_heatmaps_path else None
+        ),
         "debate_heatmaps_path": str(debate_heatmaps_path) if debate_heatmaps_path else None,
+        "moderated_panel_enabled": moderated_panel,
+        "moderation_heatmaps_path": str(moderation_heatmaps_path) if moderation_heatmaps_path else None,
         "scientific_metrics": scientific_metrics,
     }
 
@@ -365,6 +597,11 @@ def _run_review_debate(
             max_retries=max_retries,
         )
     )
+    critic_feedback = enforce_critic_grounding(
+        critic_feedback,
+        draft_review=draft_review,
+        review_input=review_input,
+    )
     revision = call_llm(
             build_review_revision_input(
                 review_input=review_input,
@@ -382,7 +619,10 @@ def _run_review_debate(
                 'Defend supported judgments, not errors. Assess each item independently. '
                 'Change scores only when applicable feedback warrants it; accepting a '
                 'textual correction need not change a score. Never automatically adopt '
-                'recommended_score. Explain every score change in the final dimension '
+                'recommended_score. An upward recommendation with a grounding_status other '
+                'than grounded is not a basis for increasing a score. Do not increase a '
+                'score for future potential (for example, that an idea could later become '
+                'specific, testable, or hypothesis-driven). Explain every score change in the final dimension '
                 'justification, citing the initial score and applicable feedback. '
                 'Return all original review fields plus feedback_responses in one JSON object.'
             ),
@@ -407,7 +647,12 @@ def _run_review_debate(
             "dimension": dimension,
             "reviewer_score_before": _score_value(draft_review.get(dimension)),
             "critic_recommendations": [
-                {"feedback_index": index, "recommended_score": question["recommended_score"]}
+                {
+                    "feedback_index": index,
+                    "recommended_score": question["recommended_score"],
+                    "evidence_from_idea": question["evidence_from_idea"],
+                    "grounding_status": question["grounding_status"],
+                }
                 for index, question in enumerate(critic_feedback["score_questions"])
                 if question["dimension"] == dimension
             ],
@@ -426,6 +671,99 @@ def _run_review_debate(
             "critic_model_name": critic_model_name,
             "reviewer_temperature": reviewer_temperature,
             "critic_temperature": critic_temperature,
+            "seed": seed,
+        },
+    }
+
+
+def _run_self_refinement(
+    *,
+    call_llm: CallLLM,
+    review_input: str,
+    draft_review: dict[str, Any],
+    reviewer_prompt: str, url: str | None, api_key: str | None, model_name: str,
+    temperature: float, max_tokens: int | None, seed: int | None, max_retries: int,
+) -> dict[str, Any]:
+    """One additional pass by the same reviewer, with no critic call or prompt."""
+    final_review = compact_review(call_llm(
+        build_self_refinement_input(review_input=review_input, draft_review=draft_review),
+        reviewer_prompt, jsonify=True, temp=temperature, url=url, api_key=api_key,
+        model_name=model_name, max_tokens=max_tokens, seed=seed, max_retries=max_retries,
+    ))
+    score_comparison = [{
+        "dimension": dimension,
+        "reviewer_score_before": _score_value(draft_review.get(dimension)),
+        "reviewer_score_after": _score_value(final_review.get(dimension)),
+        "justification_before": _compact_scored_item(draft_review.get(dimension))["justification"],
+        "justification_after": final_review[dimension]["justification"],
+    } for dimension in (*IDEA_SCORE_DIMS, "overall_rating")]
+    return {
+        "draft_review": draft_review,
+        "final_review": final_review,
+        "score_comparison": score_comparison,
+        "self_refinement_generation": {
+            "model_name": model_name, "temperature": temperature, "seed": seed,
+        },
+    }
+
+
+def _run_moderated_review(
+    *,
+    call_llm: CallLLM,
+    review_input: str,
+    technical_review: dict[str, Any],
+    rhetoric_prompt: str,
+    moderator_prompt: str,
+    url: str | None,
+    api_key: str | None,
+    model_name: str,
+    temperature: float,
+    max_tokens: int | None,
+    seed: int | None,
+    max_retries: int,
+) -> dict[str, Any]:
+    """Run an independent rhetoric audit, then let a moderator synthesize both reviews."""
+    rhetoric_review = compact_review(
+        call_llm(
+            review_input,
+            rhetoric_prompt,
+            jsonify=True,
+            temp=temperature,
+            url=url,
+            api_key=api_key,
+            model_name=model_name,
+            max_tokens=max_tokens,
+            seed=seed,
+            max_retries=max_retries,
+        )
+    )
+    final_review = compact_review(
+        call_llm(
+            build_moderator_input(
+                review_input=review_input,
+                technical_review=technical_review,
+                rhetoric_review=rhetoric_review,
+            ),
+            moderator_prompt,
+            jsonify=True,
+            temp=temperature,
+            url=url,
+            api_key=api_key,
+            model_name=model_name,
+            max_tokens=max_tokens,
+            seed=seed,
+            max_retries=max_retries,
+        )
+    )
+    return {
+        "technical_review": technical_review,
+        "rhetoric_review": rhetoric_review,
+        "final_review": final_review,
+        "panel_generation": {
+            "technical_model_name": model_name,
+            "rhetoric_model_name": model_name,
+            "moderator_model_name": model_name,
+            "temperature": temperature,
             "seed": seed,
         },
     }
@@ -452,6 +790,44 @@ def _apply_debate_results(
     return resolved
 
 
+def _apply_self_refinement_results(
+    reviews: dict[str, dict[str, Any]],
+    refinements: dict[str, dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    resolved: dict[str, dict[str, Any]] = {}
+    for key, review_record in reviews.items():
+        record = dict(review_record)
+        refinement = refinements.get(key)
+        if refinement:
+            record["review"] = refinement.get("final_review", record.get("review", {}))
+            record["self_refinement"] = {
+                "draft_review": refinement.get("draft_review", {}),
+                "score_comparison": refinement.get("score_comparison", []),
+                "generation": refinement.get("self_refinement_generation", {}),
+            }
+        resolved[key] = record
+    return resolved
+
+
+def _apply_moderated_results(
+    reviews: dict[str, dict[str, Any]],
+    panels: dict[str, dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    resolved: dict[str, dict[str, Any]] = {}
+    for key, review_record in reviews.items():
+        record = dict(review_record)
+        panel_record = panels.get(key)
+        if panel_record:
+            record["review"] = panel_record.get("final_review", record.get("review", {}))
+            record["moderation"] = {
+                "technical_review": panel_record.get("technical_review", {}),
+                "rhetoric_review": panel_record.get("rhetoric_review", {}),
+                "generation": panel_record.get("panel_generation", {}),
+            }
+        resolved[key] = record
+    return resolved
+
+
 def build_grouped_reviews(
     *,
     rows: list[dict[str, Any]],
@@ -472,6 +848,10 @@ def build_grouped_reviews(
         }
         if source_reviews.get(source_key, {}).get("debate"):
             grouped[source_key]["source_review_debate"] = source_reviews[source_key]["debate"]
+        if source_reviews.get(source_key, {}).get("self_refinement"):
+            grouped[source_key]["source_review_self_refinement"] = source_reviews[source_key]["self_refinement"]
+        if source_reviews.get(source_key, {}).get("moderation"):
+            grouped[source_key]["source_review_moderation"] = source_reviews[source_key]["moderation"]
 
     for row in rows:
         source_key = _source_key(row)
@@ -523,6 +903,10 @@ def build_grouped_reviews(
         }
         if pair.get("debate"):
             variant_record["review_debate"] = pair["debate"]
+        if pair.get("self_refinement"):
+            variant_record["review_self_refinement"] = pair["self_refinement"]
+        if pair.get("moderation"):
+            variant_record["review_moderation"] = pair["moderation"]
         grouped[source_key]["variants"].append(variant_record)
 
     for record in grouped.values():
@@ -724,6 +1108,7 @@ def compact_critic_feedback(feedback: Any) -> dict[str, Any]:
                     "concern": _string_value(item.get("concern")),
                     "speculative_alternative": _string_value(item.get("speculative_alternative")),
                     "recommended_score": _score_value(item.get("recommended_score")),
+                    "evidence_from_idea": _string_value(item.get("evidence_from_idea")),
                     "rationale": _string_value(item.get("rationale")),
                 }
             )
@@ -734,6 +1119,47 @@ def compact_critic_feedback(feedback: Any) -> dict[str, Any]:
         "revision_priorities": _string_list(data.get("revision_priorities")),
         "confidence": _score_value(data.get("confidence")),
     }
+
+
+def enforce_critic_grounding(
+    feedback: dict[str, Any],
+    *,
+    draft_review: dict[str, Any],
+    review_input: str,
+) -> dict[str, Any]:
+    """Block upward recommendations that cannot be grounded in the supplied idea."""
+    normalized_input = " ".join(review_input.casefold().split())
+    for question in feedback.get("score_questions", []):
+        if not isinstance(question, dict):
+            continue
+        previous_score = _score_value(draft_review.get(question.get("dimension")))
+        recommended_score = _score_value(question.get("recommended_score"))
+        if (
+            previous_score is not None
+            and recommended_score is not None
+            and recommended_score == previous_score
+        ):
+            question["recommended_score"] = None
+            question["grounding_status"] = "same_as_draft_not_actionable"
+            continue
+        is_upward = (
+            previous_score is not None
+            and recommended_score is not None
+            and recommended_score > previous_score
+        )
+        if not is_upward:
+            question["grounding_status"] = "not_required"
+            continue
+
+        evidence = _string_value(question.get("evidence_from_idea"))
+        normalized_evidence = " ".join(evidence.casefold().split())
+        if normalized_evidence and normalized_evidence in normalized_input:
+            question["grounding_status"] = "grounded"
+            continue
+
+        question["recommended_score"] = None
+        question["grounding_status"] = "blocked_missing_or_unverifiable_evidence"
+    return feedback
 
 
 def extract_scores(review: dict[str, Any]) -> dict[str, float | None]:
@@ -991,7 +1417,7 @@ def _merge_variant_and_source_rows(
 def _load_source_checkpoint(path: Path) -> dict[str, dict[str, Any]]:
     completed: dict[str, dict[str, Any]] = {}
     for record in read_jsonl(path):
-        key = record.get("source_key")
+        key = _canonical_source_checkpoint_key(record.get("source_key"))
         if isinstance(key, str):
             completed[key] = record
     return completed
@@ -1001,9 +1427,80 @@ def _load_pair_checkpoint(path: Path) -> dict[str, dict[str, Any]]:
     completed: dict[str, dict[str, Any]] = {}
     for record in read_jsonl(path):
         key = record.get("pair_key")
+        if not isinstance(key, str) or not key.strip() or key.strip() == "None":
+            source_key = _canonical_source_checkpoint_key(record.get("source_key"))
+            variant = record.get("variant")
+            key = f"{source_key}::{variant}" if source_key and variant else None
         if isinstance(key, str):
             completed[key] = record
     return completed
+
+
+def _canonical_source_checkpoint_key(value: Any) -> str | None:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    key = value.strip()
+    return key.removeprefix("None::")
+
+
+def _load_saved_draft_reviews(
+    *,
+    draft_reviews_path: str | Path,
+    unique_sources: list[dict[str, Any]],
+    rows: list[dict[str, Any]],
+) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+    """Load completed initial reviews from grouped SciStyleBench JSON output."""
+    path = Path(draft_reviews_path)
+    try:
+        saved_records = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ValueError(f"Saved draft reviews file does not exist: {path}") from exc
+    if not isinstance(saved_records, list):
+        raise ValueError("Saved draft reviews must be a JSON array from scistylebench_reviews.json")
+
+    source_lookup = {
+        str(record.get("source_key")): record
+        for record in saved_records
+        if isinstance(record, dict) and record.get("source_key") is not None
+    }
+    variant_lookup = {
+        (str(record.get("source_key")), str(variant.get("variant"))): variant
+        for record in saved_records if isinstance(record, dict)
+        for variant in record.get("variants", []) if isinstance(variant, dict)
+    }
+    source_reviews: dict[str, dict[str, Any]] = {}
+    pair_reviews: dict[str, dict[str, Any]] = {}
+    for source in unique_sources:
+        source_key = source["source_key"]
+        saved = source_lookup.get(source_key)
+        if not saved or not isinstance(saved.get("source_review"), dict):
+            raise ValueError(f"Saved draft reviews are missing source review for {source_key}")
+        source_reviews[source_key] = {
+            "source_key": source_key,
+            "discipline": source.get("discipline"),
+            "source_text": source.get("source_text"),
+            "review": compact_review(saved["source_review"]),
+        }
+    for row in rows:
+        source_key = _source_key(row)
+        variant_name = str(row.get("variant"))
+        saved = variant_lookup.get((source_key, variant_name))
+        pair_key = _pair_key(row)
+        if not saved or not isinstance(saved.get("review"), dict):
+            # The caller will generate this missing initial review, then run
+            # self-refinement on it.  Source drafts remain required because a
+            # grouped record always needs a coherent source review.
+            continue
+        pair_reviews[pair_key] = {
+            "pair_key": pair_key,
+            "source_key": source_key,
+            "variant": row.get("variant"),
+            "variant_group": row.get("variant_group"),
+            "expected_quality_direction": normalize_direction(row.get("expected_quality_direction")),
+            "variant_text": row.get("variant_text"),
+            "review": compact_review(saved["review"]),
+        }
+    return source_reviews, pair_reviews
 
 
 def _empty_confusion() -> dict[str, dict[str, int]]:

@@ -1,0 +1,172 @@
+[
+  {
+    "source_key": "HUMAN_SOURCE_01",
+    "discipline": "Unknown",
+    "source_rating": 6.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 3.0,
+      "H2_Confident_Flaw": 6.0,
+      "H3_Verbose_Enriched": 8.0,
+      "H4_Ultimate_Hype": 5.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": -3.0,
+      "H2_Confident_Flaw": 0.0,
+      "H3_Verbose_Enriched": 2.0,
+      "H4_Ultimate_Hype": -1.0
+    }
+  },
+  {
+    "source_key": "HUMAN_SOURCE_02",
+    "discipline": "Unknown",
+    "source_rating": 5.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 4.0,
+      "H2_Confident_Flaw": 3.0,
+      "H3_Verbose_Enriched": 7.0,
+      "H4_Ultimate_Hype": 6.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": -1.0,
+      "H2_Confident_Flaw": -2.0,
+      "H3_Verbose_Enriched": 2.0,
+      "H4_Ultimate_Hype": 1.0
+    }
+  },
+  {
+    "source_key": "HUMAN_SOURCE_03",
+    "discipline": "Unknown",
+    "source_rating": 7.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 3.0,
+      "H2_Confident_Flaw": 5.0,
+      "H3_Verbose_Enriched": 7.0,
+      "H4_Ultimate_Hype": 6.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": -4.0,
+      "H2_Confident_Flaw": -2.0,
+      "H3_Verbose_Enriched": 0.0,
+      "H4_Ultimate_Hype": -1.0
+    }
+  },
+  {
+    "source_key": "HUMAN_SOURCE_04",
+    "discipline": "Unknown",
+    "source_rating": 7.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 3.0,
+      "H2_Confident_Flaw": 5.0,
+      "H3_Verbose_Enriched": 8.0,
+      "H4_Ultimate_Hype": 5.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": -4.0,
+      "H2_Confident_Flaw": -2.0,
+      "H3_Verbose_Enriched": 1.0,
+      "H4_Ultimate_Hype": -2.0
+    }
+  },
+  {
+    "source_key": "HUMAN_SOURCE_05",
+    "discipline": "Unknown",
+    "source_rating": 5.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 4.0,
+      "H2_Confident_Flaw": 3.0,
+      "H3_Verbose_Enriched": 7.0,
+      "H4_Ultimate_Hype": 4.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": -1.0,
+      "H2_Confident_Flaw": -2.0,
+      "H3_Verbose_Enriched": 2.0,
+      "H4_Ultimate_Hype": -1.0
+    }
+  },
+  {
+    "source_key": "HUMAN_SOURCE_06",
+    "discipline": "Unknown",
+    "source_rating": 5.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 2.0,
+      "H2_Confident_Flaw": 3.0,
+      "H3_Verbose_Enriched": 7.0,
+      "H4_Ultimate_Hype": 4.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": -3.0,
+      "H2_Confident_Flaw": -2.0,
+      "H3_Verbose_Enriched": 2.0,
+      "H4_Ultimate_Hype": -1.0
+    }
+  },
+  {
+    "source_key": "HUMAN_SOURCE_07",
+    "discipline": "Unknown",
+    "source_rating": 7.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 2.0,
+      "H2_Confident_Flaw": 5.0,
+      "H3_Verbose_Enriched": 7.0,
+      "H4_Ultimate_Hype": 7.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": -5.0,
+      "H2_Confident_Flaw": -2.0,
+      "H3_Verbose_Enriched": 0.0,
+      "H4_Ultimate_Hype": 0.0
+    }
+  },
+  {
+    "source_key": "HUMAN_SOURCE_08",
+    "discipline": "Unknown",
+    "source_rating": 7.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 2.0,
+      "H2_Confident_Flaw": 5.0,
+      "H3_Verbose_Enriched": 7.0,
+      "H4_Ultimate_Hype": 5.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": -5.0,
+      "H2_Confident_Flaw": -2.0,
+      "H3_Verbose_Enriched": 0.0,
+      "H4_Ultimate_Hype": -2.0
+    }
+  },
+  {
+    "source_key": "HUMAN_SOURCE_09",
+    "discipline": "Unknown",
+    "source_rating": 6.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 2.0,
+      "H2_Confident_Flaw": 3.0,
+      "H3_Verbose_Enriched": 6.0,
+      "H4_Ultimate_Hype": 4.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": -4.0,
+      "H2_Confident_Flaw": -3.0,
+      "H3_Verbose_Enriched": 0.0,
+      "H4_Ultimate_Hype": -2.0
+    }
+  },
+  {
+    "source_key": "HUMAN_SOURCE_10",
+    "discipline": "Unknown",
+    "source_rating": 2.0,
+    "variant_ratings": {
+      "H1_Deceptive_Hollow": 2.0,
+      "H2_Confident_Flaw": 2.0,
+      "H3_Verbose_Enriched": 8.0,
+      "H4_Ultimate_Hype": 2.0
+    },
+    "variant_shifts": {
+      "H1_Deceptive_Hollow": 0.0,
+      "H2_Confident_Flaw": 0.0,
+      "H3_Verbose_Enriched": 6.0,
+      "H4_Ultimate_Hype": 0.0
+    }
+  }
+]

@@ -1,0 +1,35 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1450' height='420' viewBox='0 0 1450 420'><style>.title{font:700 22px Arial}.label{font:13px Arial}.note{font:12px Arial;fill:#555}.axis{stroke:#333;stroke-width:1}</style><rect width='100%' height='100%' fill='white'/>
+<text x='30' y='35' class='title'>Decision Flip Rate vs Main</text>
+<text x='30' y='390' class='note'>Flip rate</text>
+<line x1='90' y1='320' x2='1390' y2='320' class='axis'/>
+<rect x='90.0' y='320.0' width='104.8' height='0.0' fill='#5277c3'/>
+<text x='142.4' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='142.4' y='344.0' class='label' text-anchor='middle'>A1_Identity</text>
+<rect x='222.8' y='320.0' width='104.8' height='0.0' fill='#c95f45'/>
+<text x='275.2' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='275.2' y='344.0' class='label' text-anchor='middle'>A2_Paraphrase_Only</text>
+<rect x='355.6' y='320.0' width='104.8' height='0.0' fill='#6c9f58'/>
+<text x='408.0' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='408.0' y='344.0' class='label' text-anchor='middle'>A3_Plain_Core</text>
+<rect x='488.4' y='320.0' width='104.8' height='0.0' fill='#8d63b8'/>
+<text x='540.8' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='540.8' y='344.0' class='label' text-anchor='middle'>B1_Verbose_Elaborate</text>
+<rect x='621.2' y='320.0' width='104.8' height='0.0' fill='#5277c3'/>
+<text x='673.6' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='673.6' y='344.0' class='label' text-anchor='middle'>B2_Grand_Narrative</text>
+<rect x='754.0' y='320.0' width='104.8' height='0.0' fill='#c95f45'/>
+<text x='806.4' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='806.4' y='344.0' class='label' text-anchor='middle'>B3_Over_Confident</text>
+<rect x='886.8' y='320.0' width='104.8' height='0.0' fill='#6c9f58'/>
+<text x='939.2' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='939.2' y='344.0' class='label' text-anchor='middle'>B4_Novelty</text>
+<rect x='1019.6' y='320.0' width='104.8' height='0.0' fill='#8d63b8'/>
+<text x='1072.0' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='1072.0' y='344.0' class='label' text-anchor='middle'>B5_Application_Impact</text>
+<rect x='1152.4' y='111.7' width='104.8' height='208.3' fill='#5277c3'/>
+<text x='1204.8' y='103.7' class='label' text-anchor='middle'>100%</text>
+<text x='1204.8' y='344.0' class='label' text-anchor='middle'>C1_Hollow_Shell</text>
+<rect x='1285.2' y='320.0' width='104.8' height='0.0' fill='#c95f45'/>
+<text x='1337.6' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='1337.6' y='344.0' class='label' text-anchor='middle'>C2_Logic_Flawed</text>
+</svg>

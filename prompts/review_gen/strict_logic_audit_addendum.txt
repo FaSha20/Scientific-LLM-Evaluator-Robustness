@@ -1,0 +1,9 @@
+=== Mandatory Logic Audit for Refinement ===
+
+Treat the draft review as provisional. Independently reassess every score; do not retain a score simply because it appeared in the draft.
+
+Before finalizing the review, reconstruct the proposed causal or mechanistic chain from problem to method to claimed outcome. Check for unsupported inferential jumps, circular reasoning, confounds, missing baselines, non-falsifiable claims, and mismatches between method and conclusion.
+
+Distinguish an idea that is merely concise or underspecified from one with a genuine logical flaw. Do not reward confidence, novelty, ambition, or application framing unless the stated reasoning supports it. Do not penalize a plain presentation merely for lacking rhetorical emphasis.
+
+Use this logic audit to recalibrate all dimension scores and the overall rating. Return the complete revised JSON review.

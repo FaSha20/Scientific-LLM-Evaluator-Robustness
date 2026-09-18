@@ -181,7 +181,15 @@ def render_debate_heatmap(title: str, debate: dict, final_review: dict) -> bytes
             horizontal = 360 + column * 175
             axes.add_patch(Rectangle((horizontal, vertical), 165, 38,
                                      facecolor=color, edgecolor="#cbd5e1", linewidth=0.6))
-            label(horizontal + 65, vertical + 25, f"{value:g}" if valid else "N/A", 16,
+            if column == 1 and feedback_index is None:
+                cell_label, size = "No question", 12
+            elif column == 1 and value is None:
+                status = question.get("grounding_status")
+                cell_label = "Blocked" if status == "blocked_missing_or_unverifiable_evidence" else "Refine only"
+                size = 12
+            else:
+                cell_label, size = (f"{value:g}" if valid else "N/A"), 16
+            label(horizontal + 65, vertical + 25, cell_label, size,
                   "white" if shade == 4 else "#172033")
         change = f"{after - before:+g}" if all(value is not None and 1 <= value <= maximum for value in (before, after)) else "N/A"
         label(920, vertical + 25, change, 16)
@@ -190,7 +198,7 @@ def render_debate_heatmap(title: str, debate: dict, final_review: dict) -> bytes
     for index, color in enumerate(PALETTE):
         axes.add_patch(Rectangle((24 + index * 45, footer + 40), 45, 16,
                                  facecolor=color, edgecolor="none"))
-    label(265, footer + 54, "Low → high. Gray N/A = absent, null, or invalid score. Change = after − before.", 13)
+    label(265, footer + 54, "Low → high. Refine only = critic question with null score; No question = no critic challenge. Change = after − before.", 13)
     label(24, footer + 80, "Source: scistylebench_reviews.json. Multiple critic recommendations are separate rows; never averaged.", 12)
     output = io.BytesIO()
     figure.savefig(output, format="png", dpi=200, metadata={"Description": "\n".join(labels)})

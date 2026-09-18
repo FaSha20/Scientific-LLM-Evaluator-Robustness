@@ -1,0 +1,38 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1580' height='420' viewBox='0 0 1580 420'><style>.title{font:700 22px Arial}.label{font:13px Arial}.note{font:12px Arial;fill:#555}.axis{stroke:#333;stroke-width:1}</style><rect width='100%' height='100%' fill='white'/>
+<text x='30' y='35' class='title'>Robustness Index by Variant</text>
+<text x='30' y='390' class='note'>0-1 index</text>
+<line x1='90' y1='320' x2='1520' y2='320' class='axis'/>
+<rect x='90.0' y='107.5' width='104.5' height='212.5' fill='#5277c3'/>
+<text x='142.3' y='99.5' class='label' text-anchor='middle'>0.85</text>
+<text x='142.3' y='344.0' class='label' text-anchor='middle'>A1_Identity</text>
+<rect x='222.5' y='90.9' width='104.5' height='229.1' fill='#c95f45'/>
+<text x='274.8' y='82.9' class='label' text-anchor='middle'>0.92</text>
+<text x='274.8' y='344.0' class='label' text-anchor='middle'>A2_Paraphrase_Only</text>
+<rect x='355.1' y='92.3' width='104.5' height='227.7' fill='#6c9f58'/>
+<text x='407.4' y='84.3' class='label' text-anchor='middle'>0.91</text>
+<text x='407.4' y='344.0' class='label' text-anchor='middle'>A3_Plain_Core</text>
+<rect x='487.6' y='94.8' width='104.5' height='225.2' fill='#8d63b8'/>
+<text x='539.9' y='86.8' class='label' text-anchor='middle'>0.90</text>
+<text x='539.9' y='344.0' class='label' text-anchor='middle'>B1_Verbose_Elaborate</text>
+<rect x='620.2' y='91.6' width='104.5' height='228.4' fill='#5277c3'/>
+<text x='672.5' y='83.6' class='label' text-anchor='middle'>0.91</text>
+<text x='672.5' y='344.0' class='label' text-anchor='middle'>B2_Grand_Narrative</text>
+<rect x='752.7' y='97.8' width='104.5' height='222.2' fill='#c95f45'/>
+<text x='805.0' y='89.8' class='label' text-anchor='middle'>0.89</text>
+<text x='805.0' y='344.0' class='label' text-anchor='middle'>B3_Over_Confident</text>
+<rect x='885.3' y='86.6' width='104.5' height='233.4' fill='#6c9f58'/>
+<text x='937.5' y='78.6' class='label' text-anchor='middle'>0.93</text>
+<text x='937.5' y='344.0' class='label' text-anchor='middle'>B4_Novelty</text>
+<rect x='1017.8' y='87.9' width='104.5' height='232.1' fill='#8d63b8'/>
+<text x='1070.1' y='79.9' class='label' text-anchor='middle'>0.93</text>
+<text x='1070.1' y='344.0' class='label' text-anchor='middle'>B5_Application_Impact</text>
+<rect x='1150.4' y='89.4' width='104.5' height='230.6' fill='#5277c3'/>
+<text x='1202.6' y='81.4' class='label' text-anchor='middle'>0.92</text>
+<text x='1202.6' y='344.0' class='label' text-anchor='middle'>C1_Hollow_Shell</text>
+<rect x='1282.9' y='100.6' width='104.5' height='219.4' fill='#c95f45'/>
+<text x='1335.2' y='92.6' class='label' text-anchor='middle'>0.88</text>
+<text x='1335.2' y='344.0' class='label' text-anchor='middle'>C2_Logic_Flawed</text>
+<rect x='1415.5' y='91.6' width='104.5' height='228.4' fill='#6c9f58'/>
+<text x='1467.7' y='83.6' class='label' text-anchor='middle'>0.91</text>
+<text x='1467.7' y='344.0' class='label' text-anchor='middle'>C3_Substance_Enriched</text>
+</svg>

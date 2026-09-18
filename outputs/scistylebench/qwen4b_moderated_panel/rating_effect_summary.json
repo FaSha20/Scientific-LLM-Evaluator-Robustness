@@ -1,0 +1,501 @@
+{
+  "dataset": {
+    "n_sources": 5,
+    "n_variants": 50
+  },
+  "rating_threshold": 0.25,
+  "overall": {
+    "n": 50,
+    "mean_source_rating": 7.0,
+    "mean_variant_rating": 6.9,
+    "mean_shift": -0.1,
+    "mean_abs_shift": 0.1,
+    "direction_accuracy": 0.7,
+    "expected_counts": {
+      "same": 38,
+      "down": 8,
+      "up": 4
+    },
+    "predicted_counts": {
+      "same": 45,
+      "down": 5
+    },
+    "confusion": {
+      "down": {
+        "down": 1,
+        "same": 7,
+        "up": 0
+      },
+      "same": {
+        "down": 4,
+        "same": 34,
+        "up": 0
+      },
+      "up": {
+        "down": 0,
+        "same": 4,
+        "up": 0
+      }
+    }
+  },
+  "by_variant_group": [
+    {
+      "n": 15,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 6.866666666666666,
+      "mean_shift": -0.13333333333333333,
+      "mean_abs_shift": 0.13333333333333333,
+      "direction_accuracy": 0.8666666666666667,
+      "expected_counts": {
+        "same": 15
+      },
+      "predicted_counts": {
+        "same": 13,
+        "down": 2
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 2,
+          "same": 13,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant_group": "A_baseline_expression_control"
+    },
+    {
+      "n": 23,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 6.913043478260869,
+      "mean_shift": -0.08695652173913043,
+      "mean_abs_shift": 0.08695652173913043,
+      "direction_accuracy": 0.9130434782608695,
+      "expected_counts": {
+        "same": 23
+      },
+      "predicted_counts": {
+        "same": 21,
+        "down": 2
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 2,
+          "same": 21,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant_group": "B_rhetoric_and_framing"
+    },
+    {
+      "n": 12,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 6.916666666666667,
+      "mean_shift": -0.08333333333333333,
+      "mean_abs_shift": 0.08333333333333333,
+      "direction_accuracy": 0.08333333333333333,
+      "expected_counts": {
+        "down": 8,
+        "up": 4
+      },
+      "predicted_counts": {
+        "same": 11,
+        "down": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 1,
+          "same": 7,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 4,
+          "up": 0
+        }
+      },
+      "variant_group": "C_substance_and_logic"
+    }
+  ],
+  "by_variant": [
+    {
+      "n": 5,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "same": 5
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 5,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "A1_Identity"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "same": 5
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 5,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "A2_Paraphrase_Only"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 6.6,
+      "mean_shift": -0.4,
+      "mean_abs_shift": 0.4,
+      "direction_accuracy": 0.6,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "same": 3,
+        "down": 2
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 2,
+          "same": 3,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "A3_Plain_Core"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "same": 5
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 5,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B1_Verbose_Elaborate"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 6.8,
+      "mean_shift": -0.2,
+      "mean_abs_shift": 0.2,
+      "direction_accuracy": 0.8,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "same": 4,
+        "down": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 4,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B2_Grand_Narrative"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 6.8,
+      "mean_shift": -0.2,
+      "mean_abs_shift": 0.2,
+      "direction_accuracy": 0.8,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "down": 1,
+        "same": 4
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 4,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B3_Over_Confident"
+    },
+    {
+      "n": 4,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "same": 4
+      },
+      "predicted_counts": {
+        "same": 4
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 4,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B4_Novelty"
+    },
+    {
+      "n": 4,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "same": 4
+      },
+      "predicted_counts": {
+        "same": 4
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 4,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B5_Application_Impact"
+    },
+    {
+      "n": 4,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 6.75,
+      "mean_shift": -0.25,
+      "mean_abs_shift": 0.25,
+      "direction_accuracy": 0.25,
+      "expected_counts": {
+        "down": 4
+      },
+      "predicted_counts": {
+        "same": 3,
+        "down": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 1,
+          "same": 3,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "C1_Hollow_Shell"
+    },
+    {
+      "n": 4,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 0.0,
+      "expected_counts": {
+        "down": 4
+      },
+      "predicted_counts": {
+        "same": 4
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 4,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "C2_Logic_Flawed"
+    },
+    {
+      "n": 4,
+      "mean_source_rating": 7.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 0.0,
+      "expected_counts": {
+        "up": 4
+      },
+      "predicted_counts": {
+        "same": 4
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 4,
+          "up": 0
+        }
+      },
+      "variant": "C3_Substance_Enriched"
+    }
+  ]
+}

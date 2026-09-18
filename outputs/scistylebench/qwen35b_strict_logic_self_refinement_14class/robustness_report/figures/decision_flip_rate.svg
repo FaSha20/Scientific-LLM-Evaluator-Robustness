@@ -1,0 +1,50 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='2100' height='420' viewBox='0 0 2100 420'><style>.title{font:700 22px Arial}.label{font:13px Arial}.note{font:12px Arial;fill:#555}.axis{stroke:#333;stroke-width:1}</style><rect width='100%' height='100%' fill='white'/>
+<text x='30' y='35' class='title'>Decision Flip Rate vs Main</text>
+<text x='30' y='390' class='note'>Flip rate</text>
+<line x1='90' y1='320' x2='2040' y2='320' class='axis'/>
+<rect x='90.0' y='320.0' width='103.9' height='0.0' fill='#5277c3'/>
+<text x='141.9' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='141.9' y='344.0' class='label' text-anchor='middle'>A1_Identity</text>
+<rect x='221.9' y='307.0' width='103.9' height='13.0' fill='#c95f45'/>
+<text x='273.8' y='299.0' class='label' text-anchor='middle'>6%</text>
+<text x='273.8' y='344.0' class='label' text-anchor='middle'>A2_Paraphrase_Only</text>
+<rect x='353.7' y='254.9' width='103.9' height='65.1' fill='#6c9f58'/>
+<text x='405.7' y='246.9' class='label' text-anchor='middle'>31%</text>
+<text x='405.7' y='344.0' class='label' text-anchor='middle'>A3_Plain_Core</text>
+<rect x='485.6' y='320.0' width='103.9' height='0.0' fill='#8d63b8'/>
+<text x='537.5' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='537.5' y='344.0' class='label' text-anchor='middle'>B1_Verbose_Elaborate</text>
+<rect x='617.5' y='280.9' width='103.9' height='39.1' fill='#5277c3'/>
+<text x='669.4' y='272.9' class='label' text-anchor='middle'>19%</text>
+<text x='669.4' y='344.0' class='label' text-anchor='middle'>B2_Grand_Narrative</text>
+<rect x='749.3' y='280.9' width='103.9' height='39.1' fill='#c95f45'/>
+<text x='801.3' y='272.9' class='label' text-anchor='middle'>19%</text>
+<text x='801.3' y='344.0' class='label' text-anchor='middle'>B3_Over_Confident</text>
+<rect x='881.2' y='320.0' width='103.9' height='0.0' fill='#6c9f58'/>
+<text x='933.1' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='933.1' y='344.0' class='label' text-anchor='middle'>B4_Novelty</text>
+<rect x='1013.1' y='280.9' width='103.9' height='39.1' fill='#8d63b8'/>
+<text x='1065.0' y='272.9' class='label' text-anchor='middle'>19%</text>
+<text x='1065.0' y='344.0' class='label' text-anchor='middle'>B5_Application_Impact</text>
+<rect x='1144.9' y='137.7' width='103.9' height='182.3' fill='#5277c3'/>
+<text x='1196.9' y='129.7' class='label' text-anchor='middle'>88%</text>
+<text x='1196.9' y='344.0' class='label' text-anchor='middle'>C1_Hollow_Shell</text>
+<rect x='1276.8' y='307.0' width='103.9' height='13.0' fill='#c95f45'/>
+<text x='1328.7' y='299.0' class='label' text-anchor='middle'>6%</text>
+<text x='1328.7' y='344.0' class='label' text-anchor='middle'>C2_Logic_Flawed</text>
+<rect x='1408.7' y='320.0' width='103.9' height='0.0' fill='#6c9f58'/>
+<text x='1460.6' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='1460.6' y='344.0' class='label' text-anchor='middle'>C3_Substance_Enriched</text>
+<rect x='1540.5' y='111.7' width='103.9' height='208.3' fill='#8d63b8'/>
+<text x='1592.5' y='103.7' class='label' text-anchor='middle'>100%</text>
+<text x='1592.5' y='344.0' class='label' text-anchor='middle'>H1_Deceptive_Hollow</text>
+<rect x='1672.4' y='111.7' width='103.9' height='208.3' fill='#5277c3'/>
+<text x='1724.3' y='103.7' class='label' text-anchor='middle'>100%</text>
+<text x='1724.3' y='344.0' class='label' text-anchor='middle'>H2_Confident_Flaw</text>
+<rect x='1804.3' y='320.0' width='103.9' height='0.0' fill='#c95f45'/>
+<text x='1856.2' y='312.0' class='label' text-anchor='middle'>0%</text>
+<text x='1856.2' y='344.0' class='label' text-anchor='middle'>H3_Verbose_Enriched</text>
+<rect x='1936.1' y='254.9' width='103.9' height='65.1' fill='#6c9f58'/>
+<text x='1988.1' y='246.9' class='label' text-anchor='middle'>31%</text>
+<text x='1988.1' y='344.0' class='label' text-anchor='middle'>H4_Ultimate_Hype</text>
+</svg>

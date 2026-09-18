@@ -1,0 +1,215 @@
+{
+  "dataset": {
+    "n_sources": 10,
+    "n_variants": 40
+  },
+  "rating_threshold": 0.25,
+  "overall": {
+    "n": 40,
+    "mean_source_rating": 5.7,
+    "mean_variant_rating": 4.675,
+    "mean_shift": -1.025,
+    "mean_abs_shift": 1.825,
+    "direction_accuracy": 0.625,
+    "expected_counts": {
+      "down": 20,
+      "up": 10,
+      "same": 10
+    },
+    "predicted_counts": {
+      "down": 24,
+      "same": 9,
+      "up": 7
+    },
+    "confusion": {
+      "down": {
+        "down": 17,
+        "same": 3,
+        "up": 0
+      },
+      "same": {
+        "down": 7,
+        "same": 2,
+        "up": 1
+      },
+      "up": {
+        "down": 0,
+        "same": 4,
+        "up": 6
+      }
+    }
+  },
+  "by_variant_group": [
+    {
+      "n": 40,
+      "mean_source_rating": 5.7,
+      "mean_variant_rating": 4.675,
+      "mean_shift": -1.025,
+      "mean_abs_shift": 1.825,
+      "direction_accuracy": 0.625,
+      "expected_counts": {
+        "down": 20,
+        "up": 10,
+        "same": 10
+      },
+      "predicted_counts": {
+        "down": 24,
+        "same": 9,
+        "up": 7
+      },
+      "confusion": {
+        "down": {
+          "down": 17,
+          "same": 3,
+          "up": 0
+        },
+        "same": {
+          "down": 7,
+          "same": 2,
+          "up": 1
+        },
+        "up": {
+          "down": 0,
+          "same": 4,
+          "up": 6
+        }
+      },
+      "variant_group": "H_hybrid_mixed_perturbations"
+    }
+  ],
+  "by_variant": [
+    {
+      "n": 10,
+      "mean_source_rating": 5.7,
+      "mean_variant_rating": 2.7,
+      "mean_shift": -3.0,
+      "mean_abs_shift": 3.0,
+      "direction_accuracy": 0.9,
+      "expected_counts": {
+        "down": 10
+      },
+      "predicted_counts": {
+        "down": 9,
+        "same": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 9,
+          "same": 1,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "H1_Deceptive_Hollow"
+    },
+    {
+      "n": 10,
+      "mean_source_rating": 5.7,
+      "mean_variant_rating": 4.0,
+      "mean_shift": -1.7,
+      "mean_abs_shift": 1.7,
+      "direction_accuracy": 0.8,
+      "expected_counts": {
+        "down": 10
+      },
+      "predicted_counts": {
+        "same": 2,
+        "down": 8
+      },
+      "confusion": {
+        "down": {
+          "down": 8,
+          "same": 2,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "H2_Confident_Flaw"
+    },
+    {
+      "n": 10,
+      "mean_source_rating": 5.7,
+      "mean_variant_rating": 7.2,
+      "mean_shift": 1.5,
+      "mean_abs_shift": 1.5,
+      "direction_accuracy": 0.6,
+      "expected_counts": {
+        "up": 10
+      },
+      "predicted_counts": {
+        "up": 6,
+        "same": 4
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 4,
+          "up": 6
+        }
+      },
+      "variant": "H3_Verbose_Enriched"
+    },
+    {
+      "n": 10,
+      "mean_source_rating": 5.7,
+      "mean_variant_rating": 4.8,
+      "mean_shift": -0.9,
+      "mean_abs_shift": 1.1,
+      "direction_accuracy": 0.2,
+      "expected_counts": {
+        "same": 10
+      },
+      "predicted_counts": {
+        "down": 7,
+        "up": 1,
+        "same": 2
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 7,
+          "same": 2,
+          "up": 1
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "H4_Ultimate_Hype"
+    }
+  ]
+}

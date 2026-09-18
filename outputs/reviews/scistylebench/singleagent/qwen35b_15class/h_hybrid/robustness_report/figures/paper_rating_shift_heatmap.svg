@@ -1,0 +1,97 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='820' height='490' viewBox='0 0 820 490'><style>.title{font:700 22px Arial}.label{font:13px Arial}.note{font:12px Arial;fill:#555}.axis{stroke:#333;stroke-width:1}</style><rect width='100%' height='100%' fill='white'/>
+<text x='30' y='35' class='title'>Rating Shift by Paper and Variant</text>
+<text x='255.0' y='55' class='label' text-anchor='middle'>H1_Deceptive_Hollow</text>
+<text x='405.0' y='55' class='label' text-anchor='middle'>H2_Confident_Flaw</text>
+<text x='555.0' y='55' class='label' text-anchor='middle'>H3_Verbose_Enriched</text>
+<text x='705.0' y='55' class='label' text-anchor='middle'>H4_Ultimate_Hype</text>
+<text x='20' y='92' class='label'>HUMAN_SOURCE_01</text>
+<rect x='180' y='70' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='255.0' y='92' class='label' text-anchor='middle'>-3.0</text>
+<rect x='330' y='70' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='92' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='70' width='148' height='32' fill='rgb(205,245,205)'/>
+<text x='555.0' y='92' class='label' text-anchor='middle'>+2.0</text>
+<rect x='630' y='70' width='148' height='32' fill='rgb(245,225,225)'/>
+<text x='705.0' y='92' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='126' class='label'>HUMAN_SOURCE_02</text>
+<rect x='180' y='104' width='148' height='32' fill='rgb(245,225,225)'/>
+<text x='255.0' y='126' class='label' text-anchor='middle'>-1.0</text>
+<rect x='330' y='104' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='405.0' y='126' class='label' text-anchor='middle'>-2.0</text>
+<rect x='480' y='104' width='148' height='32' fill='rgb(205,245,205)'/>
+<text x='555.0' y='126' class='label' text-anchor='middle'>+2.0</text>
+<rect x='630' y='104' width='148' height='32' fill='rgb(225,245,225)'/>
+<text x='705.0' y='126' class='label' text-anchor='middle'>+1.0</text>
+<text x='20' y='160' class='label'>HUMAN_SOURCE_03</text>
+<rect x='180' y='138' width='148' height='32' fill='rgb(245,165,165)'/>
+<text x='255.0' y='160' class='label' text-anchor='middle'>-4.0</text>
+<rect x='330' y='138' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='405.0' y='160' class='label' text-anchor='middle'>-2.0</text>
+<rect x='480' y='138' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='160' class='label' text-anchor='middle'>+0.0</text>
+<rect x='630' y='138' width='148' height='32' fill='rgb(245,225,225)'/>
+<text x='705.0' y='160' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='194' class='label'>HUMAN_SOURCE_04</text>
+<rect x='180' y='172' width='148' height='32' fill='rgb(245,165,165)'/>
+<text x='255.0' y='194' class='label' text-anchor='middle'>-4.0</text>
+<rect x='330' y='172' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='405.0' y='194' class='label' text-anchor='middle'>-2.0</text>
+<rect x='480' y='172' width='148' height='32' fill='rgb(225,245,225)'/>
+<text x='555.0' y='194' class='label' text-anchor='middle'>+1.0</text>
+<rect x='630' y='172' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='705.0' y='194' class='label' text-anchor='middle'>-2.0</text>
+<text x='20' y='228' class='label'>HUMAN_SOURCE_05</text>
+<rect x='180' y='206' width='148' height='32' fill='rgb(245,225,225)'/>
+<text x='255.0' y='228' class='label' text-anchor='middle'>-1.0</text>
+<rect x='330' y='206' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='405.0' y='228' class='label' text-anchor='middle'>-2.0</text>
+<rect x='480' y='206' width='148' height='32' fill='rgb(205,245,205)'/>
+<text x='555.0' y='228' class='label' text-anchor='middle'>+2.0</text>
+<rect x='630' y='206' width='148' height='32' fill='rgb(245,225,225)'/>
+<text x='705.0' y='228' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='262' class='label'>HUMAN_SOURCE_06</text>
+<rect x='180' y='240' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='255.0' y='262' class='label' text-anchor='middle'>-3.0</text>
+<rect x='330' y='240' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='405.0' y='262' class='label' text-anchor='middle'>-2.0</text>
+<rect x='480' y='240' width='148' height='32' fill='rgb(205,245,205)'/>
+<text x='555.0' y='262' class='label' text-anchor='middle'>+2.0</text>
+<rect x='630' y='240' width='148' height='32' fill='rgb(245,225,225)'/>
+<text x='705.0' y='262' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='296' class='label'>HUMAN_SOURCE_07</text>
+<rect x='180' y='274' width='148' height='32' fill='rgb(245,145,145)'/>
+<text x='255.0' y='296' class='label' text-anchor='middle'>-5.0</text>
+<rect x='330' y='274' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='405.0' y='296' class='label' text-anchor='middle'>-2.0</text>
+<rect x='480' y='274' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='296' class='label' text-anchor='middle'>+0.0</text>
+<rect x='630' y='274' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='705.0' y='296' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='330' class='label'>HUMAN_SOURCE_08</text>
+<rect x='180' y='308' width='148' height='32' fill='rgb(245,145,145)'/>
+<text x='255.0' y='330' class='label' text-anchor='middle'>-5.0</text>
+<rect x='330' y='308' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='405.0' y='330' class='label' text-anchor='middle'>-2.0</text>
+<rect x='480' y='308' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='330' class='label' text-anchor='middle'>+0.0</text>
+<rect x='630' y='308' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='705.0' y='330' class='label' text-anchor='middle'>-2.0</text>
+<text x='20' y='364' class='label'>HUMAN_SOURCE_09</text>
+<rect x='180' y='342' width='148' height='32' fill='rgb(245,165,165)'/>
+<text x='255.0' y='364' class='label' text-anchor='middle'>-4.0</text>
+<rect x='330' y='342' width='148' height='32' fill='rgb(245,185,185)'/>
+<text x='405.0' y='364' class='label' text-anchor='middle'>-3.0</text>
+<rect x='480' y='342' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='555.0' y='364' class='label' text-anchor='middle'>+0.0</text>
+<rect x='630' y='342' width='148' height='32' fill='rgb(245,205,205)'/>
+<text x='705.0' y='364' class='label' text-anchor='middle'>-2.0</text>
+<text x='20' y='398' class='label'>HUMAN_SOURCE_10</text>
+<rect x='180' y='376' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='255.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='330' y='376' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='405.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='480' y='376' width='148' height='32' fill='rgb(125,245,125)'/>
+<text x='555.0' y='398' class='label' text-anchor='middle'>+6.0</text>
+<rect x='630' y='376' width='148' height='32' fill='rgb(245,245,245)'/>
+<text x='705.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+</svg>

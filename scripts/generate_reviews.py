@@ -44,6 +44,30 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Limit the number of paper records processed from the input file.",
     )
+    parser.add_argument(
+        "--variant-prefix",
+        action="append",
+        default=[],
+        help="Only process variants whose label starts with this prefix; repeatable.",
+    )
+    parser.add_argument(
+        "--variant-name",
+        action="append",
+        default=[],
+        help="Only process an exactly named variant; repeatable.",
+    )
+    parser.add_argument(
+        "--source-id",
+        nargs="+",
+        action="append",
+        default=[],
+        help="Only process these source IDs; accepts one or more IDs and is repeatable.",
+    )
+    parser.add_argument(
+        "--merge-existing-reviews",
+        action="store_true",
+        help="Merge newly generated SciStyleBench records into an existing output scistylebench_reviews.json.",
+    )
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--max-tokens", type=int, default=None)
     parser.add_argument("--seed", type=int, default=None)
@@ -54,6 +78,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--api-key", default=None)
     parser.add_argument("--model-name", default=QWEN4B)
     parser.add_argument("--run-label", default=None)
+    parser.add_argument(
+        "--draft-reviews-path",
+        default=None,
+        help=(
+            "Existing scistylebench_reviews.json to use as drafts. Requires "
+            "--self-refine; matching drafts are reused and missing variants are generated."
+        ),
+    )
     parser.add_argument(
         "--metrics-config",
         default=None,
@@ -67,10 +99,21 @@ def parse_args() -> argparse.Namespace:
             "<output-dir>/robustness_report."
         ),
     )
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
         "--debate",
         action="store_true",
         help="Run a critic-and-revision pass after each initial SciStyleBench review.",
+    )
+    mode.add_argument(
+        "--self-refine",
+        action="store_true",
+        help="Have the original reviewer regenerate its review from the idea and its own draft.",
+    )
+    mode.add_argument(
+        "--moderated-panel",
+        action="store_true",
+        help="Run independent technical and rhetoric reviews, then synthesize them with a moderator.",
     )
     parser.add_argument(
         "--critic-prompt-path",
@@ -87,6 +130,35 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=0.7,
         help="Sampling temperature for the critic's alternative interpretations.",
+    )
+    parser.add_argument(
+        "--self-refine-temperature",
+        type=float,
+        default=0.4,
+        help=(
+            "Sampling temperature for the self-refinement pass; independent of "
+            "--temperature used for the initial review."
+        ),
+    )
+    parser.add_argument(
+        "--self-refine-system-addendum-path",
+        default=None,
+        help="Optional system-prompt addendum used only during self-refinement calls.",
+    )
+    parser.add_argument(
+        "--technical-prompt-path",
+        default="prompts/review_gen/technical_scientific_reviewer.txt",
+        help="Role prompt appended to the base review prompt for the technical reviewer.",
+    )
+    parser.add_argument(
+        "--rhetoric-prompt-path",
+        default="prompts/review_gen/rhetoric_auditor.txt",
+        help="Role prompt appended to the base review prompt for the independent rhetoric auditor.",
+    )
+    parser.add_argument(
+        "--moderator-prompt-path",
+        default="prompts/review_gen/review_moderator.txt",
+        help="Role prompt appended to the base review prompt for the final moderator.",
     )
     parser.add_argument("--no-resume", action="store_true")
     return parser.parse_args()
@@ -146,15 +218,36 @@ def main() -> None:
         heatmap_sample_size=args.heatmap_sample_size,
         heatmap_seed=args.heatmap_seed,
         debate=args.debate,
+        self_refine=args.self_refine,
+        self_refine_temperature=args.self_refine_temperature,
+        self_refine_system_addendum_path=(
+            resolve_project_path(args.self_refine_system_addendum_path)
+            if args.self_refine_system_addendum_path else None
+        ),
+        draft_reviews_path=(resolve_project_path(args.draft_reviews_path) if args.draft_reviews_path else None),
         metrics_config=load_metrics_config(resolve_project_path(args.metrics_config) if args.metrics_config else None),
         critic_prompt_path=resolve_project_path(args.critic_prompt_path) if args.debate else None,
         critic_model_name=args.critic_model_name,
         critic_temperature=args.critic_temperature,
+        moderated_panel=args.moderated_panel,
+        technical_prompt_path=(
+            resolve_project_path(args.technical_prompt_path) if args.moderated_panel else None
+        ),
+        rhetoric_prompt_path=(
+            resolve_project_path(args.rhetoric_prompt_path) if args.moderated_panel else None
+        ),
+        moderator_prompt_path=(
+            resolve_project_path(args.moderator_prompt_path) if args.moderated_panel else None
+        ),
         robustness_report_dir=(
             resolve_project_path(args.robustness_report_dir)
             if args.robustness_report_dir
             else None
         ),
+        variant_prefixes=tuple(args.variant_prefix),
+        variant_names=tuple(args.variant_name),
+        source_ids=tuple(source_id for group in args.source_id for source_id in group),
+        merge_existing_reviews=args.merge_existing_reviews,
     )
     print(f"Scientific metrics: {result['scientific_metrics']['report_path']}")
     if args.debate:

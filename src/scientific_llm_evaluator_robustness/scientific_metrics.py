@@ -143,7 +143,7 @@ def evaluate_scientific_metrics(records: list[dict], config: dict | None = None)
                        "dimension": dimension, "variants": labels}
                 for stage in ("before", "final"):
                     reviews = [
-                        (variant.get("review_debate", {}).get("draft_review", {}) if stage == "before" else variant.get("review", {}))
+                        ((variant.get("review_debate") or variant.get("review_self_refinement") or {}).get("draft_review", {}) if stage == "before" else variant.get("review", {}))
                         if variant else {} for variant in selected
                     ]
                     values = [_score(review, dimension) for review in reviews]
@@ -218,7 +218,9 @@ def render_scientific_metrics(summary: dict, *, paired: bool) -> bytes:
     subtitle = "Matched before/after observations only" if paired else "Final reviews: all eligible observations"
     figure.text(0.09, 0.90, subtitle + "; gray N/A means insufficient or unconfigured data, not zero.", fontsize=10)
     for axes, metric in zip(axes_list, ("SBI", "SRR", "AWR")):
-        dimension = "dimension_mean" if metric == "SBI" else "overall_rating"
+        # Use the same 1–10 overall-rating scale for all three headline chart metrics.
+        # Dimension-level SBI remains available in the JSON/Markdown breakdown.
+        dimension = "overall_rating"
         row = next(row for row in summary["summaries"] if row["metric"] == metric and row["comparison"] is None and row["dimension"] == dimension)
         fields = ("paired_before", "paired_final") if paired else ("final",)
         for index, field in enumerate(fields):
@@ -240,15 +242,15 @@ def render_scientific_metrics(summary: dict, *, paired: bool) -> bytes:
             values = [row[field]["value"] for field in fields if row[field]["value"] is not None]
             bound = max([abs(value) for value in values] + [0.2]) * 1.4
             axes.set_ylim(-bound, bound)
-            axes.set_ylabel("Controlled deviation (1–5 score points)")
+            axes.set_ylabel("Controlled deviation (1–10 overall-rating points)")
             if summary["config"]["sbi_formula"] == "signed":
                 axes.set_title("SBI · signed difference, not magnitude", fontsize=11)
-                axes.set_ylabel("Signed difference (1–5 score points)")
+                axes.set_ylabel("Signed difference (1–10 overall-rating points)")
         else:
             axes.set_ylim(0, 1.2)
             axes.set_yticks([0, 0.25, 0.5, 0.75, 1], ["0%", "25%", "50%", "75%", "100%"])
             axes.set_ylabel("Strict correct-order rate (overall rating)")
-    notes = ["SBI: " + summary["methodology"]["sbi"] + "; seven dimensions pooled, overall rating excluded.",
+    notes = ["SBI: " + summary["methodology"]["sbi"] + "; calculated from overall rating (1–10).",
              "SRR/AWR: ties are failures. n = eligible observations (SBI: source × style × dimension; rates: source × pair).",
              "Missing variants/scores are excluded. Matched coverage can be smaller than final-only coverage. No uncertainty intervals.",
              "Source: scistylebench_reviews.json; full mappings, per-style/pair/dimension results and counts are in scientific_robustness_metrics.json."]
@@ -264,7 +266,10 @@ def write_scientific_metrics(records: list[dict], output_dir: Path, config: dict
     output_dir.mkdir(parents=True, exist_ok=True)
     json_path = output_dir / "scientific_robustness_metrics.json"
     json_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
-    paired = any(variant.get("review_debate") for record in records for variant in record.get("variants", []))
+    paired = any(
+        variant.get("review_debate") or variant.get("review_self_refinement")
+        for record in records for variant in record.get("variants", [])
+    )
     png_path = output_dir / "scientific_robustness_metrics.png"
     png_path.write_bytes(render_scientific_metrics(summary, paired=paired))
     lines = ["# Scientific robustness metrics", "", "![SBI, SRR and AWR](scientific_robustness_metrics.png)", ""]

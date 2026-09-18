@@ -1,0 +1,548 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='2158' height='524' viewBox='0 0 2158 524'><style>.title{font:700 22px Arial}.label{font:12px Arial}.note{font:12px Arial;fill:#555}</style><rect width='100%' height='100%' fill='white'/>
+<text x='30' y='35' class='title'>Sampled Source-Centered Rating Shift Heatmap</text>
+<text x='30' y='52' class='note'>Cell text = variant rating minus source rating. Color intensity tracks shift magnitude.</text>
+<text x='289.0' y='55' class='label' text-anchor='middle'>Source</text>
+<text x='407.0' y='55' class='label' text-anchor='middle'>A1_Identity</text>
+<text x='525.0' y='55' class='label' text-anchor='middle'>A2_Paraphrase_Only</text>
+<text x='643.0' y='55' class='label' text-anchor='middle'>A3_Plain_Core</text>
+<text x='761.0' y='55' class='label' text-anchor='middle'>B1_Verbose_Elaborate</text>
+<text x='879.0' y='55' class='label' text-anchor='middle'>B2_Grand_Narrative</text>
+<text x='997.0' y='55' class='label' text-anchor='middle'>B3_Over_Confident</text>
+<text x='1115.0' y='55' class='label' text-anchor='middle'>B4_Novelty</text>
+<text x='1233.0' y='55' class='label' text-anchor='middle'>B5_Application_Impact</text>
+<text x='1351.0' y='55' class='label' text-anchor='middle'>C1_Hollow_Shell</text>
+<text x='1469.0' y='55' class='label' text-anchor='middle'>C2_Logic_Flawed</text>
+<text x='1587.0' y='55' class='label' text-anchor='middle'>C3_Substance_Enriched</text>
+<text x='1705.0' y='55' class='label' text-anchor='middle'>H1_Deceptive_Hollow</text>
+<text x='1823.0' y='55' class='label' text-anchor='middle'>H2_Confident_Flaw</text>
+<text x='1941.0' y='55' class='label' text-anchor='middle'>H3_Verbose_Enriched</text>
+<text x='2059.0' y='55' class='label' text-anchor='middle'>H4_Ultimate_Hype</text>
+<text x='20' y='86' class='label'>R1_IDEA_001 [Unknown]</text>
+<rect x='230' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='86' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='643.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='702' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='879.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='938' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='70' width='116' height='22' fill='rgb(245,145,145)'/>
+<text x='1351.0' y='86' class='label' text-anchor='middle'>-5.0</text>
+<rect x='1410' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='70' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='86' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1646' y='70' width='116' height='22' fill='rgb(245,145,145)'/>
+<text x='1705.0' y='86' class='label' text-anchor='middle'>-5.0</text>
+<rect x='1764' y='70' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1823.0' y='86' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1882' y='70' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1941.0' y='86' class='label' text-anchor='middle'>+1.0</text>
+<rect x='2000' y='70' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='2059.0' y='86' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='110' class='label'>R1_IDEA_002 [Unknown]</text>
+<rect x='230' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='110' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='94' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='643.0' y='110' class='label' text-anchor='middle'>-2.0</text>
+<rect x='702' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='94' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='879.0' y='110' class='label' text-anchor='middle'>-1.0</text>
+<rect x='938' y='94' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='997.0' y='110' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1056' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='94' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1351.0' y='110' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1410' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1646' y='94' width='116' height='22' fill='rgb(245,145,145)'/>
+<text x='1705.0' y='110' class='label' text-anchor='middle'>-5.0</text>
+<rect x='1764' y='94' width='116' height='22' fill='rgb(245,145,145)'/>
+<text x='1823.0' y='110' class='label' text-anchor='middle'>-5.0</text>
+<rect x='1882' y='94' width='116' height='22' fill='#eef1f5'/>
+<text x='1941.0' y='110' class='label' text-anchor='middle'>+0.0</text>
+<rect x='2000' y='94' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='2059.0' y='110' class='label' text-anchor='middle'>-2.0</text>
+<text x='20' y='134' class='label'>R1_IDEA_003 [Unknown]</text>
+<rect x='230' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='134' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='118' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='525.0' y='134' class='label' text-anchor='middle'>-1.0</text>
+<rect x='584' y='118' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='643.0' y='134' class='label' text-anchor='middle'>-1.0</text>
+<rect x='702' y='118' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='761.0' y='134' class='label' text-anchor='middle'>-1.0</text>
+<rect x='820' y='118' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='879.0' y='134' class='label' text-anchor='middle'>-1.0</text>
+<rect x='938' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='118' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1351.0' y='134' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1410' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1646' y='118' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1705.0' y='134' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1764' y='118' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1823.0' y='134' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1882' y='118' width='116' height='22' fill='#eef1f5'/>
+<text x='1941.0' y='134' class='label' text-anchor='middle'>+0.0</text>
+<rect x='2000' y='118' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='2059.0' y='134' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='158' class='label'>R1_IDEA_004 [Unknown]</text>
+<rect x='230' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='158' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='142' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='407.0' y='158' class='label' text-anchor='middle'>-1.0</text>
+<rect x='466' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='643.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='702' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='142' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='879.0' y='158' class='label' text-anchor='middle'>-2.0</text>
+<rect x='938' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='142' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1115.0' y='158' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1174' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='142' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1351.0' y='158' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1410' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='142' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='158' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1646' y='142' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1705.0' y='158' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1764' y='142' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1823.0' y='158' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1882' y='142' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1941.0' y='158' class='label' text-anchor='middle'>+1.0</text>
+<rect x='2000' y='142' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='2059.0' y='158' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='182' class='label'>R1_IDEA_005 [Unknown]</text>
+<rect x='230' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='182' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='166' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='643.0' y='182' class='label' text-anchor='middle'>-1.0</text>
+<rect x='702' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='879.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='938' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='166' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1233.0' y='182' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1292' y='166' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1351.0' y='182' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1410' y='166' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1469.0' y='182' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1528' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1646' y='166' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1705.0' y='182' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1764' y='166' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1823.0' y='182' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1882' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='1941.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<rect x='2000' y='166' width='116' height='22' fill='#eef1f5'/>
+<text x='2059.0' y='182' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='206' class='label'>R1_IDEA_006 [Unknown]</text>
+<rect x='230' y='190' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='206' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='190' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='206' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='190' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='525.0' y='206' class='label' text-anchor='middle'>+1.0</text>
+<rect x='584' y='190' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='643.0' y='206' class='label' text-anchor='middle'>+1.0</text>
+<rect x='702' y='190' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='761.0' y='206' class='label' text-anchor='middle'>+1.0</text>
+<rect x='820' y='190' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='879.0' y='206' class='label' text-anchor='middle'>+1.0</text>
+<rect x='938' y='190' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='206' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='190' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='206' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='190' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1233.0' y='206' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1292' y='190' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1351.0' y='206' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1410' y='190' width='116' height='22' fill='rgb(205,245,205)'/>
+<text x='1469.0' y='206' class='label' text-anchor='middle'>+2.0</text>
+<rect x='1528' y='190' width='116' height='22' fill='rgb(205,245,205)'/>
+<text x='1587.0' y='206' class='label' text-anchor='middle'>+2.0</text>
+<rect x='1646' y='190' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1705.0' y='206' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1764' y='190' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1823.0' y='206' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1882' y='190' width='116' height='22' fill='rgb(205,245,205)'/>
+<text x='1941.0' y='206' class='label' text-anchor='middle'>+2.0</text>
+<rect x='2000' y='190' width='116' height='22' fill='#eef1f5'/>
+<text x='2059.0' y='206' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='230' class='label'>R1_IDEA_007 [Unknown]</text>
+<rect x='230' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='230' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='230' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='230' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='214' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='643.0' y='230' class='label' text-anchor='middle'>-1.0</text>
+<rect x='702' y='214' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='761.0' y='230' class='label' text-anchor='middle'>+1.0</text>
+<rect x='820' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='879.0' y='230' class='label' text-anchor='middle'>+0.0</text>
+<rect x='938' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='230' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='230' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='230' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='214' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1351.0' y='230' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1410' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='230' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='214' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1587.0' y='230' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1646' y='214' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1705.0' y='230' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1764' y='214' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1823.0' y='230' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1882' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='1941.0' y='230' class='label' text-anchor='middle'>+0.0</text>
+<rect x='2000' y='214' width='116' height='22' fill='#eef1f5'/>
+<text x='2059.0' y='230' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='254' class='label'>R1_IDEA_008 [Unknown]</text>
+<rect x='230' y='238' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='254' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='238' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='407.0' y='254' class='label' text-anchor='middle'>+1.0</text>
+<rect x='466' y='238' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='254' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='238' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='643.0' y='254' class='label' text-anchor='middle'>-1.0</text>
+<rect x='702' y='238' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='254' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='238' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='879.0' y='254' class='label' text-anchor='middle'>-1.0</text>
+<rect x='938' y='238' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='254' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='238' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='254' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='238' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='254' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='238' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1351.0' y='254' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1410' y='238' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='254' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='238' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1587.0' y='254' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1646' y='238' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1705.0' y='254' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1764' y='238' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1823.0' y='254' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1882' y='238' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1941.0' y='254' class='label' text-anchor='middle'>+1.0</text>
+<rect x='2000' y='238' width='116' height='22' fill='#eef1f5'/>
+<text x='2059.0' y='254' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='278' class='label'>R1_IDEA_009 [Unknown]</text>
+<rect x='230' y='262' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='278' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='262' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='278' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='262' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='278' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='262' width='116' height='22' fill='#eef1f5'/>
+<text x='643.0' y='278' class='label' text-anchor='middle'>+0.0</text>
+<rect x='702' y='262' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='761.0' y='278' class='label' text-anchor='middle'>+1.0</text>
+<rect x='820' y='262' width='116' height='22' fill='#eef1f5'/>
+<text x='879.0' y='278' class='label' text-anchor='middle'>+0.0</text>
+<rect x='938' y='262' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='997.0' y='278' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1056' y='262' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1115.0' y='278' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1174' y='262' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1233.0' y='278' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1292' y='262' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1351.0' y='278' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1410' y='262' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='278' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='262' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='278' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1646' y='262' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1705.0' y='278' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1764' y='262' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1823.0' y='278' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1882' y='262' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1941.0' y='278' class='label' text-anchor='middle'>+1.0</text>
+<rect x='2000' y='262' width='116' height='22' fill='#eef1f5'/>
+<text x='2059.0' y='278' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='302' class='label'>R1_IDEA_010 [Unknown]</text>
+<rect x='230' y='286' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='302' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='286' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='302' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='286' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='302' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='286' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='643.0' y='302' class='label' text-anchor='middle'>-1.0</text>
+<rect x='702' y='286' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='302' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='286' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='879.0' y='302' class='label' text-anchor='middle'>+1.0</text>
+<rect x='938' y='286' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='997.0' y='302' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1056' y='286' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1115.0' y='302' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1174' y='286' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='302' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='286' width='116' height='22' fill='#eef1f5'/>
+<text x='1351.0' y='302' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1410' y='286' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='302' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='286' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1587.0' y='302' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1646' y='286' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1705.0' y='302' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1764' y='286' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1823.0' y='302' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1882' y='286' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1941.0' y='302' class='label' text-anchor='middle'>+1.0</text>
+<rect x='2000' y='286' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='2059.0' y='302' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='326' class='label'>R1_IDEA_011 [Unknown]</text>
+<rect x='230' y='310' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='326' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='310' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='407.0' y='326' class='label' text-anchor='middle'>-1.0</text>
+<rect x='466' y='310' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='326' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='310' width='116' height='22' fill='#eef1f5'/>
+<text x='643.0' y='326' class='label' text-anchor='middle'>+0.0</text>
+<rect x='702' y='310' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='761.0' y='326' class='label' text-anchor='middle'>+1.0</text>
+<rect x='820' y='310' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='879.0' y='326' class='label' text-anchor='middle'>-1.0</text>
+<rect x='938' y='310' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='326' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='310' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='326' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='310' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1233.0' y='326' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1292' y='310' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1351.0' y='326' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1410' y='310' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='326' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='310' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='326' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1646' y='310' width='116' height='22' fill='rgb(245,145,145)'/>
+<text x='1705.0' y='326' class='label' text-anchor='middle'>-5.0</text>
+<rect x='1764' y='310' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1823.0' y='326' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1882' y='310' width='116' height='22' fill='#eef1f5'/>
+<text x='1941.0' y='326' class='label' text-anchor='middle'>+0.0</text>
+<rect x='2000' y='310' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='2059.0' y='326' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='350' class='label'>R1_IDEA_012 [Unknown]</text>
+<rect x='230' y='334' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='350' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='334' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='350' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='334' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='350' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='334' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='643.0' y='350' class='label' text-anchor='middle'>+1.0</text>
+<rect x='702' y='334' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='761.0' y='350' class='label' text-anchor='middle'>+1.0</text>
+<rect x='820' y='334' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='879.0' y='350' class='label' text-anchor='middle'>+1.0</text>
+<rect x='938' y='334' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='350' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='334' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='350' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='334' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1233.0' y='350' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1292' y='334' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1351.0' y='350' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1410' y='334' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1469.0' y='350' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1528' y='334' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='350' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1646' y='334' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1705.0' y='350' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1764' y='334' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1823.0' y='350' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1882' y='334' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1941.0' y='350' class='label' text-anchor='middle'>+1.0</text>
+<rect x='2000' y='334' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='2059.0' y='350' class='label' text-anchor='middle'>-1.0</text>
+<text x='20' y='374' class='label'>R1_IDEA_013 [Unknown]</text>
+<rect x='230' y='358' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='374' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='358' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='374' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='358' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='525.0' y='374' class='label' text-anchor='middle'>-1.0</text>
+<rect x='584' y='358' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='643.0' y='374' class='label' text-anchor='middle'>-4.0</text>
+<rect x='702' y='358' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='761.0' y='374' class='label' text-anchor='middle'>-1.0</text>
+<rect x='820' y='358' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='879.0' y='374' class='label' text-anchor='middle'>-1.0</text>
+<rect x='938' y='358' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='997.0' y='374' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1056' y='358' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='374' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='358' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1233.0' y='374' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1292' y='358' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1351.0' y='374' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1410' y='358' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1469.0' y='374' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1528' y='358' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1587.0' y='374' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1646' y='358' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1705.0' y='374' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1764' y='358' width='116' height='22' fill='rgb(245,145,145)'/>
+<text x='1823.0' y='374' class='label' text-anchor='middle'>-5.0</text>
+<rect x='1882' y='358' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1941.0' y='374' class='label' text-anchor='middle'>-1.0</text>
+<rect x='2000' y='358' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='2059.0' y='374' class='label' text-anchor='middle'>-2.0</text>
+<text x='20' y='398' class='label'>R1_IDEA_014 [Unknown]</text>
+<rect x='230' y='382' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='398' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='382' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='382' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='525.0' y='398' class='label' text-anchor='middle'>-1.0</text>
+<rect x='584' y='382' width='116' height='22' fill='#eef1f5'/>
+<text x='643.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='702' y='382' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='382' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='879.0' y='398' class='label' text-anchor='middle'>-1.0</text>
+<rect x='938' y='382' width='116' height='22' fill='#eef1f5'/>
+<text x='997.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1056' y='382' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='382' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1233.0' y='398' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1292' y='382' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1351.0' y='398' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1410' y='382' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='382' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1587.0' y='398' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1646' y='382' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1705.0' y='398' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1764' y='382' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='1823.0' y='398' class='label' text-anchor='middle'>-2.0</text>
+<rect x='1882' y='382' width='116' height='22' fill='#eef1f5'/>
+<text x='1941.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<rect x='2000' y='382' width='116' height='22' fill='#eef1f5'/>
+<text x='2059.0' y='398' class='label' text-anchor='middle'>+0.0</text>
+<text x='20' y='422' class='label'>R1_IDEA_015 [Unknown]</text>
+<rect x='230' y='406' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='422' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='406' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='422' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='406' width='116' height='22' fill='#eef1f5'/>
+<text x='525.0' y='422' class='label' text-anchor='middle'>+0.0</text>
+<rect x='584' y='406' width='116' height='22' fill='#eef1f5'/>
+<text x='643.0' y='422' class='label' text-anchor='middle'>+0.0</text>
+<rect x='702' y='406' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='422' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='406' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='879.0' y='422' class='label' text-anchor='middle'>-1.0</text>
+<rect x='938' y='406' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='997.0' y='422' class='label' text-anchor='middle'>+1.0</text>
+<rect x='1056' y='406' width='116' height='22' fill='#eef1f5'/>
+<text x='1115.0' y='422' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1174' y='406' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1233.0' y='422' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1292' y='406' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1351.0' y='422' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1410' y='406' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='422' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='406' width='116' height='22' fill='#eef1f5'/>
+<text x='1587.0' y='422' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1646' y='406' width='116' height='22' fill='rgb(245,145,145)'/>
+<text x='1705.0' y='422' class='label' text-anchor='middle'>-5.0</text>
+<rect x='1764' y='406' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1823.0' y='422' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1882' y='406' width='116' height='22' fill='rgb(225,245,225)'/>
+<text x='1941.0' y='422' class='label' text-anchor='middle'>+1.0</text>
+<rect x='2000' y='406' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='2059.0' y='422' class='label' text-anchor='middle'>-2.0</text>
+<text x='20' y='446' class='label'>R1_IDEA_016 [Unknown]</text>
+<rect x='230' y='430' width='116' height='22' fill='#eef1f5'/>
+<text x='289.0' y='446' class='label' text-anchor='middle'>0.0</text>
+<rect x='348' y='430' width='116' height='22' fill='#eef1f5'/>
+<text x='407.0' y='446' class='label' text-anchor='middle'>+0.0</text>
+<rect x='466' y='430' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='525.0' y='446' class='label' text-anchor='middle'>-1.0</text>
+<rect x='584' y='430' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='643.0' y='446' class='label' text-anchor='middle'>-1.0</text>
+<rect x='702' y='430' width='116' height='22' fill='#eef1f5'/>
+<text x='761.0' y='446' class='label' text-anchor='middle'>+0.0</text>
+<rect x='820' y='430' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='879.0' y='446' class='label' text-anchor='middle'>-1.0</text>
+<rect x='938' y='430' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='997.0' y='446' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1056' y='430' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1115.0' y='446' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1174' y='430' width='116' height='22' fill='#eef1f5'/>
+<text x='1233.0' y='446' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1292' y='430' width='116' height='22' fill='rgb(245,185,185)'/>
+<text x='1351.0' y='446' class='label' text-anchor='middle'>-3.0</text>
+<rect x='1410' y='430' width='116' height='22' fill='#eef1f5'/>
+<text x='1469.0' y='446' class='label' text-anchor='middle'>+0.0</text>
+<rect x='1528' y='430' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1587.0' y='446' class='label' text-anchor='middle'>-1.0</text>
+<rect x='1646' y='430' width='116' height='22' fill='rgb(245,125,125)'/>
+<text x='1705.0' y='446' class='label' text-anchor='middle'>-6.0</text>
+<rect x='1764' y='430' width='116' height='22' fill='rgb(245,165,165)'/>
+<text x='1823.0' y='446' class='label' text-anchor='middle'>-4.0</text>
+<rect x='1882' y='430' width='116' height='22' fill='rgb(245,225,225)'/>
+<text x='1941.0' y='446' class='label' text-anchor='middle'>-1.0</text>
+<rect x='2000' y='430' width='116' height='22' fill='rgb(245,205,205)'/>
+<text x='2059.0' y='446' class='label' text-anchor='middle'>-2.0</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='760' height='420' viewBox='0 0 760 420'><style>.title{font:700 22px Arial}.label{font:13px Arial}.note{font:12px Arial;fill:#555}.axis{stroke:#333;stroke-width:1}</style><rect width='100%' height='100%' fill='white'/>
+<text x='30' y='35' class='title'>Mean Rating Shift vs Main</text>
+<text x='30' y='390' class='note'>Rating points</text>
+<line x1='90' y1='195.0' x2='700' y2='195.0' class='axis'/>
+<rect x='90.0' y='195.0' width='184.7' height='17.0' fill='#c95f45'/>
+<text x='182.3' y='230.0' class='label' text-anchor='middle'>-0.04</text>
+<text x='182.3' y='344.0' class='label' text-anchor='middle'>plain_core</text>
+<rect x='302.7' y='121.6' width='184.7' height='73.4' fill='#6c9f58'/>
+<text x='395.0' y='113.6' class='label' text-anchor='middle'>0.18</text>
+<text x='395.0' y='344.0' class='label' text-anchor='middle'>rhetoric_heavy</text>
+<rect x='515.3' y='90.8' width='184.7' height='104.2' fill='#6c9f58'/>
+<text x='607.7' y='82.8' class='label' text-anchor='middle'>0.26</text>
+<text x='607.7' y='344.0' class='label' text-anchor='middle'>rhetoric_heavier</text>
+</svg>

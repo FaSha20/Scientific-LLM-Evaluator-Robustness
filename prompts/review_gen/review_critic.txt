@@ -44,6 +44,14 @@ does not compensate for absent current content. A score increase requires explic
 support in the supplied idea summary. If a wording correction is warranted but the
 idea does not support a higher score, use `recommended_score: null`.
 
+Actively check whether the draft under-rewards explicit scientific substance.
+Substance includes a concrete mechanism, a falsifiable prediction, a stated
+relationship or boundary condition, a meaningful comparison or ablation, or a
+specific evaluation path. If such content is present and materially omitted from
+the draft's justification, question the score and recommend a higher score only
+when the quoted evidence supports it. Do not reward slogans, asserted impact, or
+an unstated plan as scientific substance.
+
 When recommending a higher score, copy a short exact quotation from the idea into
 `evidence_from_idea`. Do not quote the draft review, infer missing details, or use
 your own proposed future work as evidence.
@@ -68,4 +76,9 @@ Return ONLY valid JSON in this schema:
   "confidence": 1-5
 }
 
-Use `recommended_score` as a JSON number from 1-5 for a dimension, 1-10 for `overall_rating`, or `null` if re-examination rather than a score change is warranted. Use an empty `score_questions` list when the scores are adequately justified. Do not include score sections merely to fill the list.
+Use `recommended_score` only when it is strictly higher or strictly lower than the
+draft's score: use 1-5 for a dimension and 1-10 for `overall_rating`. Never
+recommend the same score as the draft. Use `null` when re-examination or wording
+refinement is warranted without a numerical score change. Use an empty
+`score_questions` list when the scores are adequately justified. Do not include
+score sections merely to fill the list.

@@ -1,0 +1,463 @@
+{
+  "dataset": {
+    "n_sources": 1,
+    "n_variants": 10
+  },
+  "rating_threshold": 0.25,
+  "overall": {
+    "n": 10,
+    "mean_source_rating": 8.0,
+    "mean_variant_rating": 7.2,
+    "mean_shift": -0.8,
+    "mean_abs_shift": 0.8,
+    "direction_accuracy": 0.5,
+    "expected_counts": {
+      "same": 8,
+      "down": 2
+    },
+    "predicted_counts": {
+      "same": 5,
+      "down": 5
+    },
+    "confusion": {
+      "down": {
+        "down": 1,
+        "same": 1,
+        "up": 0
+      },
+      "same": {
+        "down": 4,
+        "same": 4,
+        "up": 0
+      },
+      "up": {
+        "down": 0,
+        "same": 0,
+        "up": 0
+      }
+    }
+  },
+  "by_variant_group": [
+    {
+      "n": 3,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 7.666666666666667,
+      "mean_shift": -0.3333333333333333,
+      "mean_abs_shift": 0.3333333333333333,
+      "direction_accuracy": 0.6666666666666666,
+      "expected_counts": {
+        "same": 3
+      },
+      "predicted_counts": {
+        "same": 2,
+        "down": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 2,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant_group": "A_baseline_expression_control"
+    },
+    {
+      "n": 5,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 7.4,
+      "mean_shift": -0.6,
+      "mean_abs_shift": 0.6,
+      "direction_accuracy": 0.4,
+      "expected_counts": {
+        "same": 5
+      },
+      "predicted_counts": {
+        "down": 3,
+        "same": 2
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 3,
+          "same": 2,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant_group": "B_rhetoric_and_framing"
+    },
+    {
+      "n": 2,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 6.0,
+      "mean_shift": -2.0,
+      "mean_abs_shift": 2.0,
+      "direction_accuracy": 0.5,
+      "expected_counts": {
+        "down": 2
+      },
+      "predicted_counts": {
+        "down": 1,
+        "same": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 1,
+          "same": 1,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant_group": "C_substance_and_logic"
+    }
+  ],
+  "by_variant": [
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 8.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "same": 1
+      },
+      "predicted_counts": {
+        "same": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 1,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "A1_Identity"
+    },
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": -1.0,
+      "mean_abs_shift": 1.0,
+      "direction_accuracy": 0.0,
+      "expected_counts": {
+        "same": 1
+      },
+      "predicted_counts": {
+        "down": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "A2_Paraphrase_Only"
+    },
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 8.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "same": 1
+      },
+      "predicted_counts": {
+        "same": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 1,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "A3_Plain_Core"
+    },
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": -1.0,
+      "mean_abs_shift": 1.0,
+      "direction_accuracy": 0.0,
+      "expected_counts": {
+        "same": 1
+      },
+      "predicted_counts": {
+        "down": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B1_Verbose_Elaborate"
+    },
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 8.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "same": 1
+      },
+      "predicted_counts": {
+        "same": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 1,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B2_Grand_Narrative"
+    },
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": -1.0,
+      "mean_abs_shift": 1.0,
+      "direction_accuracy": 0.0,
+      "expected_counts": {
+        "same": 1
+      },
+      "predicted_counts": {
+        "down": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B3_Over_Confident"
+    },
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 7.0,
+      "mean_shift": -1.0,
+      "mean_abs_shift": 1.0,
+      "direction_accuracy": 0.0,
+      "expected_counts": {
+        "same": 1
+      },
+      "predicted_counts": {
+        "down": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 1,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B4_Novelty"
+    },
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 8.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "same": 1
+      },
+      "predicted_counts": {
+        "same": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 1,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "B5_Application_Impact"
+    },
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 4.0,
+      "mean_shift": -4.0,
+      "mean_abs_shift": 4.0,
+      "direction_accuracy": 1.0,
+      "expected_counts": {
+        "down": 1
+      },
+      "predicted_counts": {
+        "down": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 1,
+          "same": 0,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "C1_Hollow_Shell"
+    },
+    {
+      "n": 1,
+      "mean_source_rating": 8.0,
+      "mean_variant_rating": 8.0,
+      "mean_shift": 0.0,
+      "mean_abs_shift": 0.0,
+      "direction_accuracy": 0.0,
+      "expected_counts": {
+        "down": 1
+      },
+      "predicted_counts": {
+        "same": 1
+      },
+      "confusion": {
+        "down": {
+          "down": 0,
+          "same": 1,
+          "up": 0
+        },
+        "same": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        },
+        "up": {
+          "down": 0,
+          "same": 0,
+          "up": 0
+        }
+      },
+      "variant": "C2_Logic_Flawed"
+    }
+  ]
+}

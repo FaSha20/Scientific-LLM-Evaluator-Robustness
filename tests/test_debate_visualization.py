@@ -28,7 +28,8 @@ def test_heatmap_preserves_multiple_recommendations_and_scales():
     assert "Overall rating (1–10) · critic #1" in labels
     assert labels.count("+2") == 2
     assert "7" in labels
-    assert "N/A" in labels
+    assert "Refine only" in labels
+    assert "No question" in labels
     assert "Problem significance (1–5)" in labels
 
 

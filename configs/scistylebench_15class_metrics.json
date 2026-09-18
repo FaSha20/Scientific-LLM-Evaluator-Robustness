@@ -1,0 +1,19 @@
+{
+  "plain": "A3_Plain_Core",
+  "paraphrase": "A2_Paraphrase_Only",
+  "enriched": "C3_Substance_Enriched",
+  "hollow": "C1_Hollow_Shell",
+  "flawed": "C2_Logic_Flawed",
+  "style_variants": [
+    "B1_Verbose_Elaborate",
+    "B2_Grand_Narrative",
+    "B3_Over_Confident",
+    "B4_Novelty",
+    "B5_Application_Impact"
+  ],
+  "adversarial_pairs": [
+    ["A3_Plain_Core", "H1_Deceptive_Hollow"],
+    ["A3_Plain_Core", "H2_Confident_Flaw"]
+  ],
+  "sbi_formula": "absolute_controlled"
+}
